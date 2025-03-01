@@ -1,0 +1,19 @@
+/* swiper.css */
+
+.swiper {
+    width: 1000px; /* Use full width */
+    height: 300px; /* Adjust height */
+}
+
+.swiper-slide {
+    width: 75%;
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

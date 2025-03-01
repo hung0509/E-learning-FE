@@ -1,0 +1,15 @@
+  .courses .lead {
+    color: #aaa;
+  }
+  
+/* .courses .wrapper {
+    margin: 10vh;
+} */
+  
+  /* Post card styles */
+  
+@media (min-width: 1400px) {
+    .courses .container {
+        max-width: 100%;
+    }
+}

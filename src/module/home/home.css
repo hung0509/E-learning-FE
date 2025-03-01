@@ -1,0 +1,7 @@
+.color-common{
+    color: #ff9307;
+}
+
+.background-color-common{
+    background: linear-gradient(0deg, rgba(255, 186, 33, 0.5) 0%, rgba(255, 186, 33, 1) 100%);
+}
