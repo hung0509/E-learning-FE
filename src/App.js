@@ -12,6 +12,7 @@ import Login from './module/login/login';
 import Articles from './module/aricles/articles';
 import Register from './module/register/register';
 import AdminLeftbar from './component/admin/leftbar/admin-leftbar';
+import Dashboard from './component/admin/dashboard/dashboard';
 
 
 function App() {
@@ -46,10 +47,11 @@ function App() {
                     <Route path="/about-us" element={<AboutUs/>}/>
                     <Route path="/sign-in" element={<Login/>}/>
                     <Route path="/register" element={<Register/>}/>
+                    <Route path="/admin" element={<Dashboard/>}/>
                 </Routes>
             </div>
           </div>
-          {!noHeaderFooter.includes(location.pathname) && <Footer/>}
+          <Footer/>
     </div>
   );
 }
