@@ -5,8 +5,8 @@ const Login = () => {
           <div class="container w-75">
             <div class="card border-light-subtle shadow-sm">
               <div class="row g-0">
-                <div class="col-12 col-md-6">
-                  <img class="img-fluid rounded-start w-100 h-100 object-fit-cover" loading="lazy" src="https://th.bing.com/th/id/OIP.9J1SZx9B27_fIEWOxCPiyAHaF7?w=1280&h=1024&rs=1&pid=ImgDetMain" alt="BootstrapBrain Logo"/>
+                <div class="col-12 col-md-6 bsb-tpl-bg-platinum">
+                  <img class="img-fluid rounded-start w-100 h-100 object-fit-contain" loading="lazy" src="https://bootstrapbrain.com/demo/components/registrations/registration-3/assets/img/bsb-logo.svg" alt="BootstrapBrain Logo"/>
                 </div>
                 <div class="col-12 col-md-6 background-color-common ">
                   <div class="card-body p-3 p-md-4 p-xl-5">

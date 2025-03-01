@@ -1,0 +1,16 @@
+.admin-left-bar{
+    height: 100vh;
+}
+
+.admin-left-bar .custom-logo{
+    color: #ff9307;
+    font-size: 30px;
+}
+
+.admin-left-bar .btn-custom{
+    background-color: #ff9307;
+}
+
+.admin-left-bar .btn-border-custom{
+    border-color: #ff9307;
+}

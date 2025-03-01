@@ -24,8 +24,8 @@ const Header = () => {
 
             {!isLogin ?
                 (<div class="col-md-3 text-end">
-                    <button type="button" class="btn me-2 btn-border-custom">Login</button>
-                    <button type="button" class="btn btn-custom">Sign-up</button>
+                    <a href='/sign-in' type="button" class="btn me-2 btn-border-custom">Login</a>
+                    <a href='/register'type="button" class="btn btn-custom">Sign-up</a>
                 </div>) :
                 (<div className="d-flex flex-shrink-0 dropdown">
                     <a className='btn px-3 cursor-pointer'>Khóa học của tôi</a>

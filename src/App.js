@@ -10,26 +10,33 @@ import Home from './module/home/home';
 import Courses from './module/courses/courses';
 import Login from './module/login/login';
 import Articles from './module/aricles/articles';
+import Register from './module/register/register';
+import AdminLeftbar from './component/admin/leftbar/admin-leftbar';
 
 
 function App() {
   const location = useLocation("");
   const noHeaderFooter = [
-      // "/sign-in",
-      "/register",
+      "/admin"
   ];
 
   const noLeftBar = [
     "/sign-in",
     "/register",
-];
+    "/admin"
+  ];
+
+  const adminLeftBar = [
+    "/admin",
+  ]
 
   return (
     <div className="App">
           {!noHeaderFooter.includes(location.pathname) && <Header/>}
           <div className='d-flex'>
             <div className='container-leftbar'>
-            {!noLeftBar.includes(location.pathname) &&<Leftbar />}
+            {!noLeftBar.includes(location.pathname) && <Leftbar />}
+            {adminLeftBar.includes(location.pathname) && <AdminLeftbar />}
             </div>
             <div className='container-content flex-grow-1 px-5'>
                 <Routes>
@@ -38,6 +45,7 @@ function App() {
                     <Route path="/article" element={<Articles/>}/>
                     <Route path="/about-us" element={<AboutUs/>}/>
                     <Route path="/sign-in" element={<Login/>}/>
+                    <Route path="/register" element={<Register/>}/>
                 </Routes>
             </div>
           </div>
