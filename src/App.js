@@ -13,33 +13,46 @@ import Articles from './module/aricles/articles';
 import Register from './module/register/register';
 import AdminLeftbar from './component/admin/leftbar/admin-leftbar';
 import Dashboard from './component/admin/dashboard/dashboard';
+import Learning from './module/learning/learning';
+import CourseDes from './module/course-des/course-des';
+import CourseAdmin from './component/admin/course-admin/course-admin';
 
 
 function App() {
   const location = useLocation("");
-  const noHeaderFooter = [
-      "/admin"
+  const noFooter = [
+      "/admin",
+       "/admin/course"
   ];
+
+  const noHeader = [
+    "/admin",
+    "/lesson",
+     "/admin/course"
+  ]
 
   const noLeftBar = [
     "/sign-in",
     "/register",
-    "/admin"
+    "/admin",
+    "/lesson",
+     "/admin/course"
   ];
 
   const adminLeftBar = [
     "/admin",
+    "/admin/course"
   ]
 
   return (
     <div className="App">
-          {!noHeaderFooter.includes(location.pathname) && <Header/>}
+          {!noHeader.includes(location.pathname) && <Header/>}
           <div className='d-flex'>
             <div className='container-leftbar'>
             {!noLeftBar.includes(location.pathname) && <Leftbar />}
             {adminLeftBar.includes(location.pathname) && <AdminLeftbar />}
             </div>
-            <div className='container-content flex-grow-1 px-5'>
+            <div className='container-content flex-grow-1'>
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/course" element={<Courses/>}/>
@@ -48,6 +61,10 @@ function App() {
                     <Route path="/sign-in" element={<Login/>}/>
                     <Route path="/register" element={<Register/>}/>
                     <Route path="/admin" element={<Dashboard/>}/>
+                    <Route path="/lesson" element={<Learning/>}/>
+                    <Route path="/course-des" element={<CourseDes/>}/>
+                    <Route path="/admin/course" element={<CourseAdmin/>}/>
+
                 </Routes>
             </div>
           </div>

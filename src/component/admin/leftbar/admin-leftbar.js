@@ -7,7 +7,7 @@ const AdminLeftbar = () => {
         <hr />
         <ul className="nav nav-pills flex-column mb-auto">
           <li className="nav-item">
-            <a href="#" className="nav-link background-color-common" aria-current="page">
+            <a href="#" className="nav-link " aria-current="page">
             <i className="bi bi-house-fill mx-2"></i>
                 Dashboard
             </a>

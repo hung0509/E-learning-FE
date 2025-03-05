@@ -3,7 +3,7 @@ import PolarAreaChart from '../../chart/pola-chart/pola-chart';
 import './dashboard.css';
 const Dashboard = () => {
 
-    return (<div>
+    return (<div className='px-5'>
         <div class="app-header d-flex align-items-center">
             <div class="d-flex py-2">
                 <a href="">Home</a>
@@ -55,14 +55,14 @@ const Dashboard = () => {
                 <LineChart />
             </div>
             <div class="col-sm-12 col-xl-3 align-content-center fs-5 ">
-                <p className='opacity-75 fw-bold background-color-common rounded p-5 shadow'>  The graph shows the number of views per month by user. 
+                <p className='opacity-75 fw-bold  rounded p-5 shadow'>  The graph shows the number of views per month by user. 
                 This data helps track changes in traffic over different months.</p>
             </div>
         </div>
 
         <div class="row d-flex justify-content-between my-3">
             <div class="col-sm-12 col-xl-8 align-content-center fs-5 rounded ">
-                <p className='opacity-75 fw-bold background-color-common p-5 shadow'>  The graph shows the number of views per month by user. 
+                <p className='opacity-75 fw-bold p-5 shadow'>  The graph shows the number of views per month by user. 
                 This data helps track changes in traffic over different months.</p>
             </div>
             <div class="col-sm-12 col-xl-4">

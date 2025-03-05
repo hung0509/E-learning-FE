@@ -13,7 +13,7 @@ const Header = () => {
     return (
         <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between p-3 border-bottom">
             <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-                <i class="custom-logo bi bi-alexa px-3">Orace</i>
+                <i class="custom-logo bi bi-alexa px-3"></i>
             </a>
 
             <div class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 w-50">
@@ -24,8 +24,8 @@ const Header = () => {
 
             {!isLogin ?
                 (<div class="col-md-3 text-end">
-                    <a href='/sign-in' type="button" class="btn me-2 btn-border-custom">Login</a>
-                    <a href='/register'type="button" class="btn btn-custom">Sign-up</a>
+                    <a  href='/sign-in' type="button" class="btn me-2">Đăng ký</a>
+                    <a style={{borderRadius: '18px'}} href='/register'type="button" class="btn btn-custom">Đăng nhập</a>
                 </div>) :
                 (<div className="d-flex flex-shrink-0 dropdown">
                     <a className='btn px-3 cursor-pointer'>Khóa học của tôi</a>
