@@ -1,0 +1,15 @@
+.user-admin .table{
+    width: 100%;
+}
+
+.user-admin .table td,.course-admin .table th, .course-admin .table tr {
+    border: none !important;
+    cursor: pointer;
+}
+
+.user-admin .table img{
+    width: 80px; 
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}

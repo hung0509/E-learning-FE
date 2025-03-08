@@ -1,0 +1,11 @@
+.course-admin .table td,.course-admin .table th{
+    border: none !important;
+    cursor: pointer;
+}
+
+.course-admin .table img{
+    width: 80px; 
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}

@@ -16,6 +16,7 @@ import Dashboard from './component/admin/dashboard/dashboard';
 import Learning from './module/learning/learning';
 import CourseDes from './module/course-des/course-des';
 import CourseAdmin from './component/admin/course-admin/course-admin';
+import User from './component/admin/user/user';
 
 
 function App() {
@@ -28,7 +29,8 @@ function App() {
   const noHeader = [
     "/admin",
     "/lesson",
-     "/admin/course"
+     "/admin/course",
+      "/admin/user"
   ]
 
   const noLeftBar = [
@@ -36,12 +38,14 @@ function App() {
     "/register",
     "/admin",
     "/lesson",
-     "/admin/course"
+     "/admin/course",
+      "/admin/user"
   ];
 
   const adminLeftBar = [
     "/admin",
-    "/admin/course"
+    "/admin/course",
+    "/admin/user"
   ]
 
   return (
@@ -64,7 +68,7 @@ function App() {
                     <Route path="/lesson" element={<Learning/>}/>
                     <Route path="/course-des" element={<CourseDes/>}/>
                     <Route path="/admin/course" element={<CourseAdmin/>}/>
-
+                    <Route path="/admin/user" element={<User/>}/>
                 </Routes>
             </div>
           </div>
