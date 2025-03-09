@@ -6,9 +6,9 @@ import Course from '../../component/course/course';
 const Courses = () => {
   return (
     <section className="courses wrapper border">
-      <div className="container w-100 text-center mt-1">
+      {/* <div className="container w-100 text-center mt-1">
          <img height="400px" className='w-100 rounded' src="https://www.motionworship.com/wp-content/uploads/ColorFlowWelcomeHD-768x432.jpg" alt="" />
-      </div>
+      </div> */}
       
       <div className="container px-5">
       <div class="row py-5">

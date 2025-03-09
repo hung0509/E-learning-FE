@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './user.css';
+import Pagination from '../../pagination/pagination';
 const data = [
     {
         userInfoId: 1,
@@ -28,13 +29,21 @@ const data = [
 ];
 
 const User = () => {
+    const totalPages = 5;
+    const itemsPerPage = 6;
+    const [currentPage, setCurrentPage] = useState(1);
     const [selectedRow, setSelectedRow] = useState(null);
 
     const handleRowClick = (id) => {
         setSelectedRow(selectedRow === id ? null : id);
     };
 
-    return (<div className='user-admin w-100'>
+    const onPageChange = (page) => {
+        setCurrentPage(page);
+    }
+
+
+    return (<div className='user-admin'>
         <div class="app-header d-flex align-items-center px-5">
             <div class="d-flex py-2">
                 <a href="">Home</a>
@@ -42,13 +51,13 @@ const User = () => {
                 <a href="">User</a>
             </div>
         </div>
-        <div className="col-sm-12 col-xl-10 py-3 w-100 mx-5">
+        <div className="col-sm-12 col-xl-10 py-3 mx-5">
             <div className='d-flex align-items-center'>
                 <label>Tìm kiếm: </label>
                 <input style={{width: '50%', padding: '6px 16px', fontSize: '14px'}} className='mx-3 rounded border' type="text" name="search-user" id="search-user" />
             </div>
 
-            <table className="table table-hover table-bordered w-100 my-3">
+            <table className="table table-hover table-bordered my-3">
                 <thead className="thead-dark">
                     <tr>
                         <th scope="col">#</th>
@@ -105,6 +114,11 @@ const User = () => {
                     ))}
                 </tbody>
             </table>
+            <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={onPageChange}
+            />
         </div>
     </div>);
 }

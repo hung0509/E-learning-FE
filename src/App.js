@@ -17,20 +17,26 @@ import Learning from './module/learning/learning';
 import CourseDes from './module/course-des/course-des';
 import CourseAdmin from './component/admin/course-admin/course-admin';
 import User from './component/admin/user/user';
+import ArticleAdmin from './component/admin/manage-article/article-admin';
+import Discount from './component/admin/discount/discount';
 
 
 function App() {
   const location = useLocation("");
   const noFooter = [
-      "/admin",
-       "/admin/course"
+    "/admin",
+    "/admin/course",
+    "/admin/article",
+    "/admin/user"
   ];
 
   const noHeader = [
     "/admin",
     "/lesson",
-     "/admin/course",
-      "/admin/user"
+    "/admin/course",
+    "/admin/user",
+    "/admin/article",
+    "/admin/discount"
   ]
 
   const noLeftBar = [
@@ -38,14 +44,18 @@ function App() {
     "/register",
     "/admin",
     "/lesson",
-     "/admin/course",
-      "/admin/user"
+    "/admin/course",
+    "/admin/user",
+    "/admin/article",
+    "/admin/discount"
   ];
 
   const adminLeftBar = [
     "/admin",
     "/admin/course",
-    "/admin/user"
+    "/admin/user",
+    "/admin/article",
+    "/admin/discount"
   ]
 
   return (
@@ -69,6 +79,8 @@ function App() {
                     <Route path="/course-des" element={<CourseDes/>}/>
                     <Route path="/admin/course" element={<CourseAdmin/>}/>
                     <Route path="/admin/user" element={<User/>}/>
+                    <Route path="/admin/article" element={<ArticleAdmin/>}/>
+                    <Route path="/admin/discount" element={<Discount/>}/>
                 </Routes>
             </div>
           </div>

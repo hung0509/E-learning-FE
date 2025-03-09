@@ -1,0 +1,11 @@
+.article-admin .table td,.article-admin .table th{
+    border: none !important;
+    cursor: pointer;
+}
+
+.article-admin .table img{
+    width: 80px; 
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
