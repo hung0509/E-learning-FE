@@ -8,9 +8,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const Home = () => {
     return (
         <div className='home-component px-5'>
-            <div className='w-100 '>
+            <div className='w-100 py-5' style={{paddingLeft: '8%', paddingRight: '8%'}}>
                 <Carousel />
             </div>
+
             <div className='home-introduce'>
                 <h2 className='color-common my-5'>Điểm nổi bật</h2>
                 <div className='row h-25'>

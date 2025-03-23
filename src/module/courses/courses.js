@@ -16,7 +16,7 @@ const Courses = () => {
             <h1 class="display-4 font-weight-bolder">Khóa học nổi bật</h1>
           </div>
         </div>
-        <div className="row ">
+        <div className="row px-5">
           <div className="col-sm-12 col-md-6 col-lg-3 mb-4 d-flex justify-content-center">
             <Course />
           </div>

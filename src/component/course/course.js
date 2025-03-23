@@ -3,21 +3,15 @@ import './course.css';
 const Course = () => {
     return (<div
         className="course card text-dark card-has-bg click-col"
-        style={{ backgroundImage: "url('https://source.unsplash.com/600x900/?computer,design')" }}
     >
-        <img
-            className="card-img d-none"
-            src="https://source.unsplash.com/600x900/?computer,design"
-            alt="Creative Manner Design Lorem Ipsum Sit Amet Consectetur dipisi?"
-        />
         <div className="card-img-overlay d-flex flex-column">
             <div className="card-body">
                 <small className="card-meta mb-2">Thought Leadership</small>
                 <h4 className="card-title mt-0">
-                    <a className="text-dark" href="https://creativemanner.com">
-                        Creative Manner Design Lorem Ipsum Sit Amet Consectetur dipisi?
+                    <a className="text-dark" href="">
+                        <img src="https://th.bing.com/th/id/OIP.4Z6gIWroOVvUsziZcJKL6QHaFj?rs=1&pid=ImgDetMain" alt="" />
                     </a>
-                </h4>
+                </h4>   
                 <small>
                     <i className="far fa-clock"></i> October 15, 2020
                 </small>
