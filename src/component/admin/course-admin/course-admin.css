@@ -9,3 +9,15 @@
     object-fit: cover;
     border-radius: 8px;
 }
+
+.course-admin .add-course{
+    float: right;
+    border: 1px solid #0c9edb;
+    color: #0c9edb;
+    margin-bottom: 12px;
+}
+
+.course-admin .add-course:hover{
+    background-color: #0c9edb;
+    color: #fff;
+}

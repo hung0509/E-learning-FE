@@ -3,7 +3,7 @@ import './header.css';
 
 
 const Header = () => {
-    const [isLogin, setLogin] = useState(true);
+    const [isLogin, setLogin] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const toggleDropdown = () => {
@@ -28,7 +28,7 @@ const Header = () => {
                     <a style={{borderRadius: '18px'}} href='/register'type="button" class="btn btn-custom">Đăng nhập</a>
                 </div>) :
                 (<div className="d-flex flex-shrink-0 dropdown">
-                    <a className='btn px-3 cursor-pointer'>Khóa học của tôi</a>
+                    {/* <a className='btn px-3 cursor-pointer'>Khóa học của tôi</a> */}
                     <a
                       href="#"
                       className={`d-block link-dark text-decoration-none dropdown-toggle ${isDropdownOpen ? 'show' : ''}`}
@@ -44,8 +44,6 @@ const Header = () => {
                       aria-labelledby="dropdownUser2"
                       style={isDropdownOpen ? { position: 'absolute', margin: '0px', transform: 'translate(30px, 32px)' } : {}}
                     >
-                      <li><a className="dropdown-item" href="#">New project...</a></li>
-                      <li><a className="dropdown-item" href="#">Settings</a></li>
                       <li><a className="dropdown-item" href="#">Profile</a></li>
                       <li><hr className="dropdown-divider" /></li>
                       <li><a className="dropdown-item" href="#">Sign out</a></li>

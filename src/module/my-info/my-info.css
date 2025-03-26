@@ -1,0 +1,12 @@
+.my-info .avatar-container{
+    border-radius: 50%;
+    width: 100%;
+    text-align: center;
+}
+
+.my-info .avatar-container img{
+    border-radius: 50%;
+    width: 50%;
+    object-fit: cover;
+    border: 1px solid #d6d0d0;
+}

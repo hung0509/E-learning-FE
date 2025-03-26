@@ -132,6 +132,8 @@ const CourseAdmin = () => {
                 </div>
             </div>
             <div className="col-sm-12 col-xl-10 py-3">
+                <div className='btn float-right add-course'> Thêm khóa học</div>
+
                 <table className="table table-hover table-bordered">
                     <thead className="thead-dark">
                         <tr>

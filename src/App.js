@@ -19,6 +19,8 @@ import CourseAdmin from './component/admin/course-admin/course-admin';
 import User from './component/admin/user/user';
 import ArticleAdmin from './component/admin/manage-article/article-admin';
 import Discount from './component/admin/discount/discount';
+import MyInfo from './module/my-info/my-info';
+import CourseAddition from './component/admin/course-addition/course-addition';
 
 
 function App() {
@@ -27,7 +29,8 @@ function App() {
     "/admin",
     "/admin/course",
     "/admin/article",
-    "/admin/user"
+    "/admin/user",
+    "/admin/course/add",
   ];
 
   const noHeader = [
@@ -36,7 +39,8 @@ function App() {
     "/admin/course",
     "/admin/user",
     "/admin/article",
-    "/admin/discount"
+    "/admin/discount",
+    "/admin/course/add",
   ]
 
   const noLeftBar = [
@@ -47,7 +51,8 @@ function App() {
     "/admin/course",
     "/admin/user",
     "/admin/article",
-    "/admin/discount"
+    "/admin/discount",
+    "/admin/course/add",
   ];
 
   const adminLeftBar = [
@@ -55,7 +60,7 @@ function App() {
     "/admin/course",
     "/admin/user",
     "/admin/article",
-    "/admin/discount"
+    "/admin/discount",
   ]
 
   return (
@@ -72,6 +77,7 @@ function App() {
                     <Route path="/course" element={<Courses/>}/>
                     <Route path="/article" element={<Articles/>}/>
                     <Route path="/about-us" element={<AboutUs/>}/>
+                    <Route path="/my-info" element={<MyInfo/>}/>
                     <Route path="/sign-in" element={<Login/>}/>
                     <Route path="/register" element={<Register/>}/>
                     <Route path="/admin" element={<Dashboard/>}/>
@@ -81,6 +87,7 @@ function App() {
                     <Route path="/admin/user" element={<User/>}/>
                     <Route path="/admin/article" element={<ArticleAdmin/>}/>
                     <Route path="/admin/discount" element={<Discount/>}/>
+                    <Route path="/admin/course/add" element={<CourseAddition/>}/>
                 </Routes>
             </div>
           </div>

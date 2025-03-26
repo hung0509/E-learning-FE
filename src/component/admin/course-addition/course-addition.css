@@ -1,0 +1,48 @@
+.step-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #d3d3d3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.step-circle.active {
+    background-color: #ff9307;
+}
+
+.step-label {
+    margin-left: 10px;
+    font-weight: 500;
+    color: #6c757d;
+    transition: all 0.3s ease;
+}
+
+.step-label.active {
+    color: #000;
+    font-weight: bold;
+}
+
+.step-line {
+    width: 50px;
+    height: 2px;
+    background-color: #d3d3d3;
+    margin: 0 10px;
+}
+
+.stepper-content .add-course{
+    border: 1px solid #0c9edb;
+    color: #0c9edb;
+    margin-bottom: 12px;
+}
+
+.stepper-content .add-course:hover{
+    background-color: #0c9edb;
+    color: #fff;
+}
