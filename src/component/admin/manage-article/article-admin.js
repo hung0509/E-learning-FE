@@ -101,8 +101,7 @@ const ArticleAdmin = () => {
                                     <td>{item.publishedDate}</td>
                                     <td>
                                             <div >
-                                                <button type="button" className='btn btn-primary mx-2'><i class="bi bi-pen fs-6"></i></button>
-                                                <button type="button" className='btn btn-danger'><i class="bi bi-trash3-fill fs-6"></i></button>
+                                                <button type="button" className='mx-2 border-0'><i class="bi bi-three-dots-vertical"></i></button>
                                             </div>
                                     </td>
                                 </tr>

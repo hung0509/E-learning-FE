@@ -21,6 +21,8 @@ import ArticleAdmin from './component/admin/manage-article/article-admin';
 import Discount from './component/admin/discount/discount';
 import MyInfo from './module/my-info/my-info';
 import CourseAddition from './component/admin/course-addition/course-addition';
+import EditCoursePage from './component/admin/course-edittion/course-edition';
+import PostEditor, { ToolbarPlugin } from './module/post-editor/post-editor';
 
 
 function App() {
@@ -65,10 +67,10 @@ function App() {
 
   return (
     <div className="App">
-          {!noHeader.includes(location.pathname) && <Header/>}
+         {!noHeader.some(path => location.pathname.startsWith(path)) && <Header />}
           <div className='d-flex'>
             <div className='container-leftbar'>
-            {!noLeftBar.includes(location.pathname) && <Leftbar />}
+            {!noLeftBar.some(path => location.pathname.startsWith(path)) && <Leftbar />}
             {adminLeftBar.includes(location.pathname) && <AdminLeftbar />}
             </div>
             <div className='container-content flex-grow-1'>
@@ -76,6 +78,7 @@ function App() {
                     <Route path="/" element={<Home/>}/>
                     <Route path="/course" element={<Courses/>}/>
                     <Route path="/article" element={<Articles/>}/>
+                    <Route path="/article/post" element={<ToolbarPlugin/>}/>
                     <Route path="/about-us" element={<AboutUs/>}/>
                     <Route path="/my-info" element={<MyInfo/>}/>
                     <Route path="/sign-in" element={<Login/>}/>
@@ -88,6 +91,7 @@ function App() {
                     <Route path="/admin/article" element={<ArticleAdmin/>}/>
                     <Route path="/admin/discount" element={<Discount/>}/>
                     <Route path="/admin/course/add" element={<CourseAddition/>}/>
+                    <Route path="/admin/course/:courseId" element={<EditCoursePage/>}/>
                 </Routes>
             </div>
           </div>

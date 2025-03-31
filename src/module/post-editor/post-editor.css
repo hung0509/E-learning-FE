@@ -1,0 +1,19 @@
+.editor-input {
+    min-height: 200px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .toolbar button {
+    padding: 5px 10px;
+    border: none;
+    background: #eee;
+    cursor: pointer;
+  }
+  

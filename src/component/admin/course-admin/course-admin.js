@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './course-admin.css';
+import EditCoursePage from '../course-edittion/course-edition';
 const category = [
     {
         id: 1,
@@ -51,10 +52,22 @@ const data = [
 
 const CourseAdmin = () => {
     const [selectedRow, setSelectedRow] = useState(null);
+    const [isEditModalOpen, setEditModalOpen] = useState(false);
+
+    const handleEditClick = (selectedRow) => {
+        setSelectedRow(selectedRow);
+        setEditModalOpen(true); // Mở modal
+    };
+
+    const closeModal = () => {
+        setEditModalOpen(false); // Đóng modal
+    };
 
     const handleRowClick = (id) => {
         setSelectedRow(selectedRow === id ? null : id);
     };
+
+
 
     return (
         <div className="course-admin row px-5">
@@ -189,7 +202,7 @@ const CourseAdmin = () => {
                                                 </div>
                                             </div>
                                             <div className='mx-4' style={{ float: 'inline-end' }}>
-                                                <button type="button" className='btn btn-primary mx-2'>Chỉnh sửa</button>
+                                                <button onClick={() => handleEditClick(item)} type="button" className='btn btn-primary mx-2'>Chỉnh sửa</button>
                                                 <button type="button" className='btn btn-danger mx-2'>Xóa</button>
                                             </div>
                                         </td>
@@ -199,6 +212,15 @@ const CourseAdmin = () => {
                         ))}
                     </tbody>
                 </table>
+
+                {isEditModalOpen && (
+                    <div className="modal-overlay">
+                        <div className="modal-content">
+                            <button className="close-btn btn btn-outline-danger" onClick={closeModal}>×</button>
+                            <EditCoursePage courseSelected={selectedRow} />
+                        </div>
+                    </div>
+                )}
             </div>
         </div>)
 }

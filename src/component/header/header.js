@@ -24,7 +24,7 @@ const Header = () => {
 
             {!isLogin ?
                 (<div class="col-md-3 text-end">
-                    <a  href='/sign-in' type="button" class="btn me-2">Đăng ký</a>
+                    <a  href='/sign-in' type="button" class="mx-3 link-dark text-decoration-none">Đăng ký</a>
                     <a style={{borderRadius: '18px'}} href='/register'type="button" class="btn btn-custom">Đăng nhập</a>
                 </div>) :
                 (<div className="d-flex flex-shrink-0 dropdown">
