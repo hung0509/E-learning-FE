@@ -23,6 +23,7 @@ import MyInfo from './module/my-info/my-info';
 import CourseAddition from './component/admin/course-addition/course-addition';
 import EditCoursePage from './component/admin/course-edittion/course-edition';
 import PostEditor, { ToolbarPlugin } from './module/post-editor/post-editor';
+import PageError from './module/404/404';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
     "/admin/article",
     "/admin/user",
     "/admin/course/add",
+    "/404"
   ];
 
   const noHeader = [
@@ -43,6 +45,7 @@ function App() {
     "/admin/article",
     "/admin/discount",
     "/admin/course/add",
+    "/404"
   ]
 
   const noLeftBar = [
@@ -55,6 +58,7 @@ function App() {
     "/admin/article",
     "/admin/discount",
     "/admin/course/add",
+    "/404"
   ];
 
   const adminLeftBar = [
@@ -92,6 +96,7 @@ function App() {
                     <Route path="/admin/discount" element={<Discount/>}/>
                     <Route path="/admin/course/add" element={<CourseAddition/>}/>
                     <Route path="/admin/course/:courseId" element={<EditCoursePage/>}/>
+                    <Route path="/404" element={<PageError/>}/>
                 </Routes>
             </div>
           </div>

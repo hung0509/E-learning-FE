@@ -1,0 +1,15 @@
+.editor input:focus{
+    box-shadow: none;
+    border-color: transparent;
+}
+
+
+.editor .container-class img {
+    max-width: 100%; /* Giới hạn chiều rộng tối đa */
+    height: auto;    /* Giữ nguyên tỷ lệ */
+    display: block;  /* Tránh khoảng trống thừa xung quanh ảnh */
+    margin: 0 auto;  /* Căn giữa ảnh */
+  }
+
+
+  

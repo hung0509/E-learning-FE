@@ -1,7 +1,14 @@
+import { useState } from "react";
 import Course from "../../component/course/course";
 import "./my-info.css";
 
 const MyInfo = () => {
+    const [tab, setTab] = useState(true);
+
+    const handleClickTab = () => {
+        setTab(!tab);
+    }
+
     return (
         <div className="my-info py-5">
             <div class="team-single">
@@ -27,7 +34,7 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Họ và tên</h6>
                                         </div>
-                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value='Kenneth Valdez' readOnly/>
+                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value='Kenneth Valdez' readOnly />
                                     </div>
                                 </div>
 
@@ -36,7 +43,7 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Email</h6>
                                         </div>
-                                        <input type='email' class="col-sm-9 text-secondary rounded border-0 px-2" value='hungtaithe12@gmail.com' readOnly/>
+                                        <input type='email' class="col-sm-9 text-secondary rounded border-0 px-2" value='hungtaithe12@gmail.com' readOnly />
                                     </div>
                                 </div>
 
@@ -45,7 +52,7 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Giới tính</h6>
                                         </div>
-                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value='Nam' readOnly/>
+                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value='Nam' readOnly />
                                     </div>
                                 </div>
 
@@ -54,7 +61,7 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Địa chỉ</h6>
                                         </div>
-                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value='Xã Krong Buk, huyện Krong Pawk, tỉnh Đăk Lăk' readOnly/>
+                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value='Xã Krong Buk, huyện Krong Pawk, tỉnh Đăk Lăk' readOnly />
                                     </div>
                                 </div>
 
@@ -63,13 +70,13 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Số điện thoại</h6>
                                         </div>
-                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value='0943285018' readOnly/>
+                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value='0943285018' readOnly />
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <a style={{float: 'right'}} class="btn btn-info text-white" href="">Edit</a>
+                                        <a style={{ float: 'right' }} class="btn btn-info text-white" href="">Edit</a>
                                     </div>
                                 </div>
                             </div>
@@ -77,10 +84,17 @@ const MyInfo = () => {
                     </div>
 
                     <div className="col-lg-8">
-                        <div className="d_flex border-bottom">
-                            <button className="btn"><i class="bi bi-book-fill px-2"></i>Khóa học đã đăng ký</button>
-                            <button className="btn"><i class="bi bi-book-fill px-2"></i>Bài viết đã đăng tải</button>
-                        </div>
+                        <ul class="nav nav-tabs border-bottom" >
+                            <li class="nav-item" onClick={handleClickTab}>
+                                <a style={{fontWeight: '600'}} 
+                                class={`nav-link ${tab === true ? 'active' : ''}`}
+                                 href="#"><i class="bi bi-book-fill px-2"></i>Khóa học đã đăng ký</a>
+                            </li>
+                            <li class="nav-item" onClick={handleClickTab}>
+                                <a style={{fontWeight: '600'}} class={`nav-link ${tab === false ? 'active' : ''}`} href="#"><i class="bi bi-book-fill px-2"></i>Bài viết đã đăng tải</a>
+                            </li>
+                        </ul>
+
                         <div className="row px-5 py-5">
                             <div className="col-sm-12 col-md-6 col-lg-5 mb-4 d-flex justify-content-center mx-4 px-4">
                                 <Course />
