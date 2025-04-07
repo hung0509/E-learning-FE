@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './course-admin.css';
 import EditCoursePage from '../course-edittion/course-edition';
+import Pagination from "../../pagination/pagination";
+
 const category = [
     {
         id: 1,
@@ -51,8 +53,14 @@ const data = [
 
 
 const CourseAdmin = () => {
+    const totalPages = 5;
     const [selectedRow, setSelectedRow] = useState(null);
     const [isEditModalOpen, setEditModalOpen] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const onPageChange = (page) => {
+        setCurrentPage(page);
+    }
 
     const handleEditClick = (selectedRow) => {
         setSelectedRow(selectedRow);
@@ -73,9 +81,9 @@ const CourseAdmin = () => {
         <div className="course-admin row px-5">
             <div class="app-header d-flex align-items-center">
                 <div class="d-flex py-2">
-                    <a href="">Home</a>
+                    <a href="/admin">Home</a>
                     <i class="bi bi-chevron-right fs-5 px-2"></i>
-                    <a href="">Course</a>
+                    <a href="/admin/course">Course</a>
                 </div>
             </div>
             <div className="col-sm-12 col-xl-2 px-2">
@@ -212,6 +220,12 @@ const CourseAdmin = () => {
                         ))}
                     </tbody>
                 </table>
+
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={onPageChange}
+                />
 
                 {isEditModalOpen && (
                     <div className="modal-overlay">

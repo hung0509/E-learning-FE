@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./editor.css";
-
-
+import ArticleDto from "../../dto/request/article-req";
+import { useArticle } from "../../hook/useArticle";
 
 export default function EditorApp() {
     const [htmlContent, setHtmlContent] = useState(null);
+    const [data, setData] = useState(new ArticleDto());
+    const {handleAddArticle} = useArticle();
 
     const modules = {
         toolbar: [
@@ -30,6 +32,38 @@ export default function EditorApp() {
         handleImageInsert(); // Kiểm tra lại ảnh khi render lại editor
     }, [htmlContent]);
 
+    const handleSubmit = async () => {
+        const formData = new FormData();
+    
+        formData.append('instructorId', 1); // Temporary instructorId
+        formData.append('content', htmlContent);
+        formData.append('title', data.title);
+        formData.append('image', data.image)
+
+        await handleAddArticle(formData);
+    }
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    
+    const handleFileChange = (e, fieldName) => {
+        const file = e.target.files[0];
+        console.log(file);
+        if (file) {
+            // Cập nhật vào data thay vì setFiles
+            setData((prevData) => ({
+                ...prevData,
+                [fieldName]: file, // Cập nhật file vào đúng trường trong data
+            }));
+        }
+    };
+
     return (
         <div className="editor p-6 max-w-2xl mx-auto row w-100" style={{ borderBottom: 'none', minHeight: '200px' }}>
             <div>
@@ -37,7 +71,12 @@ export default function EditorApp() {
                     <div class="col-sm-3">
                         <h6 class="mb-0">Article title</h6>
                     </div>
-                    <input type='text'
+                    <input 
+                        value={data.title}
+                        onChange={handleInputChange}
+                        name='title'
+                        id='title'
+                        type='text'
                         placeholder="Tiêu đề"
                         className="col-sm-9 rounded border-0 fs-4 p-2"
                     />
@@ -47,7 +86,12 @@ export default function EditorApp() {
                     <div class="col-sm-3">
                         <h6 class="mb-0">Article description</h6>
                     </div>
-                    <input type='text'
+                    <input 
+                        value={data.description}
+                        onChange={handleInputChange}
+                        name='description'
+                        id='description'
+                        type='text'
                         placeholder="Mô tả"
                         className="col-sm-9 rounded border-0 fs-4 p-2"
                     />
@@ -55,11 +99,13 @@ export default function EditorApp() {
 
                 <div className="row w-75 px-5 pt-4">
                     <div class="col-sm-3">
-                        <h6 class="mb-0">Course Image</h6>
+                        <h6 class="mb-0">Artcle Image</h6>
                     </div>
-                    <input type='file'
-                        name='avatar'
-                        id='avartar'
+                    <input 
+                        onChange={(e) => handleFileChange(e, 'image')}
+                        type='file'
+                        name='image'
+                        id='image'
                         class="col-sm-9 rounded text-secondary rounded p-2"
                     />
                 </div>
@@ -78,12 +124,12 @@ export default function EditorApp() {
             </div>
 
             <div className="col-12 col-lg-6 mt-6 rounded-lg mt-4 w-50 container-class"  >
-                <div style={{ height: "400px" }} className="border" dangerouslySetInnerHTML={{ __html: htmlContent }} />
+                <div style={{ height: "400px", overflow: 'scroll'}} className="border p-3" dangerouslySetInnerHTML={{ __html: htmlContent }} />
             </div>
 
             <div className="text-end">
                 <div className="btn btn-secondary mt-3">Bỏ qua</div>
-                <div style={{background: '#0d6efd', color: '#fff'}} className="btn btn-primary mt-3" >Hoàn thành</div>
+                <div onClick={handleSubmit} style={{background: '#0d6efd', color: '#fff'}} className="btn btn-primary mt-3" >Hoàn thành</div>
             </div>
         </div>
     );

@@ -2,33 +2,34 @@ import axios from "axios";
 
 // Tạo một instance của axios
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/elearning-serivce", // Thay thế bằng URL API của bạn
+  baseURL: "http://localhost:8080/elearning-service", // Thay thế bằng URL API của bạn
+  withCredentials: true
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  // Danh sách các endpoint không cần xác thực
-  const nonAuthEndpoints = [];
+  const nonAuthEndpoints = ["/auth", "/auth/logout", "/accounts"]; // Các endpoint không cần xác thực
+  const nonAuthMethods = ["post"]; // Các phương thức không cần xác thực (có thể mở rộng)
 
-  // Danh sách các phương thức không cần xác thực
-  const nonAuthMethods = ["POST"]; // GET không cần xác thực (có thể thêm các phương thức khác)
+  // Lấy đường dẫn của URL hiện tại
+  const url = new URL(config.url, config.baseURL);
+  const path = url.pathname; // Ví dụ: "/elearning-service/auth/login"
 
-  // Kiểm tra URL và phương thức
-  if (
-    nonAuthEndpoints.some((endpoint) => config.url.includes(endpoint)) &&
-    nonAuthMethods.includes(config.method.toLowerCase())
-  ) {
-    return config; // Nếu URL và phương thức không cần xác thực, bỏ qua thêm token
-  }
+  console.log(path);
+  console.log(path.startsWith("/elearning-service" + nonAuthEndpoints[0]));
 
-  // Ngược lại, thêm Authorization token
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers["Authorization"] = `Bearer ${token}`;
+  // Kiểm tra nếu đường dẫn bắt đầu bằng /auth và phương thức là POST
+  const isNonAuthRequest = nonAuthEndpoints.some(endpoint => path.startsWith("/elearning-service" + endpoint)) &&
+                           nonAuthMethods.includes(config.method.toLowerCase());
+
+  // Nếu không phải non-auth request, thêm Authorization token
+  if (!isNonAuthRequest) {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
   }
 
   return config;
 });
 
 export default axiosInstance;
-
-  

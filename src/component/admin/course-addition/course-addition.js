@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./course-addition.css";
+import CourseDto from "../../../dto/request/course-req";
+import { useCourse } from "../../../hook/useCourse";
 
 const category = [
     {
@@ -20,19 +22,32 @@ const category = [
     }
 ]
 
+const steps = [
+    { number: 1, label: "Basic Information" },
+    { number: 2, label: "Courses Media" },
+    { number: 3, label: "Curriculum" },
+    { number: 4, label: "Complete" }
+];
+
 const CourseAddition = () => {
     const [currentStep, setCurrentStep] = useState(1);
-    const [avatar, setAvatar] = useState();
     const [lessons, setLessons] = useState([]);
+    const [data, setData] = useState(new CourseDto());
+    const { handleAddSourse } = useCourse();
 
     useEffect(() => {
         return () => {
-            avatar && URL.revokeObjectURL(avatar.preview);
+            data.avatar && URL.revokeObjectURL(data.avatar);
         }
-    }, [avatar]);
+    }, [data.avatar]);
 
     const addLesson = () => {
-        setLessons([...lessons, { name: "", description: "", file: null }]);
+        const newLesson = { lessonName: "", description: "", urlLesson: null };
+        setLessons([...lessons, newLesson]);
+        setData(prevData => ({
+            ...prevData,
+            lessons: [...prevData.lessons, newLesson]  // Cập nhật vào data
+        }));
     };
 
     const updateLesson = (index, field, value) => {
@@ -40,30 +55,95 @@ const CourseAddition = () => {
             i === index ? { ...lesson, [field]: value } : lesson
         );
         setLessons(updatedLessons);
+
+        setData(prevData => ({
+            ...prevData,
+            lessons: updatedLessons  // Cập nhật lessons trong data
+        }));
     };
 
     const removeLesson = (index) => {
-        setLessons(lessons.filter((_, i) => i !== index));
+        const updatedLessons = lessons.filter((_, i) => i !== index);
+        setLessons(updatedLessons);
+
+        setData(prevData => ({
+            ...prevData,
+            lessons: updatedLessons  // Cập nhật lại lessons trong data
+        }));
     };
 
-    const handlePreviewAvatar = (e) => {
+    const handleFileChange = (e, fieldName) => {
         const file = e.target.files[0];
+        if (file) {
+            file.preview = URL.createObjectURL(file);
 
-        file.preview = URL.createObjectURL(file);
-
-        setAvatar(file);
-    }
+            // Cập nhật vào data thay vì setFiles
+            setData((prevData) => ({
+                ...prevData,
+                [fieldName]: file, // Cập nhật file vào đúng trường trong data
+            }));
+        }
+    };
 
     const navigateStep = (step) => {
         setCurrentStep(step);
     };
 
-    const steps = [
-        { number: 1, label: "Basic Information" },
-        { number: 2, label: "Courses Media" },
-        { number: 3, label: "Curriculum" },
-        { number: 4, label: "Complete" }
-    ];
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleCreateCourse = async () => {
+        const formData = new FormData();
+    
+        formData.append('instructorId', 1); // Temporary instructorId
+        formData.append('quantity', 10);
+        formData.append('categoryId', data.categoryId);
+        formData.append('courseName', data.courseName);
+        formData.append('description', data.description);
+    
+        // Append file (input type="file")
+        formData.append('avatar', data.avatar);   
+        formData.append('trailer', data.trailer); 
+    
+        formData.append('priceEntered', data.priceEntered);
+        formData.append('certificateName', data.certificateName);
+        formData.append('level', data.level);
+    
+        const lessonPromises = lessons.map((lesson, index) => {
+            return new Promise((resolve, reject) => {
+                const videoElement = document.createElement('video');
+                videoElement.src = URL.createObjectURL(lesson.urlLesson);
+                videoElement.onloadedmetadata = () => {
+                    URL.revokeObjectURL(videoElement.src); // Free memory
+    
+                    const duration = Math.floor(videoElement.duration); // Duration in seconds
+    
+                    formData.append(`lessons[${index}].lessonName`, lesson.lessonName);
+                    formData.append(`lessons[${index}].description`, lesson.description);
+                    formData.append(`lessons[${index}].urlLesson`, lesson.urlLesson); // File
+                    formData.append(`lessons[${index}].lessonTime`, duration); // Duration in seconds
+    
+                    resolve(); // Resolve after metadata is loaded and appended
+                };
+                videoElement.onerror = reject; 
+            });
+        });
+    
+        try {
+            await Promise.all(lessonPromises);
+            console.log(formData);
+
+            await handleAddSourse(formData);
+        } catch (error) {
+            console.error("Error loading video metadata:", error);
+        }
+    };
+    
 
     return (
         <div className="container mt-5">
@@ -90,22 +170,30 @@ const CourseAddition = () => {
                 {currentStep === 1 && (
                     <div className="w-50 m-auto">
                         <h2>Basic Infomation</h2>
-                        <div class="card p-3">
+                        <div className="card p-3">
                             <div className="card-body border-bottom">
                                 <div className="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Course Title</h6>
+                                    <div className="col-sm-3">
+                                        <h6 className="mb-0">Course Title</h6>
                                     </div>
-                                    <input type='text' class="col-sm-9 text-secondary rounded border p-2" />
+                                    <input
+                                        value={data.courseName}
+                                        onChange={handleInputChange}
+                                        name='courseName'
+                                        id='courseName'
+                                        type='text'
+                                        className="col-sm-9 text-secondary rounded border p-2"
+                                        required
+                                    />
                                 </div>
                             </div>
 
                             <div className="card-body border-bottom">
                                 <div className="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Course Category</h6>
+                                    <div className="col-sm-3">
+                                        <h6 className="mb-0">Course Category</h6>
                                     </div>
-                                    <select id="category" name="category" className="w-50 col-sm-9 text-secondary rounded border p-2">
+                                    <select value={data.categoryId} onChange={handleInputChange} id="categoryId" name="categoryId" className="w-50 col-sm-9 text-secondary rounded border p-2">
                                         {category.map((item) => (<option className='px-2' key={item.id} value={item.id}>{item.category_name}</option>))}
                                     </select>
                                 </div>
@@ -113,41 +201,62 @@ const CourseAddition = () => {
 
                             <div className="card-body border-bottom">
                                 <div className="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Course Level</h6>
+                                    <div className="col-sm-3">
+                                        <h6 className="mb-0">Course Level</h6>
                                     </div>
-                                    <select id="level" name="level" className="w-50 col-sm-9 text-secondary rounded border p-2">
-                                        <option className='px-2' value="0">Beginner</option>
-                                        <option className='px-2' value="1">Intermediate</option>
-                                        <option className='px-2' value="2">Expert</option>
+                                    <select value={data.level} onChange={handleInputChange} id="level" name="level" className="w-50 col-sm-9 text-secondary rounded border p-2">
+                                        <option className='px-2' value="BEGINNER">Beginner</option>
+                                        <option className='px-2' value="INTERMEDIATE">Intermediate</option>
+                                        <option className='px-2' value="EXPERT">Expert</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div className="card-body border-bottom">
                                 <div className="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Course Description</h6>
+                                    <div className="col-sm-3">
+                                        <h6 className="mb-0">Course Description</h6>
                                     </div>
-                                    <input type='text' class="col-sm-9 text-secondary rounded border p-2" />
+                                    <input
+                                        value={data.description}
+                                        onChange={handleInputChange}
+                                        name="description"
+                                        id="description"
+                                        type='text'
+                                        className="col-sm-9 text-secondary rounded border p-2"
+                                    />
                                 </div>
                             </div>
 
                             <div className="card-body border-bottom">
                                 <div className="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Course Price</h6>
+                                    <div className="col-sm-3">
+                                        <h6 className="mb-0">Course Price</h6>
                                     </div>
-                                    <input type='number' name='price' class="col-sm-9 text-secondary rounded border p-2" />
+                                    <input
+                                        value={data.priceEntered}
+                                        onChange={handleInputChange}
+                                        type='number'
+                                        name='priceEntered'
+                                        id='priceEntered'
+                                        className="col-sm-9 text-secondary rounded border p-2"
+                                    />
                                 </div>
                             </div>
 
                             <div className="card-body border-bottom">
                                 <div className="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Course Certificate</h6>
+                                    <div className="col-sm-3">
+                                        <h6 className="mb-0">Course Certificate</h6>
                                     </div>
-                                    <input type='text' name='certificate' class="col-sm-9 text-secondary rounded border p-2" />
+                                    <input
+                                        value={data.certificateName}
+                                        onChange={handleInputChange}
+                                        type='text'
+                                        name='certificateName'
+                                        id='certificateName'
+                                        className="col-sm-9 text-secondary rounded border p-2"
+                                    />
                                 </div>
                             </div>
 
@@ -159,32 +268,33 @@ const CourseAddition = () => {
                 {currentStep === 2 && (
                     <div className="w-50 m-auto">
                         <h2>Courses Media</h2>
-                        <div class="card p-3">
+                        <div className="card p-3">
                             <div className="card-body border-bottom">
                                 <div className="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Course Image</h6>
+                                    <div className="col-sm-3">
+                                        <h6 className="mb-0">Course Image</h6>
                                     </div>
                                     <input type='file'
                                         name='avatar'
                                         id='avartar'
-                                        class="col-sm-9 text-secondary rounded border p-2"
-                                        onChange={handlePreviewAvatar}
+                                        className="col-sm-9 text-secondary rounded border p-2"
+                                        onChange={(e) => handleFileChange(e, 'avatar')}
                                     />
-                                    {avatar && (<img src={avatar.preview} alt="" />)}
+                                    {data.avatar && (<img src={data.avatar.preview} alt="" />)}
                                 </div>
                             </div>
 
                             <div className="card-body border-bottom">
                                 <div className="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Course Trailer</h6>
+                                    <div className="col-sm-3">
+                                        <h6 className="mb-0">Course Trailer</h6>
                                     </div>
                                     <input
                                         type='file'
                                         name='trailer'
                                         id='trailer'
-                                        class="col-sm-9 text-secondary rounded border p-2"
+                                        className="col-sm-9 text-secondary rounded border p-2"
+                                        onChange={(e) => handleFileChange(e, 'trailer')}
                                     />
                                 </div>
                             </div>
@@ -205,7 +315,7 @@ const CourseAddition = () => {
                         </div>
 
                         {/* Dialog */}
-                        <div class="card p-3">
+                        <div className="card p-3">
 
                             {lessons.map((lesson, index) => (
                                 <div key={index} className="p-3 rounded d-flex border-bottom justify-content-between">
@@ -213,8 +323,9 @@ const CourseAddition = () => {
                                     <input
                                         type="text"
                                         className="border p-1 w-full"
-                                        value={lesson.name}
-                                        onChange={(e) => updateLesson(index, "name", e.target.value)}
+                                        value={lesson.lessonName}
+                                        name='lessonName'
+                                        onChange={(e) => updateLesson(index, "lessonName", e.target.value)}
                                     />
 
                                     <label className="block mt-2">Mô tả</label>
@@ -222,6 +333,7 @@ const CourseAddition = () => {
                                         type='text'
                                         className="border p-1 w-full"
                                         value={lesson.description}
+                                        name='description'
                                         onChange={(e) => updateLesson(index, "description", e.target.value)}
                                     />
 
@@ -229,7 +341,8 @@ const CourseAddition = () => {
                                     <input
                                         type="file"
                                         className="border p-1 w-full"
-                                        onChange={(e) => updateLesson(index, "file", e.target.files[0])}
+                                        name='urlLesson'
+                                        onChange={(e) => updateLesson(index, "urlLesson", e.target.files[0])}
                                     />
 
                                     <button className="btn" onClick={() => removeLesson(index)}>
@@ -253,10 +366,10 @@ const CourseAddition = () => {
                         <h2>🎉 Hoàn tất!</h2>
 
                         <p className="d-inline mx-5">Bạn đã sẵn sàng để tạo một khóa học mới chưa?</p>
-                       
+
                         <div>
                             <button className="btn btn-secondary mt-3" onClick={() => navigateStep(3)}>Previous</button>
-                            <button className="btn btn-primary mt-3">Tạo khóa học</button>
+                            <button onClick={handleCreateCourse} className="btn btn-primary mt-3">Tạo khóa học</button>
                         </div>
                     </div>
                 )}

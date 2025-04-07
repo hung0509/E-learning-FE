@@ -1,5 +1,30 @@
+import { useState } from "react";
+import AccountDto from "../../dto/request/account-req";
+import { useAccount } from "../../hook/useAccount";
 
 const Register = () => {
+    const [data, setData] = useState(new AccountDto());
+    const { register } = useAccount();
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+    
+        setData((prevData) => {
+          return new AccountDto(
+            name === 'username' ? value : prevData.username,
+            name === 'password' ? value : prevData.password,
+            name === 'firstName' ? value: prevData.firstName,
+            name === 'lastName' ? value: prevData.lastName,
+            name === 'email' ? value: prevData.email,
+            name === 'phone' ? value: prevData.phone,
+          );
+        });
+    };
+
+    const handleClickSignup = async () => {
+        await register(data);
+    }
+
     return (
         <section class="p-3 p-md-4 p-xl-5">
             <div class="container">
@@ -25,27 +50,81 @@ const Register = () => {
                                 <div class="row gy-3 gy-md-4 overflow-hidden">
                                     <div class="col-12">
                                         <label for="username" class="form-label">User Name <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="username" id="username" placeholder="User Name" required />
+                                        <input 
+                                            value={data.username}
+                                            onChange={handleChange}
+                                            type="text" 
+                                            class="form-control" 
+                                            name="username" 
+                                            id="username" 
+                                            placeholder="User Name" 
+                                            required 
+                                        />
                                     </div>
                                     <div class="col-12">
                                         <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                                        <input type="password" class="form-control" name="password" id="password" value="" placeholder="Password" required />
+                                        <input 
+                                            value = {data.password}
+                                            onChange={handleChange}
+                                            type="password" 
+                                            class="form-control" 
+                                            name="password" 
+                                            id="password" 
+                                            placeholder="Password" 
+                                            required 
+                                        />
                                     </div>
                                     <div class="col-12">
                                         <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="firstName" id="firstName" placeholder="First Name" required />
+                                        <input
+                                            value={data.firstName}
+                                            onChange={handleChange}
+                                            type="text" 
+                                            class="form-control" 
+                                            name="firstName" 
+                                            id="firstName" 
+                                            placeholder="First Name" 
+                                            required 
+                                        />
                                     </div>
                                     <div class="col-12">
                                         <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Last Name" required />
+                                        <input 
+                                            value={data.lastName}
+                                            onChange={handleChange}
+                                            type="text" 
+                                            class="form-control" 
+                                            name="lastName" 
+                                            id="lastName" 
+                                            placeholder="Last Name" 
+                                            required 
+                                        />
                                     </div>
                                     <div class="col-12">
                                         <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                                        <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required />
+                                        <input 
+                                            value={data.email}
+                                            onChange={handleChange}
+                                            type="email" 
+                                            class="form-control" 
+                                            name="email" 
+                                            id="email"
+                                            placeholder="name@example.com" 
+                                            required 
+                                        />
                                     </div>
                                     <div class="col-12">
                                         <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone" required />
+                                        <input 
+                                            value={data.phone}
+                                            onChange={handleChange}
+                                            type="text" 
+                                            class="form-control" 
+                                            name="phone" 
+                                            id="phone" 
+                                            placeholder="Phone" 
+                                            required 
+                                        />
                                     </div>
                                     <div class="col-12">
                                         <div class="form-check">
@@ -57,14 +136,14 @@ const Register = () => {
                                     </div>
                                     <div class="col-12">
                                         <div class="d-grid">
-                                            <button class="btn bsb-btn-xl btn-primary" type="submit">Sign up</button>
+                                            <button onClick={handleClickSignup} class="btn bsb-btn-xl btn-primary" type="submit">Sign up</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                             <div class="row">
                                 <div class="col-12">
-                                    <p class="m-0 text-secondary text-end">Already have an account? <a href="#!" class="link-primary text-decoration-none">Sign in</a></p>
+                                    <p class="m-0 text-secondary text-end">Already have an account? <a href="/sign-in" class="link-primary text-decoration-none">Sign in</a></p>
                                 </div>
                             </div>
                         </div>

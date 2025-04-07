@@ -24,6 +24,7 @@ import CourseAddition from './component/admin/course-addition/course-addition';
 import EditCoursePage from './component/admin/course-edittion/course-edition';
 import PostEditor, { ToolbarPlugin } from './module/post-editor/post-editor';
 import PageError from './module/404/404';
+import { ToastContainer } from 'react-toastify';
 
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
 
   return (
     <div className="App">
+        <ToastContainer />
          {!noHeader.some(path => location.pathname.startsWith(path)) && <Header />}
           <div className='d-flex'>
             <div className='container-leftbar'>
@@ -101,6 +103,7 @@ function App() {
             </div>
           </div>
           <Footer/>
+         
     </div>
   );
 }

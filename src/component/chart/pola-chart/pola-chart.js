@@ -2,16 +2,21 @@ import React from 'react';
 import { PolarArea } from 'react-chartjs-2';
 import 'chart.js/auto';  // Import the Chart.js library
 
-const PolarAreaChart = () => {
+const PolarAreaChart = ({ result }) => {
   const data = {
-    labels: ['Very Active', 'Inactive'],
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
     datasets: [
       {
         label: 'My First Dataset',
-        data: [11, 16, 7, 3, 14],
+        data: {result},
         backgroundColor: [
           'rgb(255, 99, 132)',
           'rgb(75, 192, 192)',
+          'rgb(27, 50, 50)',
+          'rgb(27, 27, 50)',
+          'rgb(94, 23, 23)',
+          'rgb(215, 113, 57)',
+          'rgb(20, 231, 41)',
         ],
         borderColor: [
           'rgba(128, 130, 132, 0.75)',
