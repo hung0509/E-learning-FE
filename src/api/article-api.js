@@ -15,5 +15,33 @@ export const ArticleApi = {
                 message: err.response?.data?.message || "Lỗi không xác định",
             };
         }
+    },
+
+    getArtileById: async (param) => {
+        try{
+            const res = await axiosInstance.get(`${API_URL}${API_ENDPOINTS.ARTICLE}/user${param}`);
+
+            return res.data;
+        }catch(err){
+            console.error("API Error:", err.response?.data?.message || err.message);
+            return {
+                code: CODE.FAIL,
+                message: err.response?.data?.message || "Lỗi không xác định",
+            };
+        }
+    },
+
+    getAllArticle: async (param) => {
+        try{
+            const res = await axiosInstance.get(`${API_URL}${API_ENDPOINTS.ARTICLE}${param}`);
+
+            return res.data;
+        }catch(err){
+            console.error("API Error:", err.response?.data?.message || err.message);
+            return {
+                code: CODE.FAIL,
+                message: err.response?.data?.message || "Lỗi không xác định",
+            };
+        }
     }
 }

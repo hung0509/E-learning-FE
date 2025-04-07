@@ -1,6 +1,27 @@
+import { useEffect, useState } from 'react';
 import Article from '../../component/article/article';
+import { useArticle } from '../../hook/useArticle';
+import ArticleDto from '../../dto/request/article-req';
 
 const Articles = () => {
+      const [data, setData] = useState([]);
+      const { handleGetAllArticle } = useArticle();
+
+      useEffect(() => {
+          const fetchData = async () => {
+            try{
+                 const result = await handleGetAllArticle("");
+                 const articles = result.map((item) =>  ArticleDto.fromArticleResponse(item))
+                
+                 setData(articles);
+            }catch(err){
+                  console.error("Error fetching articles:", err);
+            }
+          }
+
+          fetchData();
+      }, []);
+
     return (<div className="container">
         <div class="row">
           <div class="col">
@@ -8,31 +29,15 @@ const Articles = () => {
           </div>
         </div>
         <div className="row px-5">
-          <div class="col-md-3 mt-4">
-                <Article />
-          </div>
-          <div class="col-md-3 mt-4">
-                <Article />
-          </div>
-          <div class="col-md-3 mt-4">
-                <Article />
-          </div>
-          <div class="col-md-3 mt-4">
-                <Article />
-          </div>
-          <div class="col-md-3 mt-4">
-                <Article />
-          </div>
-          <div class="col-md-3 mt-4">
-                <Article />
-          </div>
-          <div class="col-md-3 mt-4">
-                <Article />
-          </div>
-          <div class="col-md-3 mt-4">
-                <Article />
-          </div>
+
+            {data.map((item) => (
+                  <div class="col-md-3 mt-4">
+                        <Article data={item.id}/>
+                  </div>
+            ))}
+
         </div>
-      </div>);
+      </div>
+      );
 }
 export default Articles;

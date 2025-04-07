@@ -22,9 +22,10 @@ import Discount from './component/admin/discount/discount';
 import MyInfo from './module/my-info/my-info';
 import CourseAddition from './component/admin/course-addition/course-addition';
 import EditCoursePage from './component/admin/course-edittion/course-edition';
-import PostEditor, { ToolbarPlugin } from './module/post-editor/post-editor';
+import { ToolbarPlugin } from './module/post-editor/post-editor';
 import PageError from './module/404/404';
 import { ToastContainer } from 'react-toastify';
+import ArticleDetail from './module/article-detail/article-detail';
 
 
 function App() {
@@ -98,6 +99,7 @@ function App() {
                     <Route path="/admin/discount" element={<Discount/>}/>
                     <Route path="/admin/course/add" element={<CourseAddition/>}/>
                     <Route path="/admin/course/:courseId" element={<EditCoursePage/>}/>
+                    <Route path="/article-detail/:articleId" element={<ArticleDetail />}/>
                     <Route path="/404" element={<PageError/>}/>
                 </Routes>
             </div>

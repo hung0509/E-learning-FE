@@ -5,7 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 import { useContext } from "react";
 
 export const useAuth = () => {
-  const { setUserId, setIsLogin } = useContext(AuthContext);
+  const { setUserId } = useContext(AuthContext);
 
   const handleLogin = async (credentials) => {
     try {

@@ -18,5 +18,35 @@ export const useArticle = () => {
         }
     }
 
-    return { handleAddArticle };
+    const handleGetAllArticle = async (param) => {
+        try{
+            const data = await ArticleService.getAllArticle(param);
+
+            if(data.code === 0){
+                return data.result;
+            }else {
+                console.error(data.message);
+            }
+        }catch(err){
+            showError(err.message);
+            throw err;
+        }
+    }
+
+    const handleGetArticleById = async (param) => {
+        try{
+            const data = await ArticleService.getArticleById(param);
+
+            if(data.code === 0){
+                return data.result;
+            }else {
+                console.error(data.message);
+            }
+        }catch(err){
+            showError(err.message);
+            throw err;
+        }
+    }
+
+    return { handleAddArticle, handleGetAllArticle, handleGetArticleById };
 }

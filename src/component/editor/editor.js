@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./editor.css";
@@ -34,9 +34,11 @@ export default function EditorApp() {
 
     const handleSubmit = async () => {
         const formData = new FormData();
-    
+
+        htmlContent.replaceAll(/<img(.*?)>/g, '<img$1 />')
         formData.append('instructorId', 1); // Temporary instructorId
         formData.append('content', htmlContent);
+        formData.append('description', data.description);
         formData.append('title', data.title);
         formData.append('image', data.image)
 

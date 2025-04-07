@@ -6,5 +6,5 @@ export const API_ENDPOINTS = {
   REGISTER: '/accounts',
   DASHBOARD : '/dashboards',
   COURSE: '/courses',
-  ARTICLE: '/articles'
+  ARTICLE: '/articles',
 };

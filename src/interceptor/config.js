@@ -7,22 +7,24 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const nonAuthEndpoints = ["/auth", "/auth/logout", "/accounts"]; // Các endpoint không cần xác thực
-  const nonAuthMethods = ["post"]; // Các phương thức không cần xác thực (có thể mở rộng)
+  const nonAuthEndpointsPost = ["/auth", "/auth/logout", "/accounts"]; // Các endpoint không cần xác thực
+  const nonAuthEndpointsGet = ["/articles/**", "/courses/**"];
 
   // Lấy đường dẫn của URL hiện tại
   const url = new URL(config.url, config.baseURL);
   const path = url.pathname; // Ví dụ: "/elearning-service/auth/login"
 
   console.log(path);
-  console.log(path.startsWith("/elearning-service" + nonAuthEndpoints[0]));
 
   // Kiểm tra nếu đường dẫn bắt đầu bằng /auth và phương thức là POST
-  const isNonAuthRequest = nonAuthEndpoints.some(endpoint => path.startsWith("/elearning-service" + endpoint)) &&
-                           nonAuthMethods.includes(config.method.toLowerCase());
+  const isNonAuthRequest = nonAuthEndpointsPost.some(endpoint => path.startsWith("/elearning-service" + endpoint)) &&
+                           "post".includes(config.method.toLowerCase());
 
-  // Nếu không phải non-auth request, thêm Authorization token
-  if (!isNonAuthRequest) {
+  const isNonAuthRequestGet = nonAuthEndpointsGet.some(endpoint => 
+    path.startsWith("/elearning-service" + endpoint) // Kiểm tra đường dẫn bắt đầu với /elearning-service
+  );
+
+  if (!isNonAuthRequest && !isNonAuthRequestGet) {
     const token = localStorage.getItem("token");
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
