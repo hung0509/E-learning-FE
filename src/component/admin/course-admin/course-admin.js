@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './course-admin.css';
 import EditCoursePage from '../course-edittion/course-edition';
 import Pagination from "../../pagination/pagination";
+import { useCourse } from '../../../hook/useCourse';
+import CourseHeaderDto from '../../../dto/course-header-dto';
+import BaseRequestDto from '../../../dto/base-request-dto';
+import CourseRequest from '../../../dto/request/course-request';
+import { useCategory } from '../../../hook/useCategory';
+import CategoryDto from '../../../dto/category-dto';
 
 const category = [
     {
@@ -22,41 +28,34 @@ const category = [
     }
 ]
 
-const data = [
-    {
-        "id": 1,
-        "avatar": "https://th.bing.com/th/id/OIP.hn8_Yb7--UaVl6bfh9Wc-AHaDh?rs=1&pid=ImgDetMain",
-        "name": "ReactJS for Beginners",
-        "price": 80,
-        "quantity": 25,
-        "instructorName": "John Doe",
-        "status": "Đã hoàn thành",
-        "certificateName": "ReactJS Beginner Certificate",
-        "discountCode": "REACT10",
-        "level": "Người mới",
-        "courseDuration": 300
-    },
-    {
-        "id": 2,
-        "avatar": "https://th.bing.com/th/id/OIP.lwp_9tyZoywvzRmE5HPVKgHaEC?w=626&h=342&rs=1&pid=ImgDetMain",
-        "name": "Advanced Node.js",
-        "price": 120,
-        "quantity": 30,
-        "instructorName": "Jane Smith",
-        "status": "Chưa hoàn thành",
-        "certificateName": "Node.js Pro Certificate",
-        "discountCode": "NODE20",
-        "level": "Chuyên gia",
-        "courseDuration": 400
-    }
-]
-
-
 const CourseAdmin = () => {
-    const totalPages = 5;
     const [selectedRow, setSelectedRow] = useState(null);
     const [isEditModalOpen, setEditModalOpen] = useState(false);
+    const [data, setData] = useState([]);
+    const [page, setPage] = useState(new BaseRequestDto());
     const [currentPage, setCurrentPage] = useState(1);
+    const [param, setParam] = useState(new CourseRequest('0', "", "ALL", "ALL"));
+    const [categories, setCategories] = useState([]);
+    const { handleGetCourse } = useCourse();
+    const { handleCategory } = useCategory();
+
+
+    useEffect(() => {
+        const fetchData  = async () => {
+            const results = await handleGetCourse(`?page=${currentPage-1}&pageSize=1&${param.toQueryParams()}`);
+            const resultCategory = await handleCategory();
+
+            const courses = results.result.map((item) => CourseHeaderDto.fromCourseHeaderResponse(item));
+            const categories = resultCategory.map((item) => CategoryDto.fromJson(item))
+            const page = BaseRequestDto.fromBaseRequestResponse(results);
+
+            setCategories(categories);
+            setData(courses);
+            setPage(page);
+        }
+
+        fetchData();
+    }, [currentPage, param])
 
     const onPageChange = (page) => {
         setCurrentPage(page);
@@ -75,7 +74,20 @@ const CourseAdmin = () => {
         setSelectedRow(selectedRow === id ? null : id);
     };
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
 
+        console.log(value);
+    
+        setParam((prevData) => {
+          return new CourseRequest(
+            name === 'categoryId' ? value : prevData.categoryId,
+            name === 'courseName' ? value : prevData.courseName,
+            name === 'courseStatus' ? value : prevData.courseStatus,
+            name === 'level' ? value : prevData.level
+          );
+        });
+      };
 
     return (
         <div className="course-admin row px-5">
@@ -92,32 +104,41 @@ const CourseAdmin = () => {
                         <p style={{ fontSize: '12px' }} className="fw-bold">Tìm theo tên</p>
                         <span><i class="bi bi-search"></i></span>
                     </div>
-                    <input style={{ fontSize: '12px' }} type="text" name="name-course" id="name-course" className="border-0 border-bottom p-1" />
+                    <input 
+                        value={param.courseName}
+                        onChange={handleChange}
+                        style={{ fontSize: '12px' }} 
+                        type="text" 
+                        name="courseName"
+                        id="courseName" 
+                        className="border-0 border-bottom p-1" 
+                     />
                 </div>
 
                 <div className="card p-3 my-3">
                     <p style={{ fontSize: '12px' }} className="fw-bold">Tìm theo thể loại:</p>
-                    <select id="category" name="category" style={{ fontSize: '12px' }} className="fw-normal rounded px-2">
-                        {category.map((item) => (<option className='px-2' style={{ fontSize: '12px' }} key={item.id} value={item.id}>{item.category_name}</option>))}
+                    <select style={{ fontSize: '12px' }} name="categoryId" id="categoryId" className="fw-normal rounded px-2" onChange={handleChange}>
+                        <option className='px-2' style={{ fontSize: '12px' }}    value="0"  selected>Tất cả</option>
+                        {categories.map((item) => (<option className='px-2' style={{ fontSize: '12px' }}  key={item.id} value={item.id}>{item.categoryName}</option>))}
                     </select>
                 </div>
 
                 <div className="card p-3 my-3">
                     <p style={{ fontSize: '12px' }} className="fw-bold">Trạng thái:</p>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="ALL" name="flexRadioStat" />
+                        <input class="form-check-input" type="radio" value="ALL" name="courseStatus" onChange={handleChange} checked={param.courseStatus === 'ALL'}/>
                         <label class="form-check-label" for="flexCheckDefault" style={{ fontSize: '12px' }}>
                             Tất cả
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="COM" name="flexRadioStat" />
+                        <input class="form-check-input" type="radio" value="COM" name="courseStatus"   onChange={handleChange} checked={param.courseStatus === 'COM'}/>
                         <label class="form-check-label" for="flexCheckDefault" style={{ fontSize: '12px' }}>
                             Đã hoàn thành
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="UNC" name="flexRadioStat" />
+                        <input class="form-check-input" type="radio" value="UNC" name="courseStatus"   onChange={handleChange} checked={param.courseStatus === 'UNC'}/>
                         <label class="form-check-label" for="flexCheckChecked" style={{ fontSize: '12px' }}>
                             Chưa hoàn thành
                         </label>
@@ -127,25 +148,25 @@ const CourseAdmin = () => {
                 <div className="card p-3 my-3" style={{ fontSize: '12px' }}>
                     <p className="fw-bold">Trình độ:</p>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                        <input class="form-check-input" type="radio" value="ALL" id="flexCheckDefault" name="level"  onChange={handleChange} checked={param.level === 'ALL'}/>
                         <label class="form-check-label" for="flexCheckDefault">
                             All Level
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
+                        <input class="form-check-input" type="radio" value="BEGINNER" id="flexCheckChecked" name="level" onChange={handleChange} checked={param.level === 'BEGINNER'}/>
                         <label class="form-check-label" for="flexCheckChecked">
                             Beginner
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
+                        <input class="form-check-input" type="radio" value="INTERMEDIATE" id="flexCheckChecked" name="level"  onChange={handleChange} checked={param.level === 'INTERMEDIATE'}/>
                         <label class="form-check-label" for="flexCheckChecked">
                             Intermediate
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
+                        <input class="form-check-input" type="radio" value="EXPERT" id="flexCheckChecked" name="level"  onChange={handleChange} checked={param.level === 'EXPERT'}/>
                         <label class="form-check-label" for="flexCheckChecked">
                             Expert
                         </label>
@@ -166,13 +187,13 @@ const CourseAdmin = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((item) => (
+                        {data.map((item, index) => (
                             <React.Fragment key={item.id} >
                                 <tr onClick={() => handleRowClick(item.id)} className="clickable-row" style={{ fontSize: '14px' }}>
-                                    <td>{item.id}</td>
+                                    <td>{index + 1}</td>
                                     <td><img src={item.avatar} alt="hình ảnh" /></td>
-                                    <td>{item.name}</td>
-                                    <td>{item.price}</td>
+                                    <td>{item.courseName}</td>
+                                    <td>{item.priceEntered}</td>
                                     <td>{item.quantity}</td>
                                 </tr>
                                 {selectedRow === item.id && (
@@ -182,22 +203,22 @@ const CourseAdmin = () => {
                                                 <div style={{ fontSize: '12px' }} className="col-sm-12 col-xl-6 p-3">
                                                     <div className='d-flex justify-content-between'>
                                                         <p style={{ fontSize: '14px' }} className="fw-bold">Người hướng dẫn: </p>
-                                                        <div>{item.instructorName}</div>
+                                                        <div>{item.fullName}</div>
                                                     </div>
                                                     <div className='d-flex justify-content-between'>
                                                         <p style={{ fontSize: '14px' }} className="fw-bold">Trạng thái: </p>
-                                                        <div>{item.status}</div>
+                                                        <div>{item.courseStatus}</div>
                                                     </div>
                                                     <div className='d-flex justify-content-between'>
                                                         <p style={{ fontSize: '14px' }} className="fw-bold">Chứng chỉ: </p>
-                                                        <div>{item.certificateName}</div>
+                                                        <div>{item.certificate.certificateName}</div>
                                                     </div>
                                                 </div>
 
                                                 <div className="col-sm-12 col-xl-6 p-3" style={{ fontSize: '12px' }}>
                                                     <div className='d-flex justify-content-between'>
                                                         <p style={{ fontSize: '14px' }} className="fw-bold">Mã giảm giá: </p>
-                                                        <div>{item.discountCode}</div>
+                                                        <div>{item?.discount?.discountCode || "Không có"}</div>
                                                     </div>
                                                     <div className='d-flex justify-content-between'>
                                                         <p style={{ fontSize: '14px' }} className="fw-bold">Trình độ: </p>
@@ -223,7 +244,7 @@ const CourseAdmin = () => {
 
                 <Pagination
                     currentPage={currentPage}
-                    totalPages={totalPages}
+                    totalPages={page.totalPage}
                     onPageChange={onPageChange}
                 />
 

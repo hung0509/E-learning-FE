@@ -4,15 +4,15 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState(() => {
-    const savedUserId = sessionStorage.getItem('userId');
+    const savedUserId = localStorage.getItem('userId');
     return savedUserId ? JSON.parse(savedUserId) : null;
   });
 
   useEffect(() => {
     if (userId) {
-        sessionStorage.setItem('userId', JSON.stringify(userId));
+      localStorage.setItem('userId', JSON.stringify(userId));
     } else {
-        sessionStorage.removeItem('userId');
+      localStorage.removeItem('userId');
     }
 }, [userId]);
 

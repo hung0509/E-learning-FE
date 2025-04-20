@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import LineChart from '../../chart/line-chart/line-chart';
 import PolarAreaChart from '../../chart/pola-chart/pola-chart';
 import './dashboard.css';
-import DashBoardDto from '../../../dto/request/dashboard-req';
+
 import { useDashBoard } from '../../../hook/useDashBoard';
+import DashBoardDto from '../../../dto/dashboard-dto';
 const Dashboard = () => {
     const [data, setData] = useState(new DashBoardDto());
     const { handleAnalytic } = useDashBoard()

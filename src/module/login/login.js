@@ -1,6 +1,7 @@
 import { useState } from "react";
-import AuthDto from "../../dto/request/auth-req";
+
 import { useAuth } from "../../hook/useAuth";
+import AuthDto from "../../dto/auth-req";
 
 const Login = () => {
   const [ data, setData ] = useState(new AuthDto('', ''));

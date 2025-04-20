@@ -1,25 +1,59 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Course from "../../component/course/course";
 import "./my-info.css";
+import UserInfoDto from "../../dto/user-info-dto";
+import { useUserInfo } from "../../hook/useUserInfo";
+import Article from "../../component/article/article";
+import { useNavigate } from "react-router-dom";
 
 const MyInfo = () => {
     const [tab, setTab] = useState(true);
+    const [data, setData] = useState(new UserInfoDto());
+    const { handleMyInfo } = useUserInfo();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const results = await handleMyInfo();
+
+            const info = UserInfoDto.fromUserInfoResponse(results);
+            setData(info);
+        }
+
+        fetchData();
+    }, []);
 
     const handleClickTab = () => {
         setTab(!tab);
     }
 
+    function formatJoinDate(dateStr) {
+        const date = new Date(dateStr);
+
+        const month = date.getMonth() + 1; // getMonth trả về từ 0–11
+        const year = date.getFullYear();
+
+        return `Đã tham gia từ tháng ${month} năm ${year}`;
+    }
+
+    const handleClickCourse = (id) => {
+        navigate(`/course-des/${id}`);
+    }
+
+    const handleClickArticle = (id) => {
+        navigate(`/article-detail/${id}`);
+    }
     return (
         <div className="my-info py-5">
             <div class="team-single">
                 <div class="row">
                     <div class="col-lg-4 col-md-4 xs-margin-30px-bottom">
                         <div class="team-single-img avatar-container">
-                            <img className="p-3" src="https://pluspng.com/img-png/user-png-icon-user-2-icon-png-file-512x512-pixel-512.png" alt="" />
+                            <img className="p-3" src={data.avatar || "https://pluspng.com/img-png/user-png-icon-user-2-icon-png-file-512x512-pixel-512.png"} alt="" />
                         </div>
                         <div class="bg-light-gray padding-30px-all md-padding-25px-all sm-padding-20px-all text-center">
-                            <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">Lê Xuân Hùng</h4>
-                            <p class="sm-width-95 sm-margin-auto text-secondary">Đã tham gia từ tháng 5 năm 2025</p>
+                            <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">{data.firstName + " " + data.lastName}</h4>
+                            <p class="sm-width-95 sm-margin-auto text-secondary">{formatJoinDate(data.createdAt)}</p>
                             <div class="margin-20px-top team-single-icons d-flex justify-content-center">
                                 <div><a href=""><i class="bi bi-google p-2"></i></a></div>
                                 <div><a href=""><i class="bi bi-facebook p-2"></i></a></div>
@@ -34,7 +68,7 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Họ và tên</h6>
                                         </div>
-                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value='Kenneth Valdez' readOnly />
+                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value={data.firstName + " " + data.lastName} readOnly />
                                     </div>
                                 </div>
 
@@ -43,7 +77,7 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Email</h6>
                                         </div>
-                                        <input type='email' class="col-sm-9 text-secondary rounded border-0 px-2" value='hungtaithe12@gmail.com' readOnly />
+                                        <input type='email' class="col-sm-9 text-secondary rounded border-0 px-2" value={data.email} readOnly />
                                     </div>
                                 </div>
 
@@ -52,7 +86,7 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Giới tính</h6>
                                         </div>
-                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value='Nam' readOnly />
+                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value={data.gender} readOnly />
                                     </div>
                                 </div>
 
@@ -61,7 +95,7 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Địa chỉ</h6>
                                         </div>
-                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value='Xã Krong Buk, huyện Krong Pawk, tỉnh Đăk Lăk' readOnly />
+                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value={data.addess} readOnly />
                                     </div>
                                 </div>
 
@@ -70,7 +104,7 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Số điện thoại</h6>
                                         </div>
-                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value='0943285018' readOnly />
+                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value={data.phone} readOnly />
                                     </div>
                                 </div>
 
@@ -86,28 +120,28 @@ const MyInfo = () => {
                     <div className="col-lg-8">
                         <ul class="nav nav-tabs border-bottom" >
                             <li class="nav-item" onClick={handleClickTab}>
-                                <a style={{fontWeight: '600'}} 
-                                class={`nav-link ${tab === true ? 'active' : ''}`}
-                                 href="#"><i class="bi bi-book-fill px-2"></i>Khóa học đã đăng ký</a>
+                                <a style={{ fontWeight: '600' }}
+                                    class={`nav-link ${tab === true ? 'active' : ''}`}
+                                    href="#"><i class="bi bi-book-fill px-2"></i>Khóa học đã đăng ký</a>
                             </li>
                             <li class="nav-item" onClick={handleClickTab}>
-                                <a style={{fontWeight: '600'}} class={`nav-link ${tab === false ? 'active' : ''}`} href="#"><i class="bi bi-book-fill px-2"></i>Bài viết đã đăng tải</a>
+                                <a style={{ fontWeight: '600' }} class={`nav-link ${tab === false ? 'active' : ''}`} href="#"><i class="bi bi-book-fill px-2"></i>Bài viết đã đăng tải</a>
                             </li>
                         </ul>
 
                         <div className="row px-5 py-5">
-                            <div className="col-sm-12 col-md-6 col-lg-5 mb-4 d-flex justify-content-center mx-4 px-4">
-                                <Course />
-                            </div>
-                            <div className="col-sm-12 col-md-6 col-lg-5 mb-4 d-flex justify-content-center mx-4 px-4">
-                                <Course />
-                            </div>
-                            <div className="col-sm-12 col-md-6 col-lg-5 mb-4 d-flex justify-content-center mx-4 px-4">
-                                <Course />
-                            </div>
-                            <div className="col-sm-12 col-md-6 col-lg-5 mb-4 d-flex justify-content-center mx-4 px-4">
-                                <Course />
-                            </div>
+                            {tab === true ?
+                                data.courses.map((item) => (
+                                    <div className="col-sm-12 col-md-6 col-lg-6 mb-4 d-flex justify-content-center" onClick={() => handleClickCourse(item.id)}>
+                                        <Course data={item} />
+                                    </div>
+                                )) :
+                                data.articles.map((item1) => (
+                                    <div class="w-75 m-auto mt-4" onClick={() => handleClickArticle(item1.id)}>
+                                        <Article data={item1} />
+                                    </div>
+                                ))
+                            }
                         </div>
 
                     </div>

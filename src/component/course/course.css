@@ -72,6 +72,11 @@
     text-transform: uppercase;
     font-weight: 500;
     letter-spacing: 2px;
+    padding: 0 14px;
+  }
+
+  .course .d-flex.justify-content-between.info{
+    padding: 0 14px;
   }
   
  .course .card-body {
@@ -88,4 +93,8 @@
  .course .card-img-overlay {
     transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
     /* background: linear-gradient(0deg,rgba(255, 186, 33, 1)  0%, rgba(255, 186, 33, 0.3785889355742297) 100%); */
+  }
+
+  .card-img-overlay.d-flex.flex-column {
+    padding: 0;
   }

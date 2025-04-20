@@ -2,10 +2,10 @@ import { API_ENDPOINTS, API_URL } from "../constant"
 import { CODE } from "../constant/code";
 import axiosInstance from "../interceptor/config"
 
-export const AccountApi = {
-    register: async (credential) => {
+export const UserInfoApi = {
+    myInfo : async () => {
         try {
-            const res = await axiosInstance.post(`${API_URL}${API_ENDPOINTS.REGISTER}`, credential);
+            const res = await axiosInstance.get(`${API_URL}${API_ENDPOINTS.MY_INFO}`);
 
             return res.data;
         } catch (err) {
@@ -17,9 +17,9 @@ export const AccountApi = {
         }
     },
 
-    registerCourse: async (credential) => {
+    getAll: async (credential) => {
         try {
-            const res = await axiosInstance.post(`${API_URL}${API_ENDPOINTS.REGISTER_COURSE}`, credential);
+            const res = await axiosInstance.get(`${API_URL}${API_ENDPOINTS.USERS}${credential}`);
 
             return res.data;
         } catch (err) {

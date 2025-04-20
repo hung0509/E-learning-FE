@@ -6,5 +6,10 @@ export const API_ENDPOINTS = {
   REGISTER: '/accounts',
   DASHBOARD : '/dashboards',
   COURSE: '/courses',
+  COURSE_DETAIL: '/courses/detail',
   ARTICLE: '/articles',
+  REGISTER_COURSE: '/users/register/course',
+  MY_INFO: '/users',
+  CATEGORY: '/categories',
+  USERS: '/users/all',
 };

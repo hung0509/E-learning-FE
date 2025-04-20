@@ -1,38 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './user.css';
 import Pagination from '../../pagination/pagination';
-const data = [
-    {
-        userInfoId: 1,
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john.doe@example.com',
-        gender: 'Female',
-        address: '456 Maple Ave, Othertown, USA',
-        phone: '0987654321',
-        balance: 2000.00,
-        avatar: 'https://i.pinimg.com/736x/c6/e5/65/c6e56503cfdd87da299f72dc416023d4.jpg',
-        dateOfBirth: '1980-01-01'
-    },
-    {
-        userInfoId: 2,
-        firstName: 'Jane',
-        lastName: 'Smith',
-        gender: 'Female',
-        email: 'jane.smith@example.com',
-        address: '456 Maple Ave, Othertown, USA',
-        phone: '0987654321',
-        balance: 2000.00,
-        avatar: 'https://i.pinimg.com/736x/c6/e5/65/c6e56503cfdd87da299f72dc416023d4.jpg',
-        dateOfBirth: '1980-01-01',
-    }
-];
+import BaseRequestDto from '../../../dto/base-request-dto';
+import { useUserInfo } from '../../../hook/useUserInfo';
+import UserInfoDto from '../../../dto/user-info-dto';
 
 const User = () => {
-    const totalPages = 5;
-    const itemsPerPage = 6;
+    const [data, setData] = useState([]);
+    const [page, setPage] = useState(new BaseRequestDto());
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedRow, setSelectedRow] = useState(null);
+    const { handleGetAll } = useUserInfo();
+
+    useEffect(() => {
+        const fetchData  = async () => {
+            const results = await handleGetAll(`?page=${currentPage-1}&pageSize=1`);
+
+            const users = results.result.map((item) => UserInfoDto.fromUserInfoResponse(item));
+            const page = BaseRequestDto.fromBaseRequestResponse(results);
+
+            setData(users);
+            setPage(page);
+        }
+
+        fetchData();
+    }, [currentPage])
 
     const handleRowClick = (id) => {
         setSelectedRow(selectedRow === id ? null : id);
@@ -52,10 +44,10 @@ const User = () => {
             </div>
         </div>
         <div className="col-sm-12 col-xl-10 py-3 mx-5">
-            <div className='d-flex align-items-center'>
+            {/* <div className='d-flex align-items-center'>
                 <label>Tìm kiếm: </label>
                 <input style={{width: '50%', padding: '6px 16px', fontSize: '14px'}} className='mx-3 rounded border' type="text" name="search-user" id="search-user" />
-            </div>
+            </div> */}
 
             <table className="table table-hover table-bordered my-3">
                 <thead className="thead-dark">
@@ -68,11 +60,11 @@ const User = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item) => (
+                    {data.map((item, index) => (
                         <React.Fragment key={item.id} >
                             <tr onClick={() => handleRowClick(item.userInfoId)} className="clickable-row" style={{ fontSize: '14px' }}>
-                                <td>{item.userInfoId}</td>
-                                <td><img src={item.avatar} alt="hình ảnh" /></td>
+                                <td>{index}</td>
+                                <td><img src={item.avatar || "https://static.vecteezy.com/system/resources/previews/009/734/564/original/default-avatar-profile-icon-of-social-media-user-vector.jpg"} alt="hình ảnh" /></td>
                                 <td>{item.firstName}</td>
                                 <td>{item.lastName}</td>
                                 <td>{item.dateOfBirth}</td>
@@ -88,18 +80,18 @@ const User = () => {
                                                 </div>
                                                 <div className='d-flex justify-content-between'>
                                                     <p style={{ fontSize: '14px' }} className="fw-bold">Số điện thoại: </p>
-                                                    <div>{item.phone}</div>
+                                                    <div>{item.phone || "Chưa có thông tin"}</div>
                                                 </div>
                                                 <div className='d-flex justify-content-between'>
                                                     <p style={{ fontSize: '14px' }} className="fw-bold">Địa chỉ: </p>
-                                                    <div>{item.address}</div>
+                                                    <div>{item.address || "Chưa có thông tin"}</div>
                                                 </div>
                                             </div>
 
                                             <div className="col-sm-12 col-xl-6 p-3" style={{ fontSize: '12px' }}>
                                                 <div className='d-flex justify-content-between'>
                                                     <p style={{ fontSize: '14px' }} className="fw-bold">Giới tính: </p>
-                                                    <div>{item.gender}</div>
+                                                    <div>{item.gender || "Chưa có thông tin"}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -116,7 +108,7 @@ const User = () => {
             </table>
             <Pagination
                     currentPage={currentPage}
-                    totalPages={totalPages}
+                    totalPages={page.totalPage}
                     onPageChange={onPageChange}
             />
         </div>

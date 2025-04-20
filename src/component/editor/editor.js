@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./editor.css";
-import ArticleDto from "../../dto/request/article-req";
+import ArticleDto from "../../dto/article-dto";
 import { useArticle } from "../../hook/useArticle";
 
 export default function EditorApp() {
@@ -30,6 +30,7 @@ export default function EditorApp() {
 
     useEffect(() => {
         handleImageInsert(); // Kiểm tra lại ảnh khi render lại editor
+        console.log(htmlContent);
     }, [htmlContent]);
 
     const handleSubmit = async () => {
@@ -80,7 +81,7 @@ export default function EditorApp() {
                         id='title'
                         type='text'
                         placeholder="Tiêu đề"
-                        className="col-sm-9 rounded border-0 fs-4 p-2"
+                        className="col-sm-9 rounded border-0 fs-6 p-2"
                     />
                 </div>
 
@@ -95,7 +96,7 @@ export default function EditorApp() {
                         id='description'
                         type='text'
                         placeholder="Mô tả"
-                        className="col-sm-9 rounded border-0 fs-4 p-2"
+                        className="col-sm-9 rounded border-0 fs-6 p-2"
                     />
                 </div>
 

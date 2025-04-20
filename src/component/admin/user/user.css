@@ -2,10 +2,11 @@
     width: 100%;
 }
 
-.user-admin .table td,.course-admin .table th, .course-admin .table tr {
+.user-admin .table td,.user-admin .table th {
     border: none !important;
     cursor: pointer;
 }
+
 
 .user-admin .table img{
     width: 80px; 

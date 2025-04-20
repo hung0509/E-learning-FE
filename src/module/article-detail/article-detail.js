@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react";
 import { useArticle } from "../../hook/useArticle";
-import ArticleDto from "../../dto/request/article-req";
 
-const ArticleDetail = ({ArticleSelected}) => {
-    const [data, setData] = useState();
+import { useParams } from "react-router-dom";
+import dayjs from 'dayjs';
+import "./article-detail.css";
+import ArticleDto from "../../dto/article-dto";
+
+const ArticleDetail = () => {
+    const { articleId } = useParams();
+    const [data, setData] = useState(new ArticleDto());
     const { handleGetArticleById } = useArticle();
 
     useEffect(() => {
         const fetchData = async () => {
             try{
-                const result = await handleGetArticleById("?id=" + ArticleSelected);
-                const article = ArticleDto.fromArticleUserResponse(result);
+                const result = await handleGetArticleById("?id=" + articleId);
+                const article = ArticleDto.fromArticleUserResponse(result[0]);
 
                 setData(article);
             }catch(err){
@@ -18,17 +23,40 @@ const ArticleDetail = ({ArticleSelected}) => {
             }
         }
 
-        fetchData();
+        fetchData();  
     }, []);
 
-    const getMonthDifference = (date1, date2) => {
-        const year1 = date1.getFullYear();
-        const year2 = date2.getFullYear();
-        const month1 = date1.getMonth();
-        const month2 = date2.getMonth();
+    const compareDates = (fromDateStr, toDateStr) => {
+        const fromDate = dayjs(fromDateStr);
+        const toDate = dayjs(toDateStr);
+      
+        // Đảo ngược nếu fromDate > toDate
+        let start = fromDate;
+        let end = toDate;
+        if (fromDate.isAfter(toDate)) {
+          start = toDate;
+          end = fromDate;
+        }
+      
+        let years = end.diff(start, 'year');
+        start = start.add(years, 'year');
+      
+        let months = end.diff(start, 'month');
+        start = start.add(months, 'month');
+      
+        let days = end.diff(start, 'day');
+      
+        let result = [];
+      
+        if (years > 0) result.push(`${years} năm`);
+        if (months > 0) result.push(`${months} tháng`);
+        if (days > 0) result.push(`${days} ngày`);
+      
+        if (result.length === 0) return '0 ngày trước';
+      
+        return result.join(' ');
+      }
     
-        return (year1 - year2) * 12 + (month1 - month2);
-    }
 
     return (
         <div className="article-detail container w-50 m-auto my-5">
@@ -36,7 +64,7 @@ const ArticleDetail = ({ArticleSelected}) => {
 
             <div className="d-flex my-5">
                 <img 
-                    src= {data.image === null 
+                    src= {data.avatar === null 
                     ? 'https://th.bing.com/th/id/OIP.vg41yG82qw84ziz5nS-CWQHaHa?rs=1&pid=ImgDetMain' 
                     : data.image}
                     style={{borderRadius: '50%', width: '50px', height: '50px'}} 
@@ -44,15 +72,15 @@ const ArticleDetail = ({ArticleSelected}) => {
 
                 <div className="mx-3">
                     <div className="fw-bold" style={{fontSize: '15px'}}>{data.fullName}</div>
-                    <span className="text-secondary">{getMonthDifference(new Date(), data.publishedDate)} tháng trước</span>
+                    <span className="text-secondary">{compareDates(new Date(), data.publishedDate)}</span>
                 </div>
             </div>
 
-            <div className="content-article">
-                {data.content}
+            <div className="content-article w-100">
+                <div className="article-content" dangerouslySetInnerHTML={{ __html: data.content }}></div>
             </div>
 
-            {/* <div>
+            {/* <div>   
                 <h5 className="my-4">Bài đăng cùng tác giả</h5>
                 <ul>
                     <li className="my-3"><a className="text-decoration-none text-dark" href="#">Mình đã làm thế nào để hoàn thành một dự án website chỉ trong 15 ngày</a></li>

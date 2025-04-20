@@ -1,14 +1,12 @@
-
-const Article = () => {
+const Article = ({data}) => {
     return (
-    <div class="btn card profile-card-5 cursor-pointer">
-        <div class="card-img-block">
-           <img class="card-img-top" src="https://images.unsplash.com/photo-1517832207067-4db24a2ae47c" alt="Card image cap"/>
+    <div class="btn card profile-card-5 cursor-pointer d-flex flex-diration-row flex-row" style={{alignItems: 'center', minHeight: '220px'}}>
+        <div class="card-body">
+           <h5 class="card-title mt-3 fs-4">{data.title}</h5>
+           <p class="card-text">{data.description}</p>
         </div>
-        <div class="card-body pt-0">
-           <h5 class="card-title mt-3">Florence Pink</h5>
-           <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-              the card's content.</p>
+        <div class="card-img-block">
+           <img style={{height: '200px', width:'180px'}} class="card-img" src={data.image} alt="Card image cap"/>
         </div>
      </div>
    );

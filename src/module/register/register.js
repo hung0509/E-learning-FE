@@ -1,6 +1,7 @@
 import { useState } from "react";
-import AccountDto from "../../dto/request/account-req";
+
 import { useAccount } from "../../hook/useAccount";
+import AccountDto from "../../dto/account-dto";
 
 const Register = () => {
     const [data, setData] = useState(new AccountDto());

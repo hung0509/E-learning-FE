@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./course-addition.css";
-import CourseDto from "../../../dto/request/course-req";
+
 import { useCourse } from "../../../hook/useCourse";
+import CourseDto from "../../../dto/course-dto";
 
 const category = [
     {
@@ -99,6 +100,7 @@ const CourseAddition = () => {
 
     const handleCreateCourse = async () => {
         const formData = new FormData();
+        let courseDuaration = 0;
     
         formData.append('instructorId', 1); // Temporary instructorId
         formData.append('quantity', 10);
@@ -127,12 +129,14 @@ const CourseAddition = () => {
                     formData.append(`lessons[${index}].description`, lesson.description);
                     formData.append(`lessons[${index}].urlLesson`, lesson.urlLesson); // File
                     formData.append(`lessons[${index}].lessonTime`, duration); // Duration in seconds
-    
+                    courseDuaration = courseDuaration + duration;
                     resolve(); // Resolve after metadata is loaded and appended
                 };
                 videoElement.onerror = reject; 
             });
         });
+
+        formData.append('courseDuration', courseDuaration);
     
         try {
             await Promise.all(lessonPromises);

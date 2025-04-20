@@ -1,43 +1,49 @@
 import { useEffect, useState } from 'react';
 import Article from '../../component/article/article';
 import { useArticle } from '../../hook/useArticle';
-import ArticleDto from '../../dto/request/article-req';
+
+import { useNavigate } from 'react-router-dom';
+import ArticleDto from '../../dto/article-dto';
 
 const Articles = () => {
-      const [data, setData] = useState([]);
-      const { handleGetAllArticle } = useArticle();
+  const [data, setData] = useState([]);
+  const { handleGetAllArticle } = useArticle();
+  const navigate = useNavigate();
 
-      useEffect(() => {
-          const fetchData = async () => {
-            try{
-                 const result = await handleGetAllArticle("");
-                 const articles = result.map((item) =>  ArticleDto.fromArticleResponse(item))
-                
-                 setData(articles);
-            }catch(err){
-                  console.error("Error fetching articles:", err);
-            }
-          }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await handleGetAllArticle("");
+        const articles = result.map((item) => ArticleDto.fromArticleResponse(item))
 
-          fetchData();
-      }, []);
+        setData(articles);
+      } catch (err) {
+        console.error("Error fetching articles:", err);
+      }
+    }
 
-    return (<div className="container">
-        <div class="row">
-          <div class="col">
-            <h1 class="display-4 font-weight-bolder">Bài viết nổi bật</h1>
-          </div>
-        </div>
-        <div className="row px-5">
+    fetchData();
+  }, []);
 
-            {data.map((item) => (
-                  <div class="col-md-3 mt-4">
-                        <Article data={item.id}/>
-                  </div>
-            ))}
+  const handleClickArticle = (id) => {
+    navigate(`/article-detail/${id}`);
+  }
 
-        </div>
+  return (<div className="container">
+    <div class="row">
+      <div class="col">
+        <div class="display-4 fs-4 fw-bold">Bài viết nổi bật</div>
       </div>
-      );
+    </div>
+    <div className="row px-5">
+      {data.map((item) => (
+        <div class="col-md-6 mt-4" onClick={() => handleClickArticle(item.id)}>
+          <Article data={item} />
+        </div>
+      ))}
+
+    </div>
+  </div>
+  );
 }
 export default Articles;

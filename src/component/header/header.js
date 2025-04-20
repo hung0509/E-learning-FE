@@ -6,7 +6,7 @@ import { useAuth } from '../../hook/useAuth';
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(() => {
-    return sessionStorage.getItem("userId") || null; // Mặc định là false nếu không tìm thấy giá trị
+    return localStorage.getItem("userId") || null; // Mặc định là false nếu không tìm thấy giá trị
   });
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

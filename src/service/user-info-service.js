@@ -1,17 +1,17 @@
-import { CourseApi } from "../api/course-api";
+import { UserInfoApi } from "../api/user-info-api";
 import { CODE } from "../constant/code";
 import { MESSAGES } from "../constant/message"
 
-export const CourseService = {
-    addCourse: async (credential) => {
+export const UserInfoService = {
+    getMyInfo: async () => {
         try{
-            const data = await CourseApi.addCourse(credential);
+            const data = await UserInfoApi.myInfo();
 
             const {code, result} = data;
             if(code !== 0){
                 return {
                     code: code,
-                    message: "Thông tin khóa học chưa đúng"
+                    message: MESSAGES.ERROR_SERVER
                 }
             }
 
@@ -30,16 +30,16 @@ export const CourseService = {
         }
     },
 
-    getCourses: async (credential) => {
+    getAllUser:  async (credential) => {
         try{
-            const data = await CourseApi.getCourses(credential);
+            const data = await UserInfoApi.getAll(credential);
 
-            const {code, result, currentPage, pageSize, totalPages, totalItems} = data;
-
+            const {code, result,currentPage, pageSize, totalItems, totalPages} = data;
+            
             if(code !== 0){
                 return {
                     code: code,
-                    result: null
+                    message: MESSAGES.ERROR_SERVER
                 }
             }
 
@@ -51,6 +51,7 @@ export const CourseService = {
                 totalPages: totalPages,
                 totalItems: totalItems
             }
+
         }catch(err){
             const message = err.response?.data?.message || MESSAGES.ERROR_SERVICE;
             console.error(message);
@@ -60,32 +61,4 @@ export const CourseService = {
             }
         }
     },
-
-    getDetailCourse: async (credential) => {
-        try{
-            const data = await CourseApi.getDetailCourse(credential);
-
-            const {code, message, result} = data;
-
-            if(code !== 0){
-                return {
-                    code: code,
-                    result: null,
-                    message: message
-                }
-            }
-
-            return {
-                code: CODE.SUCCESS,
-                result: result
-            }
-        }catch(err){
-            const message = err.response?.data?.message || MESSAGES.ERROR_SERVICE;
-            console.error(message);
-            return {
-                code: CODE.FAIL,
-                message: message
-            }
-        }
-    }
 }

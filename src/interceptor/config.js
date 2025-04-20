@@ -18,13 +18,14 @@ axiosInstance.interceptors.request.use((config) => {
 
   // Kiểm tra nếu đường dẫn bắt đầu bằng /auth và phương thức là POST
   const isNonAuthRequest = nonAuthEndpointsPost.some(endpoint => path.startsWith("/elearning-service" + endpoint)) &&
-                           "post".includes(config.method.toLowerCase());
+    "post".includes(config.method.toLowerCase());
 
-  const isNonAuthRequestGet = nonAuthEndpointsGet.some(endpoint => 
-    path.startsWith("/elearning-service" + endpoint) // Kiểm tra đường dẫn bắt đầu với /elearning-service
-  );
+  const isNonAuthGet = nonAuthEndpointsGet.some(ep => {
+    const prefix = ep.replace("/**", ""); // xử lý wildcard
+    return path.startsWith("/elearning-service" + prefix);
+  }) &&  "get".includes(config.method.toLowerCase());
 
-  if (!isNonAuthRequest && !isNonAuthRequestGet) {
+  if (!isNonAuthRequest && !isNonAuthGet) {
     const token = localStorage.getItem("token");
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
