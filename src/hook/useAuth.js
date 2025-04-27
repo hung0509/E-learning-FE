@@ -23,6 +23,22 @@ export const useAuth = () => {
     }
   };
 
+  const handleLoginByGoogle = async (credentials) => {
+    try {
+      const data = await AuthService.loginByGoogle(credentials);
+      if (data.code === 0) {
+        setUserId(extractUserId(data.result.token));
+        // showSuccess("Đăng nhập thành công");
+        window.location.href = "/";
+      } else {
+        showError("Looix");
+      }
+    } catch (err) {
+      showError(err.message);
+      throw err;
+    }
+  };
+
   const handleLogOut = async () => {
     sessionStorage.removeItem('userId');
     setUserId(null);
@@ -34,6 +50,6 @@ export const useAuth = () => {
     return jwtDecode(token).userId;
   }
 
-  return { handleLogin, handleLogOut };
+  return { handleLogin, handleLogOut, handleLoginByGoogle };
 };
 

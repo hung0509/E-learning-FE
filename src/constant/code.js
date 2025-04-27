@@ -8,4 +8,10 @@ export const STATUS = {
     APPROVE: "APPROVE",
     PENDING: "PENDING"
 };
+
+export const OauthConfig = {
+    clientId: "431338781049-uouarnahtk707j8ojnidtqqsgjq7bi6m.apps.googleusercontent.com",
+    redirectUri: "http://localhost:3000",
+    authUri: "https://accounts.google.com/o/oauth2/auth"
+}
   

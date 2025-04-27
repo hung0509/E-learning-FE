@@ -44,5 +44,37 @@ export const AuthService = {
       console.log("Error logout api:", err);
     }
     localStorage.removeItem("token"); 
-  }
+  },
+
+  loginByGoogle: async (credential) => {
+    try {
+      const data = await authenticationApi.loginByGoogle(credential);
+      console.log(data);
+
+      const { code, result } = data;
+
+      if (code !== 0) {
+        return {
+          code: code,
+          message: "Tài khoản hoặc mật khẩu chưa chính xác!",
+        };
+      }
+
+      // ✅ Xử lý logic FE nếu cần, ví dụ:
+      localStorage.setItem("token", result.token);
+      
+
+      return {
+        code: 0,
+        result: result,
+      };
+
+    } catch (err) {
+      const message = err.response?.data?.message || MESSAGES.ERROR_SERVICE;
+      return {
+        code: false,
+        message,
+      };
+    }
+  },
 }

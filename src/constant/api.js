@@ -14,5 +14,6 @@ export const API_ENDPOINTS = {
   CATEGORY: '/categories',
   USERS: '/users/all',
   LESSON: '/lessons',
-  CREATE_PAYMENT: '/payments/create'
+  CREATE_PAYMENT: '/payments/create',
+  AUTH_BY_GOOGLE: '/auth/outbound/authentication'
 };

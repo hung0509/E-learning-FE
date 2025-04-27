@@ -2,9 +2,10 @@ import { useState } from "react";
 
 import { useAuth } from "../../hook/useAuth";
 import AuthDto from "../../dto/auth-req";
+import { OauthConfig } from "../../constant/code";
 
 const Login = () => {
-  const [ data, setData ] = useState(new AuthDto('', ''));
+  const [data, setData] = useState(new AuthDto('', ''));
   const { handleLogin } = useAuth();
 
   const handleChange = (e) => {
@@ -19,8 +20,19 @@ const Login = () => {
   };
 
   const handleSubmit = async () => {
-      console.log(data);
-      await handleLogin(data);
+    console.log(data);
+    await handleLogin(data);
+  }
+
+  const loginByGoogle = () => {
+    const callBackUri = OauthConfig.redirectUri;
+    const authUrl = OauthConfig.authUri;
+    const googleClientId = OauthConfig.clientId;
+
+    const target_url = `${authUrl}?redirect_uri=${encodeURIComponent(callBackUri)}&response_type=code&client_id=${googleClientId}&scope=openid%20email%20profile`;
+
+    console.log(target_url);
+    window.location.href = target_url;
   }
 
   return (
@@ -97,10 +109,10 @@ const Login = () => {
                   <div class="col-12">
                     <p class="mt-5 mb-4">Or sign in with</p>
                     <div class="d-flex gap-3 flex-column flex-xl-row">
-                      <a href="#!" class="btn bsb-btn-xl btn-outline-primary">
+                      <div onClick={loginByGoogle} class="btn bsb-btn-xl btn-outline-primary">
                         <i class="bi bi-google"></i>
                         <span class="ms-2 fs-6">Google</span>
-                      </a>
+                      </div>
                       <a href="#!" class="btn bsb-btn-xl btn-outline-primary">
                         <i class="bi bi-facebook"></i>
                         <span class="ms-2 fs-6">Facebook</span>
