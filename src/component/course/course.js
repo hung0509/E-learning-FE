@@ -23,7 +23,7 @@ const Course = ({data}) => {
                 <div className="card-meta text-dark mb-2 fw-bold">{data.courseName}</div>
                 <div className='d-flex justify-content-between info' style={{fontSize: "13px"}}>
                     <i class="bi bi-stopwatch"><span className='px-3'>{formatSecondsToHMS(data.courseDuration)}</span></i>
-                    <i class="bi bi-currency-dollar">{data.priceEntered}</i>
+                    <i class="bi">{Number(data.priceEntered).toLocaleString('vi-VN')} VND</i>
                 </div>
                 <div className='p-3 text-muted'>{data.description}</div>
             </div>

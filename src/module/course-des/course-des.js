@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useCourse } from "../../hook/useCourse";
 import CourseDetailDto from "../../dto/course-detail-dto";
 import { useAccount } from "../../hook/useAccount";
@@ -112,8 +112,13 @@ const CourseDes = () => {
   }
 
   const handleRegister = async (id) => {
-      await registerCourse({ courseId: id });
-      setIsRegistered(true);
+    await registerCourse({ courseId: id });
+    setIsRegistered(true);
+  }
+
+  const isFree = (price) => {
+    console.log(price);
+    return (price === 0 || price === null) ? price : "Miễn phí";
   }
 
   return (<div className="row p-5">
@@ -128,52 +133,69 @@ const CourseDes = () => {
       </div>
       <ul className="p-0">
       {data.lessons.map((lesson) => (
-            <li
-              key={lesson.id}
-              className="py-3 px-3 list-unstyled"
-              style={{
-                cursor: isRegistered ? 'pointer' : 'not-allowed',  // Vô hiệu hóa click khi chưa đăng ký
-                fontWeight: '500',
-                opacity: isRegistered ? '1' : '0.6',  // Thêm hiệu ứng mờ khi chưa đăng ký
-              }}
-            >
-              <a
-                href=""
-                className={`text-decoration-none link-dark opacity-75 d-flex justify-content-between pr-5 ${!isRegistered ? 'disabled' : ''}`}
-                style={{ pointerEvents: isRegistered ? 'auto' : 'none' }}  // Ngừng nhận sự kiện click nếu chưa đăng ký
-              >
-                <div>
-                  <i className="bi bi-play-circle p-3"></i>
-                  {lesson.id} . {lesson.lessonName}
-                </div>
-                <span style={{ fontSize: '12px' }}>
-                  <i className="bi bi-play-circle px-2"></i>
-                  {formatDuration(lesson.lessonTime)}
-                </span>
-              </a>
-            </li>
-          ))}
+  <li
+    key={lesson.id}
+    className="py-3 px-3 list-unstyled"
+    style={{
+      cursor: isRegistered ? 'pointer' : 'not-allowed',
+      fontWeight: '500',
+      opacity: isRegistered ? '1' : '0.6',
+    }}
+  >
+    {registerCourse && isRegistered ? (
+      <Link
+        to={`/lesson?courseId=${data.id}&lessonId=${lesson.id}`}
+        className="text-decoration-none link-dark opacity-75 d-flex justify-content-between pr-5"
+        style={{ width: '100%' }}
+      >
+        <div>
+          <i className="bi bi-play-circle p-3"></i>
+          {lesson.id} . {lesson.lessonName}
+        </div>
+        <span style={{ fontSize: '12px' }}>
+          <i className="bi bi-play-circle px-2"></i>
+          {formatDuration(lesson.lessonTime)}
+        </span>
+      </Link>
+    ) : (
+      <div
+        className="text-decoration-none link-dark opacity-75 d-flex justify-content-between pr-5"
+        style={{ pointerEvents: 'none', width: '100%' }}
+      >
+        <div>
+          <i className="bi bi-play-circle p-3"></i>
+          {lesson.id} . {lesson.lessonName}
+        </div>
+        <span style={{ fontSize: '12px' }}>
+          <i className="bi bi-play-circle px-2"></i>
+          {formatDuration(lesson.lessonTime)}
+        </span>
+      </div>
+    )}
+  </li>
+))}
+
       </ul>
     </div>
 
     <div className=" col-sm-12 col-xl-4 px-4">
       <div className="p-3 text-center" >
         <img className="w-100 pb-3" style={{ borderRadius: '18px' }} src="https://th.bing.com/th/id/OIP.NK8Sm1NoQz41q1_DhhToUwHaEK?rs=1&pid=ImgDetMain" alt="" />
-        <h4 className="color-common">{data.priceAfterReduce === 0 ? 'Miễn phí' : data.priceAfterReduce}</h4>
+        <h4 className="color-common">{data.priceAfterReduce === 0 ? 'Miễn phí' : Number(data.priceEntered).toLocaleString('vi-VN') + "  VND"}</h4>
         {/* <div style={{ borderRadius: '18px' }} className="btn btn-primary fw-bold fs-6" onClick={() => handleRegister(data.id)}>ĐĂNG KÝ HỌC</div> */}
         <div
-            style={{
-              borderRadius: "18px",
-              backgroundColor: isRegistered ? "#d6d6d6" : "#007bff",  // Màu xám nếu đã đăng ký
-              cursor: isRegistered ? "not-allowed" : "pointer",  // Không cho click nếu đã đăng ký
-            }}
-            className="btn btn-primary fw-bold fs-6"
-            onClick={() => {
-              if (!isRegistered) handleRegister(data.id);  // Chỉ gọi khi chưa đăng ký
-            }}
-          >
-            {isRegistered ? "Đã đăng ký" : "ĐĂNG KÝ HỌC"}  {/* Thay đổi nội dung nút */}
-          </div>
+          style={{
+            borderRadius: "18px",
+            backgroundColor: isRegistered ? "#d6d6d6" : "#007bff",  // Màu xám nếu đã đăng ký
+            cursor: isRegistered ? "not-allowed" : "pointer",  // Không cho click nếu đã đăng ký
+          }}
+          className="btn btn-primary fw-bold fs-6"
+          onClick={() => {
+            if (!isRegistered) handleRegister(data.id);  // Chỉ gọi khi chưa đăng ký
+          }}
+        >
+          {isRegistered ? isFree(data.priceAfterReduce) : "ĐĂNG KÝ HỌC"}  {/* Thay đổi nội dung nút */}
+        </div>
       </div>
       <ul style={{ marginLeft: '25%' }}>
         <li className="list-unstyled"><i style={{ marginRight: '6px' }} className="bi bi-rocket-fill fw-bold"></i>{data.level}</li>

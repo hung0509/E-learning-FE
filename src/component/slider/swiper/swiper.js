@@ -9,15 +9,19 @@ import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 import { FreeMode, Pagination } from 'swiper/modules';
 
-const data = [
-    'https://i.pinimg.com/originals/a9/71/d8/a971d8b69fdc16c9ca3222a38e895226.jpg',
-    'https://th.bing.com/th/id/OIP.zeLczq7P7bxbw2_7meDVJQHaJR?rs=1&pid=ImgDetMain',
-    'https://th.bing.com/th/id/OIP.rS2WmFXmzYzZsCWk3zKHYQHaLk?rs=1&pid=ImgDetMain',
-    'https://i.pinimg.com/736x/d9/de/af/d9deaf0d2f1e48d947bd6f448a5cf3bb.jpg',
-    'https://pbs.twimg.com/profile_images/1597114239142936576/gM7XVk83_400x400.jpg'
+const dataAvatar = [
+    'https://th.bing.com/th/id/OIP.O_3liXgPrqK_FTyuoEJY2QHaEK?rs=1&pid=ImgDetMain',
+    'https://th.bing.com/th/id/OIP.g2ytdiyBCFETiMmdSTN0HgHaEm?w=1200&h=745&rs=1&pid=ImgDetMain',
+    'https://th.bing.com/th/id/OIP.Es-dWNe-Z2NItaKyPwhiYgHaFQ?rs=1&pid=ImgDetMain',
+    'https://th.bing.com/th/id/OIP.wvCFGWAMS1WO6t2NSyWOdgHaFQ?w=804&h=571&rs=1&pid=ImgDetMain',
+    'https://www.oneeducation.org.uk/wp-content/uploads/2020/10/816.-C-Programming-Beginner-to-Advanced.jpg',
+    "https://th.bing.com/th/id/OIP.5Jeqb4Si0-h8ejVzPZ1EwQHaD4?rs=1&pid=ImgDetMain",
+    
 ];
 
-const SwiperComponent = () => {
+const SwiperComponent = ({data}) => {
+
+    console.log(data);
     return (
         <>
             <Swiper
@@ -30,10 +34,10 @@ const SwiperComponent = () => {
                 modules={[FreeMode, Pagination]}
                 className="mySwiper"
             >
-                {data.map((src, index) => (
+                {dataAvatar.map((item, index) => (
                     <SwiperSlide key={index}>
                         <div className="card text-center" style={{ width: '16rem' }}>
-                            <img width="254px" height="315px" src={src} className="card-img-bottom" alt="..." />
+                            <img width="254px" height="315px" src={item} className="card-img-bottom" alt="..." />
                         </div>
                     </SwiperSlide>
                 ))}

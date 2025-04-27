@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 const MyInfo = () => {
     const [tab, setTab] = useState(true);
     const [data, setData] = useState(new UserInfoDto());
+    const [isEdit, setIsEdit] = useState(false);
     const { handleMyInfo } = useUserInfo();
     const navigate = useNavigate();
 
@@ -43,6 +44,11 @@ const MyInfo = () => {
     const handleClickArticle = (id) => {
         navigate(`/article-detail/${id}`);
     }
+
+    const handleIsEdit = (check) => {
+        setIsEdit(!isEdit);
+    }
+
     return (
         <div className="my-info py-5">
             <div class="team-single">
@@ -68,7 +74,7 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Họ và tên</h6>
                                         </div>
-                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value={data.firstName + " " + data.lastName} readOnly />
+                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 p-2" value={data.firstName + " " + data.lastName} readOnly={!isEdit} />
                                     </div>
                                 </div>
 
@@ -77,7 +83,7 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Email</h6>
                                         </div>
-                                        <input type='email' class="col-sm-9 text-secondary rounded border-0 px-2" value={data.email} readOnly />
+                                        <input type='email' class="col-sm-9 text-secondary rounded border-0 p-2" value={data.email} readOnly={!isEdit} />
                                     </div>
                                 </div>
 
@@ -86,7 +92,7 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Giới tính</h6>
                                         </div>
-                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value={data.gender} readOnly />
+                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 p-2"  readOnly={!isEdit} value={data.gender} />
                                     </div>
                                 </div>
 
@@ -95,7 +101,7 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Địa chỉ</h6>
                                         </div>
-                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value={data.addess} readOnly />
+                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 p-2" value={data.addess} readOnly={!isEdit} />
                                     </div>
                                 </div>
 
@@ -104,14 +110,21 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Số điện thoại</h6>
                                         </div>
-                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value={data.phone} readOnly />
+                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value={data.phone} readOnly={!isEdit} />
                                     </div>
                                 </div>
 
                                 <div class="row">
+                                    { !isEdit ? (
                                     <div class="col-sm-12">
-                                        <a style={{ float: 'right' }} class="btn btn-info text-white" href="">Edit</a>
+                                        <div style={{ float: 'right' }} class="btn btn-info text-white" onClick={handleIsEdit}>Edit</div>
+                                    </div>) :
+                                    (<div class="col-sm-12">
+                                        <div style={{ float: 'right' }} class="btn btn-info text-white" onClick={handleIsEdit}>Save</div>
+                                        <div style={{ float: 'right' }} class="btn btn-outline-danger" onClick={handleIsEdit}>Cancle</div>
                                     </div>
+                                    )
+                                    }
                                 </div>
                             </div>
                         </div>

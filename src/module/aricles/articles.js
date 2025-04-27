@@ -14,7 +14,7 @@ const Articles = () => {
     const fetchData = async () => {
       try {
         const result = await handleGetAllArticle("");
-        const articles = result.map((item) => ArticleDto.fromArticleResponse(item))
+        const articles = result.result.map((item) => ArticleDto.fromArticleResponse(item))
 
         setData(articles);
       } catch (err) {

@@ -53,7 +53,7 @@ const Header = () => {
           <ul
             className={`dropdown-menu text-small shadow ${isDropdownOpen ? 'show' : ''}`}
             aria-labelledby="dropdownUser2"
-            style={isDropdownOpen ? { position: 'absolute', margin: '0px', transform: 'translate(30px, 32px)' } : {}}
+            style={isDropdownOpen ? { position: 'absolute', margin: '0px', transform: 'translate(30px, 32px)',left: '-112px', top: '18px' } : {}}
           >
             <li><a className="dropdown-item" href="/my-info">Profile</a></li>
             <li><hr className="dropdown-divider" /></li>

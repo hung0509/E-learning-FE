@@ -1,5 +1,12 @@
-import React  from 'react';
+import React, { useEffect, useState } from 'react';
 import './article-admin.css';
+import BaseRequestDto from '../../../dto/base-request-dto';
+import ArticleRequest from '../../../dto/request/article-req';
+import { useArticle } from '../../../hook/useArticle';
+import ArticleDto from '../../../dto/article-dto';
+import Pagination from '../../pagination/pagination';
+import ActionMenu from '../../action-menu/action-menu';
+import { CODE, STATUS } from '../../../constant/code';
 
 const authors = [
     {
@@ -12,41 +19,76 @@ const authors = [
     }
 ]
 
-const data = [
-    {
-      articleId: 1,
-      imageUrl: 'https://files.fullstack.edu.vn/f8-prod/blog_posts/65/6139e5543f08a.png',
-      title: 'Sample Article 1',
-      publishedDate: '2025-03-01'
-    },
-    {
-      articleId: 2,
-      imageUrl: 'https://files.fullstack.edu.vn/f8-prod/blog_posts/65/613a0bf0926b4.png',
-      title: 'Sample Article 2',
-      publishedDate: '2025-03-05'
-    },
-    {
-      articleId: 3,
-      imageUrl: 'https://files.fullstack.edu.vn/f8-prod/blog_posts/65/6139fe28a9844.png',
-      title: 'Sample Article 3',
-      publishedDate: '2025-03-10'
-    },
-    {
-      articleId: 4,
-      imageUrl: 'https://files.fullstack.edu.vn/f8-prod/blog_posts/65/613ac64ecffae.png',
-      title: 'Sample Article 4',
-      publishedDate: '2025-03-15'
-    },
-    {
-      articleId: 5,
-      imageUrl: 'https://files.fullstack.edu.vn/f8-prod/blog_posts/65/613a0fd38709e.png',
-      title: 'Sample Article 5',
-      publishedDate: '2025-03-20'
-    }
-];
-
 const ArticleAdmin = () => {
+    const [data, setData] = useState([]);
+    const [page, setPage] = useState(new BaseRequestDto());
+    const [currentPage, setCurrentPage] = useState(1);
+    const [param, setParam] = useState(new ArticleRequest("", [], "ALL"));
+    const { handleGetAllArticle } = useArticle();
+    const { handleUpdateArticle } = useArticle();
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const results = await handleGetAllArticle(`?page=${currentPage - 1}&pageSize=1&${param.toQueryParams()}`);
+
+            const articles = results.result.map((item) => ArticleDto.fromArticleUserResponse(item));
+            const page = BaseRequestDto.fromBaseRequestResponse(results);
+
+            setData(articles);
+            setPage(page);
+        }
+
+        fetchData();
+    }, [currentPage, param]);
+
+    const onPageChange = (page) => {
+        setCurrentPage(page);
+    }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        console.log(value);
+
+        setParam((prevData) => {
+            return new ArticleRequest(
+                name === 'title' ? value : prevData.title,
+                name === 'fullNames' ? value : prevData.fullNames,
+                name === 'status' ? value : prevData.status,
+            );
+        });
+    };
+
+    const formatDate = (publishedDate) => {
+        const date = new Date(publishedDate);
+
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+        const year = date.getUTCFullYear();
+
+        const formattedDate = `${day}/${month}/${year}`;
+        return formattedDate;
+    }
+
+    const approveArticle = async (id) => {
+        console.log(id);
+
+        const formData = new FormData();
+        formData.append('id', id)
+        formData.append('status', STATUS.APPROVE);
+
+        await handleUpdateArticle(formData);
+    }
+
+    const rejectArticle = async (id) => {
+        console.log(id);
+        
+        const formData = new FormData();
+        formData.append('id', id)
+        formData.append('status', STATUS.REJECT);
+
+        await handleUpdateArticle(formData);
+    }
 
     return (
         <div className="article-admin row px-5">
@@ -63,21 +105,48 @@ const ArticleAdmin = () => {
                         <p style={{ fontSize: '12px' }} className="fw-bold">Tìm theo tên</p>
                         <span><i class="bi bi-search"></i></span>
                     </div>
-                    <input style={{ fontSize: '12px' }} type="text" name="name-article" id="name-article" className="border-0 border-bottom p-1" />
+                    <input style={{ fontSize: '12px' }} type="text" name="title" id="title" onChange={handleChange} className="border-0 border-bottom p-1" />
                 </div>
 
                 <div className="card p-3 my-3" style={{ fontSize: '12px' }}>
                     <p className="fw-bold">Tác giả:</p>
 
                     {authors.map((item) => (
-                         <div class="form-check" key={item.id}>
+                        <div class="form-check" key={item.id}>
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                             <label class="form-check-label" for="flexCheckDefault">
                                 {item.name}
                             </label>
                         </div>
                     ))}
-                    
+                </div>
+
+                <div className="card p-3 my-3">
+                    <p style={{ fontSize: '12px' }} className="fw-bold">Trạng thái:</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="ALL" name="status" onChange={handleChange} checked={param.status === 'ALL'} />
+                        <label class="form-check-label" for="flexCheckDefault" style={{ fontSize: '12px' }}>
+                            Tất cả
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="PENDING" name="status" onChange={handleChange} checked={param.status === 'PENDING'} />
+                        <label class="form-check-label" for="flexCheckDefault" style={{ fontSize: '12px' }}>
+                            Đang chờ xử lý
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="APPROVE" name="status" onChange={handleChange} checked={param.status === 'APPROVE'} />
+                        <label class="form-check-label" for="flexCheckChecked" style={{ fontSize: '12px' }}>
+                            Phê duyệt
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="REJECT" name="status" onChange={handleChange} checked={param.status === 'REJECT'} />
+                        <label class="form-check-label" for="flexCheckChecked" style={{ fontSize: '12px' }}>
+                            Từ chối
+                        </label>
+                    </div>
                 </div>
             </div>
             <div className="col-sm-12 col-xl-10 py-3">
@@ -92,23 +161,34 @@ const ArticleAdmin = () => {
                         </tr>
                     </thead>
                     <tbody className='text-center'>
-                        {data.map((item) => (
-                            <React.Fragment key={item.articleId} >
+                        {data.map((item, index) => (
+                            <React.Fragment key={item.id} >
                                 <tr>
-                                    <td>{item.articleId}</td>
-                                    <td><img src={item.imageUrl} alt="hình ảnh" /></td>
+                                    <td>{index}</td>
+                                    <td><img src={item.image} alt="hình ảnh" /></td>
                                     <td>{item.title}</td>
-                                    <td>{item.publishedDate}</td>
-                                    <td>
-                                            <div >
-                                                <button type="button" className='mx-2 border-0'><i class="bi bi-three-dots-vertical"></i></button>
-                                            </div>
-                                    </td>
+                                    <td>{formatDate(item.publishedDate)}</td>
+                                    {item.status == STATUS.PENDING && <td >
+                                        {/* <div >
+                                            <button type="button" className='mx-2 border-0'><i class="bi bi-three-dots-vertical"></i></button>
+                                        </div> */}
+                                        <ActionMenu
+                                            itemId={item.id}
+                                            onAccept={approveArticle}
+                                            onReject={rejectArticle}
+                                        />
+                                    </td>}
                                 </tr>
                             </React.Fragment>
                         ))}
                     </tbody>
                 </table>
+
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={page.totalPage}
+                    onPageChange={onPageChange}
+                />
             </div>
         </div>);
 }

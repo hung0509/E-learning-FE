@@ -43,5 +43,17 @@ export const useCourse = () => {
         }
     }
 
-    return { handleAddSourse, handleGetCourse, handleGetDetailCourse };
+    const handleCourseSpecial = async () => {
+        try{
+            const data = await CourseService.getCourseSpecial();
+
+            if(data.code === CODE.SUCCESS){
+                return data.result;
+            }
+        }catch(err){
+            throw err;
+        }
+    }
+
+    return { handleAddSourse, handleGetCourse, handleGetDetailCourse, handleCourseSpecial };
 }

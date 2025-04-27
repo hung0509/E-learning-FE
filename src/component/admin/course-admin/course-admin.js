@@ -8,25 +8,8 @@ import BaseRequestDto from '../../../dto/base-request-dto';
 import CourseRequest from '../../../dto/request/course-request';
 import { useCategory } from '../../../hook/useCategory';
 import CategoryDto from '../../../dto/category-dto';
+import { useNavigate } from 'react-router-dom';
 
-const category = [
-    {
-        id: 1,
-        category_name: "Cấu trúc dữ liệu và giải thuật"
-    },
-    {
-        id: 2,
-        category_name: "Lập trình căn bản"
-    },
-    {
-        id: 3,
-        category_name: "Font-end(FE)"
-    },
-    {
-        id: 4,
-        category_name: "Back-end(BE)"
-    }
-]
 
 const CourseAdmin = () => {
     const [selectedRow, setSelectedRow] = useState(null);
@@ -38,6 +21,7 @@ const CourseAdmin = () => {
     const [categories, setCategories] = useState([]);
     const { handleGetCourse } = useCourse();
     const { handleCategory } = useCategory();
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -88,6 +72,10 @@ const CourseAdmin = () => {
           );
         });
       };
+
+    const handleAddCourse = () => {
+        navigate(`/admin/course/add`);
+    }
 
     return (
         <div className="course-admin row px-5">
@@ -174,7 +162,7 @@ const CourseAdmin = () => {
                 </div>
             </div>
             <div className="col-sm-12 col-xl-10 py-3">
-                <div className='btn float-right add-course'> Thêm khóa học</div>
+                <div className='btn float-right add-course' onClick={handleAddCourse}> Thêm khóa học</div>
 
                 <table className="table table-hover table-bordered">
                     <thead className="thead-dark">

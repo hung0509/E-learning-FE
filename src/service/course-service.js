@@ -87,5 +87,33 @@ export const CourseService = {
                 message: message
             }
         }
+    },
+
+    getCourseSpecial: async () => {
+        try{
+            const data = await CourseApi.getCourseSpecial();
+
+            const {code, message, result} = data;
+
+            if(code !== 0){
+                return {
+                    code: code,
+                    result: null,
+                    message: message
+                }
+            }
+
+            return {
+                code: CODE.SUCCESS,
+                result: result
+            }
+        }catch(err){
+            const message = err.response?.data?.message || MESSAGES.ERROR_SERVICE;
+            console.error(message);
+            return {
+                code: CODE.FAIL,
+                message: message
+            }
+        }
     }
 }

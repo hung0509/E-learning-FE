@@ -34,7 +34,7 @@ export const ArticleService = {
         try{
             const data = await ArticleApi.getAllArticle(param);
 
-            const {code, result} = data;
+            const {code, result, currentPage, totalItems, totalPages, pageSize} = data;
             if(code !== 0){
                 return {
                     code: code,
@@ -44,7 +44,11 @@ export const ArticleService = {
 
             return {
                 code: CODE.SUCCESS,
-                result: result
+                result: result,
+                currentPage: currentPage,
+                pageSize: pageSize,
+                totalPages: totalPages,
+                totalItems: totalItems
             } 
         }catch(err){
             const message = err.response?.data?.message || MESSAGES.ERROR_SERVICE;
@@ -80,6 +84,33 @@ export const ArticleService = {
                 message: message
             }
         }
-    }
+    },
+
+    updateArticle: async (credential) => {
+        try{
+            const data = await ArticleApi.updateArticle(credential);
+
+            const {code, result} = data;
+            if(code !== 0){
+                return {
+                    code: code,
+                    message: MESSAGES.ERROR_SERVICE
+                }
+            }
+
+            return {
+                code: CODE.SUCCESS,
+                result: result
+            }
+
+        }catch(err){
+            const message = err.response?.data?.message || MESSAGES.ERROR_SERVICE;
+            console.error(message);
+            return {
+                code: CODE.FAIL,
+                message: message
+            }
+        }
+    },
 
 }

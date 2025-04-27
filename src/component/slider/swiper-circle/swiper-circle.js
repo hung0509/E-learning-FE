@@ -8,12 +8,12 @@ import './swiper-circle.css';
 
 const logos = [
     'https://i.pinimg.com/originals/a9/71/d8/a971d8b69fdc16c9ca3222a38e895226.jpg',
-    'https://example.com/logo2.png',
-    'https://example.com/logo3.png',
-    'https://example.com/logo2.png',
-    'https://example.com/logo3.png',
-    'https://example.com/logo2.png',
-    'https://example.com/logo3.png',
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
 ];
 
 const SwiperComponent = () => {
@@ -31,7 +31,7 @@ const SwiperComponent = () => {
             {logos.map((logo, index) => (
                 <SwiperSlide className="card-circle-custom" key={index}>
                     <div className="circular-card">
-                        <img src={logo} className="circular-img" alt={`Logo ${index + 1}`} />
+                        <img src={logo || "https://pluspng.com/img-png/user-png-icon-user-2-icon-png-file-512x512-pixel-512.png"} className="circular-img" alt={`Logo ${index + 1}`} />
                     </div>
                 </SwiperSlide>
             ))}
