@@ -26,6 +26,8 @@ import { ToolbarPlugin } from './module/post-editor/post-editor';
 import PageError from './module/404/404';
 import { ToastContainer } from 'react-toastify';
 import ArticleDetail from './module/article-detail/article-detail';
+import PaymentSuccess from './component/status/success/payment-success';
+import PaymentError from './component/status/error/payment-error';
 
 
 function App() {
@@ -100,6 +102,8 @@ function App() {
                     <Route path="/admin/course/add" element={<CourseAddition/>}/>
                     <Route path="/admin/course/:courseId" element={<EditCoursePage/>}/>
                     <Route path="/article-detail/:articleId" element={<ArticleDetail />}/>
+                    <Route path="/payment/success" element={<PaymentSuccess />}/>
+                    <Route path="/payment/error" element={<PaymentError />}/>
                     <Route path="/404" element={<PageError/>}/>
                 </Routes>
             </div>

@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useCourse } from "../../hook/useCourse";
 import CourseDetailDto from "../../dto/course-detail-dto";
 import { useAccount } from "../../hook/useAccount";
+import { useTransaction } from "../../hook/useTransaction";
 
 // const lessons = [
 //   {
@@ -64,10 +65,12 @@ import { useAccount } from "../../hook/useAccount";
 
 
 const CourseDes = () => {
+  const userId = localStorage.getItem("userId");
   const { courseId } = useParams();
   const [data, setData] = useState(new CourseDetailDto());
   const { handleGetDetailCourse } = useCourse();
   const { registerCourse } = useAccount()
+  const { handlePayment } = useTransaction()
   const [isRegistered, setIsRegistered] = useState(false);
   //Check neu chua dang nhap thi vo trang nay
   useEffect(() => {
@@ -111,8 +114,27 @@ const CourseDes = () => {
     return parts.join(' ');
   }
 
-  const handleRegister = async (id) => {
-    await registerCourse({ courseId: id });
+  const handleRegister = async (data) => {
+    // await registerCourse({ courseId: data.id });
+    if(data.priceAfterReduce !== null || data.priceAfterReduce > 0){
+      //Thanh toan paypal
+      const result = {
+         userId: userId,
+         courseId: data.id,
+         balance: data.priceAfterReduce,
+         description: `Thanh toán khóa học ${data.courseName}`,
+         urlError: 'http://localhost:8080/elearning-service/payments/error',
+         urlSuccess: 'http://localhost:8080/elearning-service/payments/success',
+         currency: 'USD',
+         intent: 'sale',
+         method: 'paypal'
+      }
+      await handlePayment(result);
+      
+    }else{
+      await registerCourse({ courseId: data.id });
+    }
+
     setIsRegistered(true);
   }
 
@@ -191,7 +213,7 @@ const CourseDes = () => {
           }}
           className="btn btn-primary fw-bold fs-6"
           onClick={() => {
-            if (!isRegistered) handleRegister(data.id);  // Chỉ gọi khi chưa đăng ký
+            if (!isRegistered) handleRegister(data);  // Chỉ gọi khi chưa đăng ký
           }}
         >
           {isRegistered ? isFree(data.priceAfterReduce) : "ĐĂNG KÝ HỌC"}  {/* Thay đổi nội dung nút */}

@@ -1,0 +1,9 @@
+.payment-success .bg-white.p-6.md\:mx-auto {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10%;
+}
+
+.payment-success svg{
+    width: 10%;
+}

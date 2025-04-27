@@ -13,5 +13,6 @@ export const API_ENDPOINTS = {
   MY_INFO: '/users',
   CATEGORY: '/categories',
   USERS: '/users/all',
-  LESSON: '/lessons'
+  LESSON: '/lessons',
+  CREATE_PAYMENT: '/payments/create'
 };
