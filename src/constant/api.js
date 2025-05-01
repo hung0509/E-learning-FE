@@ -15,5 +15,6 @@ export const API_ENDPOINTS = {
   USERS: '/users/all',
   LESSON: '/lessons',
   CREATE_PAYMENT: '/payments/create',
-  AUTH_BY_GOOGLE: '/auth/outbound/authentication'
+  AUTH_BY_GOOGLE: '/auth/outbound/authentication',
+  COMMENT: '/comments'
 };

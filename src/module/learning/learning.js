@@ -6,75 +6,26 @@ import { useLesson } from "../../hook/useLesson";
 import LessonDto from "../../dto/lesson-dto";
 import { useCourse } from "../../hook/useCourse";
 import CourseDetailDto from "../../dto/course-detail-dto";
-const lessons = [
-    {
-        lesson_id: 1,
-        course_id: 1,
-        lesson_name: 'Introduction to SQL',
-        url_lesson: 'http://example.com/sql-intro',
-        description: 'Learn the basics of SQL',
-        lesson_time: 30, // tính theo số phút
-        is_active: 'Y',
-        created_at: new Date(),
-        updated_at: new Date()
-    },
-    {
-        lesson_id: 2,
-        course_id: 1,
-        lesson_name: 'Advanced SQL Queries',
-        url_lesson: 'http://example.com/sql-advanced',
-        description: 'Dive into advanced SQL topics',
-        lesson_time: 45, // tính theo số phút
-        is_active: 'Y',
-        created_at: new Date(),
-        updated_at: new Date()
-    },
-    {
-        lesson_id: 3,
-        course_id: 2,
-        lesson_name: 'Python for Data Science',
-        url_lesson: 'http://example.com/python-data-science',
-        description: 'Introduction to Python in data science',
-        lesson_time: 60, // tính theo số phút
-        is_active: 'Y',
-        created_at: new Date(),
-        updated_at: new Date()
-    },
-    {
-        lesson_id: 4,
-        course_id: 2,
-        lesson_name: 'Data Visualization with Python',
-        url_lesson: 'http://example.com/data-visualization-python',
-        description: 'Learn to create visualizations with Python',
-        lesson_time: 50, // tính theo số phút
-        is_active: 'Y',
-        created_at: new Date(),
-        updated_at: new Date()
-    },
-    {
-        lesson_id: 5,
-        course_id: 3,
-        lesson_name: 'Machine Learning Basics',
-        url_lesson: 'http://example.com/ml-basics',
-        description: 'Understand the fundamentals of machine learning',
-        lesson_time: 90, // tính theo số phút
-        is_active: 'Y',
-        created_at: new Date(),
-        updated_at: new Date()
-    }
-];
+import SockJsClient from 'react-stomp';
+import { useComment } from "../../hook/useComment";
+import { Stomp } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
+import CommentDto from "../../dto/comment-dto";
+
 
 const Learning = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const userId = localStorage.getItem("userId");
     const [searchParams] = useSearchParams();
-
     const courseId = searchParams.get("courseId");
     const lessonId = searchParams.get("lessonId");
     const [course, setCourse] = useState(new CourseDetailDto());
     const { handleGetDetailCourse } = useCourse();
     const [selectedLesson, setSelectedLesson] = useState(new LessonDto());
+    const [comment, setComment] = useState([]);
+    const [message, setMessage] = useState("");
+    const { handlePostComment, handleGetAll } = useComment();
 
     useEffect(() => {
         const fetchCourse = async () => {
@@ -92,6 +43,49 @@ const Learning = () => {
 
         fetchCourse();
     }, []);
+
+    // useEffect(() => {
+    //     const socket = new SockJS("http://localhost:8080/elearning-service/ws-chat");
+    //     const stompClient = Stomp.over(socket);
+
+    //     stompClient.connect({}, (frame) => {
+    //         console.log("Connected: " + frame);
+
+    //         // Đảm bảo chỉ gửi thông điệp đăng ký 1 lần
+    //         stompClient.send("/app/register", {}, JSON.stringify({
+    //             userId: userId,
+    //         }));
+
+    //         // Subscribe vào topic của bài học
+    //         stompClient.subscribe(`/topic/comment/${selectedLesson.id}`, (msg) => {
+    //             console.log("Received comment:", msg.body);
+    //             setComment(prev => [...prev, JSON.parse(msg.body)]);
+    //         });
+    //     });
+
+    //     // Cleanup khi component bị unmount
+    //     return () => {
+    //         if (stompClient && stompClient.connected) {
+    //             stompClient.disconnect(() => {
+    //                 console.log("Disconnected from WebSocket");
+    //             });
+    //         }
+    //     };
+    // }, [selectedLesson.id]);
+
+
+    useEffect(() => {
+        if (selectedLesson && selectedLesson.id != null) {
+            const fetchCourse = async () => {
+                const result = await handleGetAll(`?lessonId=${selectedLesson.id}`);
+                const comments = result.result.map((item) => CommentDto.fromCommentDto(item));
+                setComment(comments);
+            };
+        
+            fetchCourse();
+        }
+    }, [selectedLesson.id]);
+
 
     const handleClickLesson = (lesson) => {
 
@@ -114,6 +108,29 @@ const Learning = () => {
         return `${padded(hours)}:${padded(minutes)}:${padded(seconds)}`;
     }
 
+    const postComment = async () => {
+        const credential = {
+            content: message,
+            userId: userId,
+            lessonId: selectedLesson.id,
+            isActive: 'Y'
+        }
+        await handlePostComment(credential);
+        setMessage("");
+    }
+
+    const formatDateToSharedPublicly = (dateString) => {
+        const date = new Date(dateString);
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    
+        const month = monthNames[date.getMonth()];
+        const year = date.getFullYear();
+    
+        return `${month} ${year}`;
+    };
+    
+
     return (
         <div>
             <div className="d-flex rounded bg-dark text-white justify-content-between p-2" style={{ width: '100%', height: '50px' }}>
@@ -129,6 +146,69 @@ const Learning = () => {
             <div className="learning-sign-in d-flex padding-custom" >
                 <div class='lesson col-sm-12 col-xl-9 align-content-center rounded '>
                     <Lesson data={selectedLesson} />
+
+                    <SockJsClient
+                        key={selectedLesson.id}
+                        url="http://localhost:8080/elearning-service/ws-chat"
+                        topics={[`/topic/comment/${selectedLesson.id}`]}
+                        onConnect={() => console.log("Connected to lesson:", selectedLesson.id)}
+                        onDisconnect={() => console.log("Disconnected")}
+                        onMessage={(msg) => {
+                            console.log("Received comment:", msg);
+                            const commentNew = CommentDto.fromCommentDto(msg);
+                            setComment(prev => [...prev, commentNew]);
+                        }}
+                        debug={false}
+                    />
+                    <div class="mx-3 p-3" style={{ marginTop: '100px' }}>
+                        <div class=" w-100">
+                            <div class="d-flex flex-row align-items-start ">
+                                <img class="rounded-circle mx-3" src="https://i.imgur.com/RpzrMR2.jpg" width="40" />
+                                <textarea
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                    class="form-control ml-1 shadow-none textarea"
+                                    placeholder="Viết gì đó ...."
+                                >
+                                </textarea>
+                            </div>
+                            <div class="mt-2 text-right" style={{ float: "right" }}>
+                                <button
+                                    onClick={postComment}
+                                    class="btn btn-primary btn-sm shadow-none"
+                                    type="button"
+                                >
+                                    Post comment
+                                </button>
+                                <button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button>
+                            </div>
+                        </div>
+
+                        {comment.map((item, index) => (
+                            <div class="" key={index}>
+                                <div class="d-flex flex-column comment-section w-100">
+                                    <div class="">
+                                        <div class="d-flex flex-row user-info">
+                                            <img class="rounded-circle mx-3" src={item.avatar ||  "https://pluspng.com/img-png/user-png-icon-user-2-icon-png-file-512x512-pixel-512.png"} width="40" />
+                                            <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">{item.firstName + " " + item.lastName}</span><span class="date text-black-50">{formatDateToSharedPublicly(item.createdAt)}</span></div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <p class="comment-text mx-5 px-4">{item.content}</p>
+                                        </div>
+                                    </div>
+                                    {/* <div class="bg-white">
+                                    <div class="d-flex flex-row fs-12">
+                                        <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1">Like</span></div>
+                                        <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span class="ml-1">Comment</span></div>
+                                        <div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>
+                                    </div>
+                                </div> */}
+
+                                </div>
+                            </div>
+                        ))}
+
+                    </div>
                 </div>
                 <div class='lesson col-sm-12 col-xl-3 rounded '>
                     <h5 className="p-4 fs-6 border-bottom fw-bold">Nội dung khóa học</h5>

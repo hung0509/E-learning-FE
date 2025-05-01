@@ -29,7 +29,7 @@ const Articles = () => {
     navigate(`/article-detail/${id}`);
   }
 
-  return (<div className="container">
+  return (<div className="p-5">
     <div class="row">
       <div class="col">
         <div class="display-4 fs-4 fw-bold">Bài viết nổi bật</div>

@@ -203,7 +203,7 @@ const CourseDes = () => {
     <div className=" col-sm-12 col-xl-4 px-4">
       <div className="p-3 text-center" >
         <img className="w-100 pb-3" style={{ borderRadius: '18px' }} src="https://th.bing.com/th/id/OIP.NK8Sm1NoQz41q1_DhhToUwHaEK?rs=1&pid=ImgDetMain" alt="" />
-        <h4 className="color-common">{data.priceAfterReduce === 0 ? 'Miễn phí' : Number(data.priceEntered).toLocaleString('vi-VN') + "  VND"}</h4>
+        <h4 className="color-common">{data.priceAfterReduce === 0 ? 'Miễn phí' : "$" + Number(data.priceEntered).toLocaleString('vi-VN')}</h4>
         {/* <div style={{ borderRadius: '18px' }} className="btn btn-primary fw-bold fs-6" onClick={() => handleRegister(data.id)}>ĐĂNG KÝ HỌC</div> */}
         <div
           style={{

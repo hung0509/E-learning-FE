@@ -27,7 +27,7 @@ const Dashboard = () => {
             <div class="d-flex py-2">
                 <a href="/admin/dashboard">Home</a>
                 <i class="bi bi-chevron-right fs-5 px-2"></i>
-                <a href="/admin/dashboard">Dashboard</a>
+                <a href="/admin">Dashboard</a>
             </div>
         </div>
 
