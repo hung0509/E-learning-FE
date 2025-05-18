@@ -4,13 +4,13 @@ const Carousel = () => {
         <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="hover">
         <div className="carousel-inner rounded">
             <div className="carousel-item active">
-                <img className="d-block w-100" src="https://th.bing.com/th/id/OIP.ZKmZKD4N07UyIdAi6UckxQHaCq?w=800&h=288&rs=1&pid=ImgDetMain" alt="Second slide" />
+                <img style={{minWidth: '100%',maxHeight: '400px'}} className="d-block" src="https://files.fullstack.edu.vn/f8-prod/courses/15/62f13d2424a47.png" alt="Second slide" />
             </div>
             <div className="carousel-item">
-                <img className="d-block w-100" src="https://static.vecteezy.com/system/resources/previews/000/381/578/original/vector-abstract-colorful-wave-banner-background.jpg" alt="First slide" />
+                <img style={{minWidth: '100%',maxHeight: '400px'}} className="d-block" src="https://files.fullstack.edu.vn/f8-prod/courses/19/66aa28194b52b.png" alt="First slide" />
             </div>
             <div className="carousel-item">
-                <img className="d-block w-100" src="https://static.vecteezy.com/system/resources/previews/000/381/988/original/vector-abstract-colorful-dotted-banner-background.jpg" alt="Third slide" />
+                <img style={{minWidth: '100%',maxHeight: '400px'}} className="d-block " src="https://files.fullstack.edu.vn/f8-prod/courses/27/64e184ee5d7a2.png" alt="Third slide" />
             </div>
         </div>
         <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">

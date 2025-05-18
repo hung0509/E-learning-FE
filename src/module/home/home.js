@@ -51,9 +51,9 @@ const Home = () => {
 
     return (
         <div className='home-component px-5'>
-            {/* <div className='w-100 py-5' style={{ paddingLeft: '8%', paddingRight: '8%' }}>
+            <div className='w-100' >
                 <Carousel />
-            </div> */}
+            </div>
 
             <div className='home-introduce'>
                 <h2 className='fs-4 fw-bold my-5'>Điểm nổi bật</h2>

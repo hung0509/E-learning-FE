@@ -116,22 +116,22 @@ const CourseDes = () => {
 
   const handleRegister = async (data) => {
     // await registerCourse({ courseId: data.id });
-    if(data.priceAfterReduce !== null || data.priceAfterReduce > 0){
+    if (data.priceAfterReduce !== null || data.priceAfterReduce > 0) {
       //Thanh toan paypal
       const result = {
-         userId: userId,
-         courseId: data.id,
-         balance: data.priceAfterReduce,
-         description: `Thanh toán khóa học ${data.courseName}`,
-         urlError: 'http://localhost:8080/elearning-service/payments/error',
-         urlSuccess: 'http://localhost:8080/elearning-service/payments/success',
-         currency: 'USD',
-         intent: 'sale',
-         method: 'paypal'
+        userId: userId,
+        courseId: data.id,
+        balance: data.priceAfterReduce,
+        description: `Thanh toán khóa học ${data.courseName}`,
+        urlError: 'http://localhost:8080/elearning-service/payments/error',
+        urlSuccess: 'http://localhost:8080/elearning-service/payments/success',
+        currency: 'USD',
+        intent: 'sale',
+        method: 'paypal'
       }
       await handlePayment(result);
-      
-    }else{
+
+    } else {
       await registerCourse({ courseId: data.id });
     }
 
@@ -148,56 +148,65 @@ const CourseDes = () => {
       <h2 className="fs-3 fw-bold">{data.courseName}</h2>
       <p>{data.description}</p>
 
-      <h4 className="fs-5 fw-bold mt-5">Nội dung khóa học</h4>
-      <div className="d-flex align-content-center border-bottom">
-        <p>{data.quantity} bài học</p>
-        <p className="px-3">{formatDurationText(data.courseDuration)}</p>
-      </div>
-      <ul className="p-0">
-      {data.lessons.map((lesson) => (
-  <li
-    key={lesson.id}
-    className="py-3 px-3 list-unstyled"
-    style={{
-      cursor: isRegistered ? 'pointer' : 'not-allowed',
-      fontWeight: '500',
-      opacity: isRegistered ? '1' : '0.6',
-    }}
-  >
-    {registerCourse && isRegistered ? (
-      <Link
-        to={`/lesson?courseId=${data.id}&lessonId=${lesson.id}`}
-        className="text-decoration-none link-dark opacity-75 d-flex justify-content-between pr-5"
-        style={{ width: '100%' }}
-      >
-        <div>
-          <i className="bi bi-play-circle p-3"></i>
-          {lesson.id} . {lesson.lessonName}
+      <div>
+        {/* Lesson */}
+        <h4 className="fs-5 fw-bold mt-5">Nội dung khóa học</h4>
+        <div className="d-flex align-content-center border-bottom">
+          <p>{data.quantity} bài học</p>
+          <p className="px-3">{formatDurationText(data.courseDuration)}</p>
         </div>
-        <span style={{ fontSize: '12px' }}>
-          <i className="bi bi-play-circle px-2"></i>
-          {formatDuration(lesson.lessonTime)}
-        </span>
-      </Link>
-    ) : (
-      <div
-        className="text-decoration-none link-dark opacity-75 d-flex justify-content-between pr-5"
-        style={{ pointerEvents: 'none', width: '100%' }}
-      >
-        <div>
-          <i className="bi bi-play-circle p-3"></i>
-          {lesson.id} . {lesson.lessonName}
-        </div>
-        <span style={{ fontSize: '12px' }}>
-          <i className="bi bi-play-circle px-2"></i>
-          {formatDuration(lesson.lessonTime)}
-        </span>
-      </div>
-    )}
-  </li>
-))}
+        <ul className="p-0">
+          {data.lessons.map((lesson) => (
+            <li
+              key={lesson.id}
+              className="py-3 px-3 list-unstyled"
+              style={{
+                cursor: isRegistered ? 'pointer' : 'not-allowed',
+                fontWeight: '500',
+                opacity: isRegistered ? '1' : '0.6',
+              }}
+            >
+              {registerCourse && isRegistered ? (
+                <Link
+                  to={`/lesson?courseId=${data.id}&lessonId=${lesson.id}`}
+                  className="text-decoration-none link-dark opacity-75 d-flex justify-content-between pr-5"
+                  style={{ width: '100%' }}
+                >
+                  <div>
+                    <i className="bi bi-play-circle p-3"></i>
+                    {lesson.id} . {lesson.lessonName}
+                  </div>
+                  <span style={{ fontSize: '12px' }}>
+                    <i className="bi bi-play-circle px-2"></i>
+                    {formatDuration(lesson.lessonTime)}
+                  </span>
+                </Link>
+              ) : (
+                <div
+                  className="text-decoration-none link-dark opacity-75 d-flex justify-content-between pr-5"
+                  style={{ pointerEvents: 'none', width: '100%' }}
+                >
+                  <div>
+                    <i className="bi bi-play-circle p-3"></i>
+                    {lesson.id} . {lesson.lessonName}
+                  </div>
+                  <span style={{ fontSize: '12px' }}>
+                    <i className="bi bi-play-circle px-2"></i>
+                    {formatDuration(lesson.lessonTime)}
+                  </span>
+                </div>
+              )}
+            </li>
+          ))}
 
-      </ul>
+        </ul>
+      </div>
+
+      {/* Quiz */}
+
+
+
+      {/* Document */}
     </div>
 
     <div className=" col-sm-12 col-xl-4 px-4">

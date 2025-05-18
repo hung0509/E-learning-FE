@@ -1,28 +1,4 @@
-.course-admin .table td,.course-admin .table th{
-    border: none !important;
-    cursor: pointer;
-}
-
-.course-admin .table img{
-    width: 80px; 
-    height: 80px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.course-admin .add-course{
-    float: right;
-    border: 1px solid #0c9edb;
-    color: #0c9edb;
-    margin-bottom: 12px;
-}
-
-.course-admin .add-course:hover{
-    background-color: #0c9edb;
-    color: #fff;
-}
-
-.course-admin .modal-overlay {
+.course-lesson .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -32,10 +8,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 101;
+    z-index: 102;
   }
   
-  .course-admin .modal-content {
+  .course-lesson .modal-content {
     width: 60%;
     background: white;
     padding: 20px;
@@ -45,7 +21,7 @@
     overflow-y: auto; /* Bật cuộn khi nội dung dài */
   }
   
-  .course-admin  .close-btn {
+  .course-lesson  .close-btn {
     position: absolute;
     top: 10px;
     right: 15px;
@@ -54,6 +30,3 @@
     font-size: 20px;
     cursor: pointer;
   }
-  
-  
-  

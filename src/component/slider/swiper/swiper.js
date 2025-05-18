@@ -36,8 +36,8 @@ const SwiperComponent = ({data}) => {
             >
                 {dataAvatar.map((item, index) => (
                     <SwiperSlide key={index}>
-                        <div className="card text-center" style={{ width: '16rem' }}>
-                            <img width="254px" height="315px" src={item} className="card-img-bottom" alt="..." />
+                        <div className="card text-center" style={{ minWidth: '18rem', borderRadius: '32px' }}>
+                            <img width="254px" height="315px"  src={item} className="card-img-bottom"  alt="..." />
                         </div>
                     </SwiperSlide>
                 ))}
