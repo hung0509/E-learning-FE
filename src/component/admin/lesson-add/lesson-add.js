@@ -1,16 +1,27 @@
 import { useState } from "react";
 import LessonDto from "../../../dto/lesson-dto";
+import { useLesson } from "../../../hook/useLesson";
 
-const LessonInfo = ({closeModal}) => {
+const LessonInfo = ({closeModal, addLesson}) => {
     const [lesson, setLesson] = useState(new LessonDto());
+    const { handleAddLesson } = useLesson();
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setLesson({ ...lesson, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async () => {
+        //   const formData = new FormData();
+    
+        // formData.append('courseId', courseId); // Temporary instructorId
+        // formData.append('documentName', document.documentName);
+        // formData.append('documentUrl', document.documentUrl);
 
+
+        // const value = await handleAddLesson(lesson);
     };
+
     return (
         <form >
             <div className="mb-3">

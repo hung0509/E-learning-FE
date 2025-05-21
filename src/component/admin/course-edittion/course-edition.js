@@ -235,69 +235,127 @@ import AddWritingTestForm from "../course-quiz/course-quiz";
 import CourseDoc from "../course-doc/course-doc";
 import DocumentTab from "../document/document";
 
-const sampleCourseData = {
-  name: "Khóa học ReactJS từ cơ bản đến nâng cao",
-  description: "Khóa học này giúp bạn học ReactJS từng bước, có ví dụ thực tế và bài tập.",
-  avatar: "https://example.com/images/react-course-avatar.jpg",
-  trailer: "https://youtube.com/trailer-react-course",
-  price: 1500000,          // Giá gốc
-  price_after_reduce: 1200000, // Giá sau giảm
-  courseDuration: 480,     // Thời lượng (phút)
-  quantity: 30,            // Số lượng bài học
-  discount_id: 101,        // Discount Id
-  is_active: "Y",          // Trạng thái hoạt động
-  certificate_id: 5,       // Certificate Id
-  level: "beginner",       // Level
-  created_at: "2025-05-01",// Ngày tạo (định dạng ISO yyyy-mm-dd)
-  updated_at: "2025-05-15", // Ngày cập nhật
-  lessons: [
-    {
-      id: 1,
-      lessonName: "Introduction to React",
-      lessonTime: 300, // 5 minutes
-    },
-    {
-      id: 2,
-      lessonName: "JSX and Components",
-      lessonTime: 750, // 12 minutes 30 seconds
-    },
-    {
-      id: 3,
-      lessonName: "State and Props",
-      lessonTime: 1800, // 30 minutes
-    },
-    {
-      id: 4,
-      lessonName: "React Hooks Overview",
-      lessonTime: 2400, // 40 minutes
-    },
-  ],
-  documents: [
-    {
-      id: 1,
-      documentName: "Lập trình tin học"
-    },
-    {
-      id: 2,
-      documentName: "Lập trình nâng cao"
-    }
-  ],
-  quizs: [
-    {
-      id: 1,
-      title: "Bài kiểm tra 1"
-    }  ,
-    {
-      id: 2,
-      title: "Bài kiểm tra 2"
-    }  
-  ]
-};
+// const sampleCourseData = {
+//   id: 10,
+//   name: "Khóa học ReactJS từ cơ bản đến nâng cao",
+//   description: "Khóa học này giúp bạn học ReactJS từng bước, có ví dụ thực tế và bài tập.",
+//   avatar: "https://example.com/images/react-course-avatar.jpg",
+//   trailer: "https://youtube.com/trailer-react-course",
+//   price: 1500000,          // Giá gốc
+//   price_after_reduce: 1200000, // Giá sau giảm
+//   courseDuration: 480,     // Thời lượng (phút)
+//   quantity: 30,            // Số lượng bài học
+//   discount_id: 101,        // Discount Id
+//   is_active: "Y",          // Trạng thái hoạt động
+//   certificate_id: 5,       // Certificate Id
+//   level: "beginner",       // Level
+//   created_at: "2025-05-01",// Ngày tạo (định dạng ISO yyyy-mm-dd)
+//   updated_at: "2025-05-15", // Ngày cập nhật
+//   lessons: [
+//     {
+//       id: 1,
+//       lessonName: "Introduction to React",
+//       lessonTime: 300, // 5 minutes
+//     },
+//     {
+//       id: 2,
+//       lessonName: "JSX and Components",
+//       lessonTime: 750, // 12 minutes 30 seconds
+//     },
+//     {
+//       id: 3,
+//       lessonName: "State and Props",
+//       lessonTime: 1800, // 30 minutes
+//     },
+//     {
+//       id: 4,
+//       lessonName: "React Hooks Overview",
+//       lessonTime: 2400, // 40 minutes
+//     },
+//   ],
+//   documents: [
+//     {
+//       id: 1,
+//       documentName: "Lập trình tin học"
+//     },
+//     {
+//       id: 2,
+//       documentName: "Lập trình nâng cao"
+//     }
+//   ],
+//   quizs: [
+//     {
+//       id: 1,
+//       title: "Bài kiểm tra 1"
+//     }  ,
+//     {
+//       id: 2,
+//       title: "Bài kiểm tra 2"
+//     }  
+//   ]
+// };
 
 
-const EditCoursePage = () => {
+const EditCoursePage = ({ courseSelected }) => {
   const [activeTab, setActiveTab] = useState(0); // 0,1,2,3 tương ứng 4 tab
-  const [course, setCourse] = useState(sampleCourseData);
+  const [course, setCourse] = useState(courseSelected);
+
+  const addDocument = (newDocumentName) => {
+    const newDoc = {
+      id: newDocumentName.id,
+      documentName: newDocumentName.documentName,
+    };
+
+    setCourse((prevData) => ({
+      ...prevData,
+      documents: [...prevData.documents, newDoc],
+    }));
+  };
+
+  const addQuiz = (newQuiz) => {
+    const quizAddition = {
+      id: newQuiz.id,
+      title: newQuiz.title,
+    };
+
+    setCourse((prevData) => ({
+      ...prevData,
+      quizs: [...prevData.quizs, quizAddition],
+    }));
+  };
+
+   const addLesson = (newLesson) => {
+    const lessonAddition = {
+      id: newLesson.id,
+      title: newLesson.lessonName,
+    };
+
+    setCourse((prevData) => ({
+      ...prevData,
+      lessons: [...prevData.lessons, lessonAddition],
+    }));
+  };
+
+  const deleteDocument = (idToDelete) => {
+    setCourse((prev) => ({
+      ...prev,
+      documents: prev.documents.filter((doc) => doc.id !== idToDelete),
+    }));
+  };
+
+  const deleteQuiz = (id) => {
+    setCourse((prev) => ({
+      ...prev,
+      quizs: prev.quizs.filter((quiz) => quiz.id !== id),
+    }));
+  };
+
+  const deleteLesson = (id) => {
+    setCourse((prev) => ({
+      ...prev,
+      lessons: prev.lessons.filter((lesson) => lesson.id !== id),
+    }));
+  };
 
   return (
     <div className="col-lg-12">
@@ -344,22 +402,34 @@ const EditCoursePage = () => {
         {
           activeTab === 0 &&
           <div>
-            <CourseInfoTab courses={course}/>
+            <CourseInfoTab courses={course} />
           </div>
         }
-        {activeTab === 1 && 
+        {activeTab === 1 &&
           <div>
-            <CourseLessonTab lessons={course.lessons} />
+            <CourseLessonTab 
+              lessons={course.lessons} 
+              addLesson={addLesson}
+              deleteLesson={deleteLesson}  
+            />
           </div>
         }
-        {activeTab === 2 && 
+        {activeTab === 2 &&
           <div>
-              <AddWritingTestForm courses={course}/>
+            <AddWritingTestForm 
+              courses={course} 
+              addQuiz={addQuiz}
+              deleteQuiz={deleteQuiz}
+            />
           </div>
         }
-        {activeTab === 3 && 
+        {activeTab === 3 &&
           <div>
-              <DocumentTab courses={course}/>
+            <DocumentTab
+              courses={course}
+              addDocument={addDocument}
+              deleteDocument={deleteDocument}
+            />
           </div>
         }
       </div>

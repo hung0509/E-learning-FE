@@ -11,7 +11,12 @@ class CourseDetailDto{
         courseDuration,
         quantity,
         createdAt,
-        lessons = []
+        certificate ,
+        discount,
+        category ,
+        lessons = [],
+        quizs = [],
+        documents = [] 
     ) {
         this.id = id;
         this.courseName = courseName;
@@ -25,6 +30,11 @@ class CourseDetailDto{
         this.quantity = quantity;
         this.createdAt = createdAt;
         this.lessons = lessons;
+        this.quizs = quizs;
+        this.documents = documents;
+         this.certificate = certificate;
+        this.discount = discount;
+        this.category = category;
     }
 
     // Hàm tùy chọn để chuyển đổi sang JSON
@@ -41,7 +51,12 @@ class CourseDetailDto{
             courseDuration: this.courseDuration,
             quantity: this.quantity,
             createdAt: this.createdAt,
-            lessons: this.lessons
+            certificate: this.certificate,
+            discount: this.discount,
+            category: this.category,
+            lessons: this.lessons,
+            quizs: this.quizs,
+            documents: this.documents
         };
     }
 
@@ -58,7 +73,12 @@ class CourseDetailDto{
             data.courseDuration,
             data.quantity,
             new Date(data.createdAt), // Chuyển đổi sang kiểu Date
-            data.lessons
+            data.certificate,
+            data.discount,
+            data.category,
+            data.lessons,
+            data.quizs,
+            data.documents
         );
     }
 }

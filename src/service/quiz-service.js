@@ -1,10 +1,11 @@
-import { LessonApi } from "../api/lesson-api";
+import { DocumentApi } from "../api/document-api";
+import { QuizApi } from "../api/quiz-api";
 import { MESSAGES } from "../constant/message";
 
-export const LessonService = {
-    getLessonById : async (credential) => {
+export const QuizService = {
+    add : async (credential) => {
         try{
-            const data = await LessonApi.getLessonById(credential);
+            const data = await QuizApi.add(credential);
 
             const {code, result} = data;
 
@@ -30,33 +31,7 @@ export const LessonService = {
 
     delete : async (credential) => {
         try{
-            const data = await LessonApi.remove(credential);
-
-            const {code, result} = data;
-
-            if(code !== 0){
-                return {
-                    code: code,
-                    message: MESSAGES.ERROR_UNKNOWN
-                }
-            }
-
-            return {
-                code: 0,
-                result: result
-            }
-        }catch(err){
-            const message = err.response?.data?.message || MESSAGES.ERROR_SERVER;
-            return {
-                code: false,
-                message: message
-            }
-        }
-    },
-
-    add : async (credential) => {
-        try{
-            const data = await LessonApi.add(credential);
+            const data = await QuizApi.delete(credential);
 
             const {code, result} = data;
 

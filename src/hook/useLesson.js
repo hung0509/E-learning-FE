@@ -14,5 +14,29 @@ export const useLesson = () => {
         }
     }
 
-    return { handleGetLesson };
+    const handleDeleteLesson = async (credential) => {
+        try {
+            const data = await LessonService.delete(credential);
+            if(data.code === 0){
+                return data.result;
+            }
+        } catch (err) {
+            showError(err.message);
+            throw err;
+        }
+    }
+
+    const handleAddLesson = async (credential) => {
+        try {
+            const data = await LessonService.add(credential);
+            if(data.code === 0){
+                return data.result;
+            }
+        } catch (err) {
+            showError(err.message);
+            throw err;
+        }
+    }
+
+    return { handleGetLesson, handleDeleteLesson, handleAddLesson };
 }

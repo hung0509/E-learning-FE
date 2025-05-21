@@ -3,12 +3,13 @@ import './course-admin.css';
 import EditCoursePage from '../course-edittion/course-edition';
 import Pagination from "../../pagination/pagination";
 import { useCourse } from '../../../hook/useCourse';
-import CourseHeaderDto from '../../../dto/course-header-dto';
+// import CourseHeaderDto from '../../../dto/course-header-dto';
 import BaseRequestDto from '../../../dto/base-request-dto';
 import CourseRequest from '../../../dto/request/course-request';
 import { useCategory } from '../../../hook/useCategory';
 import CategoryDto from '../../../dto/category-dto';
 import { useNavigate } from 'react-router-dom';
+import CourseDetailDto from '../../../dto/course-detail-dto';
 
 
 const CourseAdmin = () => {
@@ -19,17 +20,17 @@ const CourseAdmin = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [param, setParam] = useState(new CourseRequest('0', "", "ALL", "ALL"));
     const [categories, setCategories] = useState([]);
-    const { handleGetCourse } = useCourse();
+    const { handleGetCourse2 } = useCourse();
     const { handleCategory } = useCategory();
     const navigate = useNavigate();
 
 
     useEffect(() => {
         const fetchData  = async () => {
-            const results = await handleGetCourse(`?page=${currentPage-1}&pageSize=1&${param.toQueryParams()}`);
+            const results = await handleGetCourse2(`?page=${currentPage-1}&pageSize=1&${param.toQueryParams()}`);
             const resultCategory = await handleCategory();
 
-            const courses = results.result.map((item) => CourseHeaderDto.fromCourseHeaderResponse(item));
+            const courses = results.result.map((item) => CourseDetailDto.fromCourseDetailResponse(item));
             const categories = resultCategory.map((item) => CategoryDto.fromJson(item))
             const page = BaseRequestDto.fromBaseRequestResponse(results);
 

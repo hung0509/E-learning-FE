@@ -1,29 +1,20 @@
 import { useState } from "react";
 import LessonInfo from "../lesson-add/lesson-add";
 import CourseDocAdd from "../course-doc/course-doc";
+import { useDocument } from "../../../hook/useDocument";
 
-const DocumentTab = ({ courses }) => {
+const DocumentTab = ({ courses, addDocument, deleteDocument }) => {
     const [isEditModalOpen, setEditModalOpen] = useState(false);
+    const {handleDeleteDoc} = useDocument();
 
     const closeModal = () => {
         setEditModalOpen(false); // Đóng modal
     };
 
-    function pad(num) {
-        return num.toString().padStart(2, '0');
-    }
+    const handleRemoveLesson = async (id) => {
+        const value = await handleDeleteDoc(id);
 
-    function formatDuration(seconds) {
-        const totalSeconds = Math.floor(seconds);
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const secs = totalSeconds % 60;
-
-        return `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;
-    }
-
-    const handleRemoveLesson = () => {
-
+        deleteDocument(value);
     }
 
     const handleEditClick = () => {
@@ -41,12 +32,16 @@ const DocumentTab = ({ courses }) => {
                 <div className="modal-overlay">
                     <div className="modal-content w-25">
                         {/* <button className="close-btn btn btn-outline-danger" onClick={closeModal}>×</button> */}
-                            <CourseDocAdd closeModal={closeModal}/>
+                        <CourseDocAdd
+                            closeModal={closeModal}
+                            courseId={courses.id}
+                            addDocument={addDocument}
+                        />
                     </div>
                 </div>
             )}
 
-            {courses.documents.map((document) => (
+            {courses.documents.map((document, index) => (
                 <li
                     key={document.id}
                     className="py-3 px-3"
@@ -60,10 +55,18 @@ const DocumentTab = ({ courses }) => {
                     >
                         <div>
                             <i className="bi bi-play-circle p-3"></i>
-                            {document.id}. {document.documentName}
+                            {index}. {document.documentName}
+                        </div>
+                        <div>
+                            {/* <iframe
+                                src={document.documentUrl}
+                                width="100%"
+                                height="600px"
+                            /> */}
+                            <a href={document.documentUrl}>{document.documentName}</a>
                         </div>
                         <span style={{ fontSize: '12px' }}>
-                            <span onClick={handleRemoveLesson} className="mx-5" style={{ cursor: 'pointer' }}><i class="bi bi-trash-fill"></i></span>
+                            <span onClick={() => handleRemoveLesson(document.id)} className="mx-5" style={{ cursor: 'pointer' }}><i class="bi bi-trash-fill"></i></span>
                         </span>
                     </div>
                 </li>

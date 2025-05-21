@@ -6,6 +6,7 @@ export const API_ENDPOINTS = {
   REGISTER: '/accounts',
   DASHBOARD : '/dashboards',
   COURSE: '/courses',
+  COURSE2: '/courses/v2',
   COURSE_SPECIAL: '/courses/special',
   COURSE_DETAIL: '/courses/detail',
   ARTICLE: '/articles',
@@ -16,5 +17,7 @@ export const API_ENDPOINTS = {
   LESSON: '/lessons',
   CREATE_PAYMENT: '/payments/create',
   AUTH_BY_GOOGLE: '/auth/outbound/authentication',
-  COMMENT: '/comments'
+  COMMENT: '/comments',
+  DOCUMENT: '/documents',
+  QUIZ: '/quizzes'
 };

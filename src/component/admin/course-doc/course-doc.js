@@ -1,27 +1,53 @@
 import { useState } from "react";
 import LessonDto from "../../../dto/lesson-dto";
+import { useDocument } from "../../../hook/useDocument";
+import DocumentDto from "../../../dto/document-dto";
 
-const CourseDocAdd = ({closeModal}) => {
-    const [lesson, setLesson] = useState(new LessonDto());
+const CourseDocAdd = ({closeModal, courseId, addDocument}) => {
+    const [document, setDocument] = useState(new DocumentDto());
+    const { handleAddDocument } = useDocument();
+
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setLesson({ ...lesson, [name]: value });
+        setDocument({ ...document, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleFileChange = (e, fieldName) => {
+        const file = e.target.files[0];
+        if (file) {
+            file.preview = URL.createObjectURL(file);
 
+            // Cập nhật vào data thay vì setFiles
+            setDocument((prevData) => ({
+                ...prevData,
+                [fieldName]: file, // Cập nhật file vào đúng trường trong data
+            }));
+        }
     };
+
+    const handleSubmit = async () => {
+        const formData = new FormData();
+    
+        formData.append('courseId', courseId); // Temporary instructorId
+        formData.append('documentName', document.documentName);
+        formData.append('documentUrl', document.documentUrl);
+
+        const data = await handleAddDocument(formData);
+
+        addDocument(data);
+    };
+
     return (
         <form >
             <div className="mb-3">
                 <label className="form-label fw-bold">Tên tài liệu</label>
                 <input
                     type="text"
-                    name="course_name"
-                    value={lesson.lessonName}
+                    name="documentName"
+                    value={document.documentName}
                     onChange={handleChange}
                     className="form-control"
-                    placeholder="Nhập tên khóa học"
+                    placeholder="Nhập tên tài liệu"
                 />
             </div>
 
@@ -30,9 +56,8 @@ const CourseDocAdd = ({closeModal}) => {
                     <label className="form-label fw-bold">File</label>
                     <input
                         type="file"
-                        name="price_entered"
-                        value={lesson.urlLesson}
-                        onChange={handleChange}
+                        name="documentUrl"
+                        onChange={(e) => handleFileChange(e, 'documentUrl')}
                         className="form-control"
                         placeholder="Nhập giá gốc"
                     />

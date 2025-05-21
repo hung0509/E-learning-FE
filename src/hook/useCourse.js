@@ -31,6 +31,18 @@ export const useCourse = () => {
         }
     }
 
+    const handleGetCourse2 = async (credential) => {
+        try{
+            const data = await CourseService.getCourses2(credential);
+
+            if(data.code === 0){
+                return data;
+            }
+        }catch(err){
+            throw err;
+        }
+    }
+
     const handleGetDetailCourse = async (credential) => {
         try{
             const data = await CourseService.getDetailCourse(credential);
@@ -55,5 +67,5 @@ export const useCourse = () => {
         }
     }
 
-    return { handleAddSourse, handleGetCourse, handleGetDetailCourse, handleCourseSpecial };
+    return { handleAddSourse, handleGetCourse, handleGetDetailCourse, handleCourseSpecial, handleGetCourse2 };
 }

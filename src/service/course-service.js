@@ -61,6 +61,38 @@ export const CourseService = {
         }
     },
 
+    getCourses2: async (credential) => {
+        try{
+            const data = await CourseApi.getCourses2(credential);
+
+            const {code, result, currentPage, pageSize, totalPages, totalItems} = data;
+
+            if(code !== 0){
+                return {
+                    code: code,
+                    result: null
+                }
+            }
+
+            return {
+                code: CODE.SUCCESS,
+                result: result,
+                currentPage: currentPage,
+                pageSize: pageSize,
+                totalPages: totalPages,
+                totalItems: totalItems
+            }
+        }catch(err){
+            const message = err.response?.data?.message || MESSAGES.ERROR_SERVICE;
+            console.error(message);
+            return {
+                code: CODE.FAIL,
+                message: message
+            }
+        }
+    },
+
+
     getDetailCourse: async (credential) => {
         try{
             const data = await CourseApi.getDetailCourse(credential);

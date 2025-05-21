@@ -1,8 +1,10 @@
 import { useState } from "react";
 import LessonInfo from "../lesson-add/lesson-add";
+import { useLesson } from "../../../hook/useLesson";
 
-const CourseLessonTab = ({ lessons }) => {
+const CourseLessonTab = ({ lessons, addLesson, deleteLesson }) => {
     const [isEditModalOpen, setEditModalOpen] = useState(false);
+    const { handleDeleteLesson } = useLesson();
 
     const closeModal = () => {
         setEditModalOpen(false); // Đóng modal
@@ -21,8 +23,9 @@ const CourseLessonTab = ({ lessons }) => {
         return `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;
     }
 
-    const handleRemoveLesson = () => {
-
+    const handleRemoveLesson = async (id) => {
+        const value = await handleDeleteLesson(id);
+        deleteLesson(value);
     }
 
     const handleEditClick = () => {
@@ -40,12 +43,15 @@ const CourseLessonTab = ({ lessons }) => {
                 <div className="modal-overlay">
                     <div className="modal-content w-25">
                         {/* <button className="close-btn btn btn-outline-danger" onClick={closeModal}>×</button> */}
-                            <LessonInfo closeModal={closeModal}/>
+                            <LessonInfo 
+                                closeModal={closeModal}
+                                addLesson={addLesson}
+                            />
                     </div>
                 </div>
             )}
 
-            {lessons.map((lesson) => (
+            {lessons.map((lesson, index) => (
                 <li
                     key={lesson.id}
                     className="py-3 px-3"
@@ -59,7 +65,7 @@ const CourseLessonTab = ({ lessons }) => {
                     >
                         <div>
                             <i className="bi bi-play-circle p-3"></i>
-                            {lesson.id}. {lesson.lessonName}
+                            {index}. {lesson.lessonName}
                         </div>
                         <span style={{ fontSize: '12px' }}>
                             <i className="bi bi-clock px-2"></i>

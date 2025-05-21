@@ -34,6 +34,21 @@ export const CourseApi = {
         }
     },
 
+     getCourses2: async (credential) => {
+        try{
+            const res = await axiosInstance.get(`${API_URL}${API_ENDPOINTS.COURSE2}${credential}`, );
+
+            return res.data;
+        }catch(err){
+            const message = err.response?.data?.message || MESSAGES.ERROR_UNKNOWN;
+            console.log(message);
+            return {
+                code: CODE.FAIL,
+                message: message
+            }
+        }
+    },
+
     getDetailCourse: async (credential) => {
         try{
             const res = await axiosInstance.get(`${API_URL}${API_ENDPOINTS.COURSE_DETAIL}${credential}`, );

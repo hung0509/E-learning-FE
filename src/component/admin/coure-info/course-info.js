@@ -17,7 +17,7 @@ const CourseInfoTab = ({courses}) => {
                 <input
                   type="text"
                   name="course_name"
-                  value={course.name || ""}
+                  value={course.courseName || ""}
                   onChange={handleChange}
                   className="form-control"
                   placeholder="Nhập tên khóa học"
@@ -27,7 +27,7 @@ const CourseInfoTab = ({courses}) => {
                 <label className="form-label fw-bold">Mô tả</label>
                 <textarea
                   name="description"
-                  value={""}
+                  value={course.description}
                   onChange={handleChange}
                   className="form-control"
                   placeholder="Nhập mô tả khóa học"
@@ -68,7 +68,7 @@ const CourseInfoTab = ({courses}) => {
                   <input
                     type="number"
                     name="price_entered"
-                    value={course.price || 0}
+                    value={course.priceEntered}
                     onChange={handleChange}
                     className="form-control"
                     placeholder="Nhập giá gốc"
@@ -79,7 +79,7 @@ const CourseInfoTab = ({courses}) => {
                   <input
                     type="number"
                     name="price_after_reduce"
-                    value={0}
+                    value={course.priceAfterReduce}
                     onChange={handleChange}
                     className="form-control"
                     placeholder="Nhập giá sau giảm"
@@ -118,7 +118,7 @@ const CourseInfoTab = ({courses}) => {
                   <input
                     type="number"
                     name="discountCode"
-                    value={course.discountCode || ""}
+                    value={course.discount?.discountCode || ""}
                     onChange={handleChange}
                     className="form-control"
                     placeholder="Nhập Discount Id (nếu có)"
@@ -132,7 +132,7 @@ const CourseInfoTab = ({courses}) => {
                   <label className="form-label fw-bold">Trạng thái</label>
                   <select
                     name="is_active"
-                    value={""}
+                    value={null}
                     onChange={handleChange}
                     className="form-select"
                   >
@@ -145,7 +145,7 @@ const CourseInfoTab = ({courses}) => {
                   <input
                     type="number"
                     name="certificate"
-                    value={course.certificateName || ""}
+                    value={course.certificate.certificateName}
                     onChange={handleChange}
                     className="form-control"
                     placeholder="Nhập Certificate Id (nếu có)"
@@ -156,7 +156,7 @@ const CourseInfoTab = ({courses}) => {
                   <input
                     type="text"
                     name="level"
-                    value={course.level || ""}
+                    value={course.level}
                     onChange={handleChange}
                     className="form-control"
                     placeholder="Ví dụ: begin, pro"
