@@ -89,8 +89,8 @@ const AddMultipleChoiceTestForm = ({ courses, addQuiz, deleteQuiz }) => {
 
     const handleRemoveQuiz = async (id) => {
         const value = await handleDeleteQuiz(id);
-
-        deleteQuiz(value);
+        console.log("Value: ", value.id);
+        deleteQuiz(value.id);
     }
 
     return (

@@ -26,8 +26,8 @@ const CourseAdmin = () => {
 
 
     useEffect(() => {
-        const fetchData  = async () => {
-            const results = await handleGetCourse2(`?page=${currentPage-1}&pageSize=1&${param.toQueryParams()}`);
+        const fetchData = async () => {
+            const results = await handleGetCourse2(`?page=${currentPage - 1}&pageSize=1&${param.toQueryParams()}`);
             const resultCategory = await handleCategory();
 
             const courses = results.result.map((item) => CourseDetailDto.fromCourseDetailResponse(item));
@@ -41,6 +41,20 @@ const CourseAdmin = () => {
 
         fetchData();
     }, [currentPage, param])
+
+
+    const changeData = (changeCourse) => {
+        if (selectedRow) {
+            // Ví dụ: cập nhật 1 hàng trong data dựa vào selectedRow
+            setData((prevData) =>
+                prevData.map((row) =>
+                    row.id === selectedRow.id ? { ...row, ...changeCourse } : row
+                )
+            );
+
+            console.log(data);
+        }
+    }
 
     const onPageChange = (page) => {
         setCurrentPage(page);
@@ -63,16 +77,16 @@ const CourseAdmin = () => {
         const { name, value } = e.target;
 
         console.log(value);
-    
+
         setParam((prevData) => {
-          return new CourseRequest(
-            name === 'categoryId' ? value : prevData.categoryId,
-            name === 'courseName' ? value : prevData.courseName,
-            name === 'courseStatus' ? value : prevData.courseStatus,
-            name === 'level' ? value : prevData.level
-          );
+            return new CourseRequest(
+                name === 'categoryId' ? value : prevData.categoryId,
+                name === 'courseName' ? value : prevData.courseName,
+                name === 'courseStatus' ? value : prevData.courseStatus,
+                name === 'level' ? value : prevData.level
+            );
         });
-      };
+    };
 
     const handleAddCourse = () => {
         navigate(`/admin/course/add`);
@@ -93,41 +107,41 @@ const CourseAdmin = () => {
                         <p style={{ fontSize: '12px' }} className="fw-bold">Tìm theo tên</p>
                         <span><i class="bi bi-search"></i></span>
                     </div>
-                    <input 
+                    <input
                         value={param.courseName}
                         onChange={handleChange}
-                        style={{ fontSize: '12px' }} 
-                        type="text" 
+                        style={{ fontSize: '12px' }}
+                        type="text"
                         name="courseName"
-                        id="courseName" 
-                        className="border-0 border-bottom p-1" 
-                     />
+                        id="courseName"
+                        className="border-0 border-bottom p-1"
+                    />
                 </div>
 
                 <div className="card p-3 my-3">
                     <p style={{ fontSize: '12px' }} className="fw-bold">Tìm theo thể loại:</p>
                     <select style={{ fontSize: '12px' }} name="categoryId" id="categoryId" className="fw-normal rounded px-2" onChange={handleChange}>
-                        <option className='px-2' style={{ fontSize: '12px' }}    value="0"  selected>Tất cả</option>
-                        {categories.map((item) => (<option className='px-2' style={{ fontSize: '12px' }}  key={item.id} value={item.id}>{item.categoryName}</option>))}
+                        <option className='px-2' style={{ fontSize: '12px' }} value="0" selected>Tất cả</option>
+                        {categories.map((item) => (<option className='px-2' style={{ fontSize: '12px' }} key={item.id} value={item.id}>{item.categoryName}</option>))}
                     </select>
                 </div>
 
                 <div className="card p-3 my-3">
                     <p style={{ fontSize: '12px' }} className="fw-bold">Trạng thái:</p>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="ALL" name="courseStatus" onChange={handleChange} checked={param.courseStatus === 'ALL'}/>
+                        <input class="form-check-input" type="radio" value="ALL" name="courseStatus" onChange={handleChange} checked={param.courseStatus === 'ALL'} />
                         <label class="form-check-label" for="flexCheckDefault" style={{ fontSize: '12px' }}>
                             Tất cả
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="COM" name="courseStatus"   onChange={handleChange} checked={param.courseStatus === 'COM'}/>
+                        <input class="form-check-input" type="radio" value="COM" name="courseStatus" onChange={handleChange} checked={param.courseStatus === 'COM'} />
                         <label class="form-check-label" for="flexCheckDefault" style={{ fontSize: '12px' }}>
                             Đã hoàn thành
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="UNC" name="courseStatus"   onChange={handleChange} checked={param.courseStatus === 'UNC'}/>
+                        <input class="form-check-input" type="radio" value="UNC" name="courseStatus" onChange={handleChange} checked={param.courseStatus === 'UNC'} />
                         <label class="form-check-label" for="flexCheckChecked" style={{ fontSize: '12px' }}>
                             Chưa hoàn thành
                         </label>
@@ -137,25 +151,25 @@ const CourseAdmin = () => {
                 <div className="card p-3 my-3" style={{ fontSize: '12px' }}>
                     <p className="fw-bold">Trình độ:</p>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="ALL" id="flexCheckDefault" name="level"  onChange={handleChange} checked={param.level === 'ALL'}/>
+                        <input class="form-check-input" type="radio" value="ALL" id="flexCheckDefault" name="level" onChange={handleChange} checked={param.level === 'ALL'} />
                         <label class="form-check-label" for="flexCheckDefault">
                             All Level
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="BEGINNER" id="flexCheckChecked" name="level" onChange={handleChange} checked={param.level === 'BEGINNER'}/>
+                        <input class="form-check-input" type="radio" value="BEGINNER" id="flexCheckChecked" name="level" onChange={handleChange} checked={param.level === 'BEGINNER'} />
                         <label class="form-check-label" for="flexCheckChecked">
                             Beginner
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="INTERMEDIATE" id="flexCheckChecked" name="level"  onChange={handleChange} checked={param.level === 'INTERMEDIATE'}/>
+                        <input class="form-check-input" type="radio" value="INTERMEDIATE" id="flexCheckChecked" name="level" onChange={handleChange} checked={param.level === 'INTERMEDIATE'} />
                         <label class="form-check-label" for="flexCheckChecked">
                             Intermediate
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="EXPERT" id="flexCheckChecked" name="level"  onChange={handleChange} checked={param.level === 'EXPERT'}/>
+                        <input class="form-check-input" type="radio" value="EXPERT" id="flexCheckChecked" name="level" onChange={handleChange} checked={param.level === 'EXPERT'} />
                         <label class="form-check-label" for="flexCheckChecked">
                             Expert
                         </label>
@@ -241,7 +255,10 @@ const CourseAdmin = () => {
                     <div className="modal-overlay">
                         <div className="modal-content">
                             <button className="close-btn btn btn-outline-danger" onClick={closeModal}>×</button>
-                            <EditCoursePage courseSelected={selectedRow} />
+                            <EditCoursePage 
+                                courseSelected={selectedRow} 
+                                changeData={changeData}
+                            />
                         </div>
                     </div>
                 )}

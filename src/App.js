@@ -28,6 +28,7 @@ import { ToastContainer } from 'react-toastify';
 import ArticleDetail from './module/article-detail/article-detail';
 import PaymentSuccess from './component/status/success/payment-success';
 import PaymentError from './component/status/error/payment-error';
+import QuizForm from './module/quiz/quiz';
 
 
 function App() {
@@ -89,6 +90,7 @@ function App() {
                     <Route path="/article" element={<Articles/>}/>
                     <Route path="/article/post" element={<ToolbarPlugin/>}/>
                     <Route path="/about-us" element={<AboutUs/>}/>
+                    <Route path="/quiz/:quizId" element={<QuizForm/>}/>
                     <Route path="/my-info" element={<MyInfo/>}/>
                     <Route path="/sign-in" element={<Login/>}/>
                     <Route path="/register" element={<Register/>}/>

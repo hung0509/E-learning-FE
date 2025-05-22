@@ -174,7 +174,7 @@ const CourseDes = () => {
                 >
                   <div>
                     <i className="bi bi-play-circle p-3"></i>
-                    {lesson.id} . {lesson.lessonName}
+                     {lesson.lessonName}
                   </div>
                   <span style={{ fontSize: '12px' }}>
                     <i className="bi bi-play-circle px-2"></i>
@@ -202,11 +202,81 @@ const CourseDes = () => {
         </ul>
       </div>
 
-      {/* Quiz */}
-
-
-
       {/* Document */}
+      <div>
+        {/* Lesson */}
+        <h4 className="fs-5 fw-bold mt-5">Nội dung tài liệu</h4>
+        <ul className="p-0">
+          {data.documents.map((document, index) => (
+            <li
+              key={document.id}
+              className="py-3 px-3 list-unstyled"
+              style={{
+                cursor: isRegistered ? 'pointer' : 'not-allowed',
+                fontWeight: '500',
+                opacity: isRegistered ? '1' : '0.6',
+              }}
+            >
+              <a
+                href={isRegistered ? document.documentUrl : '#'}
+                onClick={(e) => {
+                  if (!isRegistered) {
+                    e.preventDefault(); // Không cho click nếu chưa đăng ký
+                  }
+                }}
+                target="_blank"
+                className="text-decoration-none link-dark opacity-75 d-flex justify-content-between pr-5"
+                style={{
+                  width: '100%',
+                  pointerEvents: isRegistered ? 'auto' : 'none', // Vô hiệu hóa pointer nếu chưa đăng ký
+                }}
+              >
+                <div>
+                  {index} . {document.documentName}
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+
+      {/* Quiz */}
+      <div>
+        <h4 className="fs-5 fw-bold mt-5">Nội dung kiểm tra</h4>
+        <ul className="p-0">
+          {data.quizs.map((quiz, index) => (
+            <li
+              key={quiz.id}
+              className="py-3 px-3 list-unstyled"
+              style={{
+                cursor: isRegistered ? 'pointer' : 'not-allowed',
+                fontWeight: '500',
+                opacity: isRegistered ? '1' : '0.6',
+              }}
+            >
+              <a
+                href={isRegistered ? "" : '#'}
+                onClick={(e) => {
+                  if (!isRegistered) {
+                    e.preventDefault(); // Không cho click nếu chưa đăng ký
+                  }
+                }}
+                target="_blank"
+                className="text-decoration-none link-dark opacity-75 d-flex justify-content-between pr-5"
+                style={{
+                  width: '100%',
+                  pointerEvents: isRegistered ? 'auto' : 'none', // Vô hiệu hóa pointer nếu chưa đăng ký
+                }}
+              >
+                <div>
+                  {index} . {quiz.title}
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
 
     <div className=" col-sm-12 col-xl-4 px-4">

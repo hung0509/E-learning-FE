@@ -228,7 +228,7 @@
 
 // export default EditCoursePage;
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CourseInfoTab from "../coure-info/course-info";
 import CourseLessonTab from "../course-lesson/course-lesson";
 import AddWritingTestForm from "../course-quiz/course-quiz";
@@ -296,9 +296,13 @@ import DocumentTab from "../document/document";
 // };
 
 
-const EditCoursePage = ({ courseSelected }) => {
+const EditCoursePage = ({ courseSelected, changeData }) => {
   const [activeTab, setActiveTab] = useState(0); // 0,1,2,3 tương ứng 4 tab
   const [course, setCourse] = useState(courseSelected);
+
+  useEffect(() => {
+    changeData(course); // gọi cập nhật mỗi khi course thay đổi
+  }, [course]);
 
   const addDocument = (newDocumentName) => {
     const newDoc = {
@@ -324,7 +328,7 @@ const EditCoursePage = ({ courseSelected }) => {
     }));
   };
 
-   const addLesson = (newLesson) => {
+  const addLesson = (newLesson) => {
     const lessonAddition = {
       id: newLesson.id,
       title: newLesson.lessonName,
@@ -344,6 +348,7 @@ const EditCoursePage = ({ courseSelected }) => {
   };
 
   const deleteQuiz = (id) => {
+    console.log(course);
     setCourse((prev) => ({
       ...prev,
       quizs: prev.quizs.filter((quiz) => quiz.id !== id),
@@ -407,17 +412,17 @@ const EditCoursePage = ({ courseSelected }) => {
         }
         {activeTab === 1 &&
           <div>
-            <CourseLessonTab 
-              lessons={course.lessons} 
+            <CourseLessonTab
+              lessons={course.lessons}
               addLesson={addLesson}
-              deleteLesson={deleteLesson}  
+              deleteLesson={deleteLesson}
             />
           </div>
         }
         {activeTab === 2 &&
           <div>
-            <AddWritingTestForm 
-              courses={course} 
+            <AddWritingTestForm
+              courses={course}
               addQuiz={addQuiz}
               deleteQuiz={deleteQuiz}
             />
