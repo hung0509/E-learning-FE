@@ -17,6 +17,18 @@ export const useQuiz = () => {
         }
     }
 
+    const handleScore = async (credential) => {
+        try {
+            const data = await QuizService.score(credential);
+            if(data.code === 0){
+                return data.result;
+            }
+        } catch (err) {
+            showError(err.message);
+            throw err;
+        }
+    }
+
     const handleDeleteQuiz = async (credential) => {
         try {
             const data = await QuizService.delete(credential);
@@ -30,5 +42,17 @@ export const useQuiz = () => {
         }
     }
 
-    return { handleAddQuiz, handleDeleteQuiz };
+    const handleGetQuiz = async (credential) => {
+        try {
+            const data = await QuizService.getById(credential);
+            if(data.code === 0){
+                return data.result;
+            }
+        } catch (err) {
+            showError(err.message);
+            throw err;
+        }
+    }
+
+    return { handleAddQuiz, handleDeleteQuiz, handleGetQuiz, handleScore };
 }

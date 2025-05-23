@@ -13,8 +13,8 @@ const User = () => {
     const { handleGetAll } = useUserInfo();
 
     useEffect(() => {
-        const fetchData  = async () => {
-            const results = await handleGetAll(`?page=${currentPage-1}&pageSize=1`);
+        const fetchData = async () => {
+            const results = await handleGetAll(`?page=${currentPage - 1}&pageSize=1`);
 
             const users = results.result.map((item) => UserInfoDto.fromUserInfoResponse(item));
             const page = BaseRequestDto.fromBaseRequestResponse(results);
@@ -67,7 +67,11 @@ const User = () => {
                                 <td><img src={item.avatar || "https://static.vecteezy.com/system/resources/previews/009/734/564/original/default-avatar-profile-icon-of-social-media-user-vector.jpg"} alt="hình ảnh" /></td>
                                 <td>{item.firstName}</td>
                                 <td>{item.lastName}</td>
-                                <td>{item.dateOfBirth}</td>
+                                <td>{new Date(item.dateOfBirth).toLocaleDateString('vi-VN', {
+                                    day: 'numeric',
+                                    month: 'long',
+                                    year: 'numeric'
+                                })}</td>
                             </tr>
                             {selectedRow === item.userInfoId && (
                                 <tr>
@@ -107,9 +111,9 @@ const User = () => {
                 </tbody>
             </table>
             <Pagination
-                    currentPage={currentPage}
-                    totalPages={page.totalPage}
-                    onPageChange={onPageChange}
+                currentPage={currentPage}
+                totalPages={page.totalPage}
+                onPageChange={onPageChange}
             />
         </div>
     </div>);

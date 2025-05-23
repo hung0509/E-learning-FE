@@ -71,147 +71,120 @@
 
 // export default QuizForm;
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import QuizResultPopup from "../../component/quiz-result/quiz-result";
+import { useQuiz } from "../../hook/useQuiz";
+import { showWarning } from "../../service/toast";
 
-const exampleData =  {
-    "id": 1,
-    "title": "Quiz 1: Kiến thức tổng hợp",
-    "description": "Kiểm tra kiến thức cơ bản",
-    "timeLimit": 120,
-    "questions": [
-      {
-        "id": 101,
-        "quizId": 1,
-        "description": "Câu hỏi kiểm tra",
-        "questionText": "Thủ đô của Việt Nam là gì?",
-        "answers": [
-          {
-            "id": 1001,
-            "questionId": 101,
-            "answerText": "Hà Nội",
-            "isCorrect": "N"
-          },
-          {
-            "id": 1002,
-            "questionId": 101,
-            "answerText": "TP.HCM",
-            "isCorrect": "N"
-          },
-          {
-            "id": 1003,
-            "questionId": 101,
-            "answerText": "Đà Nẵng",
-            "isCorrect": "N"
-          },
-          {
-            "id": 1004,
-            "questionId": 101,
-            "answerText": "Huế",
-            "isCorrect": "N"
-          }
-        ]
-      },
-      {
-        "id": 102,
-        "quizId": 1,
-        "description": "Câu hỏi kiểm tra",
-        "questionText": "2 + 2 = ?",
-        "answers": [
-          {
-            "id": 1005,
-            "questionId": 102,
-            "answerText": "3",
-            "isCorrect": "N"
-          },
-          {
-            "id": 1006,
-            "questionId": 102,
-            "answerText": "4",
-            "isCorrect": "N"
-          },
-          {
-            "id": 1007,
-            "questionId": 102,
-            "answerText": "5",
-            "isCorrect": "N"
-          },
-          {
-            "id": 1008,
-            "questionId": 102,
-            "answerText": "6",
-            "isCorrect": "N"
-          }
-        ]
-      }
-    ]
-  }
 
 const QuizForm = () => {
-    const [quizData, setQuizData] = useState(exampleData);
-    const [selectedAnswers, setSelectedAnswers] = useState({});
+  const { quizId } = useParams();
+  const userId = localStorage.getItem("userId");
+  const [quizData, setQuizData] = useState(null);
+  const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [resultData, setResultData] = useState(null);
+  const [showResult, setShowResult] = useState(false);
+  const { handleGetQuiz, handleScore } = useQuiz();
 
-    useEffect(() => {
-        // Fetch quiz detail from backend
-    }, []);
-
-    const handleAnswerSelect = (questionId, answerId) => {
-        setSelectedAnswers((prev) => ({
-            ...prev,
-            [questionId]: answerId,
-        }));
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await handleGetQuiz(quizId);
+        setQuizData(result);
+      } catch (err) {
+        console.error("Error fetching quiz:", err);
+      }
     };
 
-    const handleSubmit = async () => {
-        if (!quizData) return;
+    fetchData();
+  }, []);
 
-        const payload = {
-            quizId: quizData.id,
-            result: Object.entries(selectedAnswers).map(([questionId, answerId]) => ({
-                questionId: parseInt(questionId),
-                selectedAnswerId: answerId,
-            })),
-        };
+  const handleAnswerSelect = (questionId, answerId) => {
+    setSelectedAnswers((prev) => ({
+      ...prev,
+      [questionId]: answerId,
+    }));
+  };
 
-        console.log("Submit payload:", payload);
+  const handleSubmit = async () => {
+    if (!quizData) return;
 
-        // Gửi dữ liệu lên BE
-        // await axios.post("/api/quiz/submit", payload);
+    const totalQuestions = quizData.questions.length;
+    const answeredCount = Object.keys(selectedAnswers).length;
+
+    if (answeredCount < totalQuestions) {
+      showWarning("Vui lòng điền hết đáp án!")
+      return;
+    }
+
+    const payload = {
+      quizId: quizData.id,
+      userId,
+      results: Object.entries(selectedAnswers).map(([questionId, answerId]) => ({
+        questionId: parseInt(questionId),
+        selectedAnswerId: answerId,
+      })),
     };
 
-    if (!quizData) return <div>Loading...</div>;
+    const data = await handleScore(payload);
+    if (data !== null) {
+      setResultData(data); // giả sử bạn dùng format { data: { ...responseObject } }
+      setShowResult(true);
+    }
+  };
 
-    return (
-        <div className="container">
-            <h4 className="fs-5 fw-bold">{quizData.title}</h4>
-            <p>{quizData.description}</p>
-            <hr />
+  const handleRetry = () => {
+    setSelectedAnswers({});
+    setShowResult(false);
+    setResultData(null);
+  };
 
-            {quizData.questions.map((question, qIndex) => (
-                <div key={question.id} className="mb-4 border p-3 rounded shadow-sm">
-                    <h6>Câu {qIndex + 1}: {question.questionText}</h6>
+  if (!quizData) {
+    return <div className="container">Loading quiz...</div>;
+  }
 
-                    {question.answers.map((answer) => (
-                        <div key={answer.id} className="form-check">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                name={`question-${question.id}`}
-                                checked={selectedAnswers[question.id] === answer.id}
-                                onChange={() => handleAnswerSelect(question.id, answer.id)}
-                            />
-                            <label className="form-check-label">
-                                {answer.answerText}
-                            </label>
-                        </div>
-                    ))}
-                </div>
-            ))}
+  return (
+    <div className="container pt-5">
+      <h4 className="fs-5 fw-bold">{quizData.title}</h4>
+      <p>Mô tả: {quizData.description}</p>
+      <hr />
 
-            <button onClick={handleSubmit} className="btn btn-outline-primary">
-                Nộp bài
-            </button>
+      {quizData.questions.map((question, qIndex) => (
+        <div key={question.id} className="mb-4 border p-3 rounded shadow-sm w-75">
+          <h6>Câu {qIndex + 1}: {question.questionText}</h6>
+
+          {question.answers.map((answer) => (
+            <div key={answer.id} className="form-check">
+              <input
+                className="form-check-input"
+                type="radio"
+                name={`question-${question.id}`}
+                checked={selectedAnswers[question.id] === answer.id}
+                onChange={() => handleAnswerSelect(question.id, answer.id)}
+              />
+              <label className="form-check-label">
+                {answer.answerText}
+              </label>
+            </div>
+          ))}
         </div>
-    );
+      ))}
+
+      <button onClick={handleSubmit} className="btn btn-outline-primary">
+        Nộp bài
+      </button>
+
+      {showResult && (
+        <QuizResultPopup
+          resultData={resultData}
+          onClose={() => setShowResult(false)}
+          onRetry={handleRetry}
+        />
+      )}
+    </div>
+  );
 };
 
 export default QuizForm;
+

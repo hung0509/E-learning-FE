@@ -17,7 +17,7 @@ const Header = () => {
   };
 
   const handleClickLogOut = async () => {
-   
+
     await handleLogOut();
   }
 
@@ -41,7 +41,7 @@ const Header = () => {
         (<div className="d-flex flex-shrink-0 dropdown">
           {/* <a className='btn px-3 cursor-pointer'>Khóa học của tôi</a> */}
           <a
-          href="#"
+            href="#"
             className={`d-block link-dark text-decoration-none dropdown-toggle ${isDropdownOpen ? 'show' : ''}`}
             id="dropdownUser2"
             data-bs-toggle="dropdown"
@@ -53,11 +53,13 @@ const Header = () => {
           <ul
             className={`dropdown-menu text-small shadow ${isDropdownOpen ? 'show' : ''}`}
             aria-labelledby="dropdownUser2"
-            style={isDropdownOpen ? { position: 'absolute', margin: '0px', transform: 'translate(30px, 32px)',left: '-112px', top: '18px' } : {}}
+            style={isDropdownOpen ? { position: 'absolute', margin: '0px', transform: 'translate(30px, 32px)', left: '-112px', top: '18px' } : {}}
           >
-            <li><a className="dropdown-item" href="/my-info">Profile</a></li>
+            <li><a className="dropdown-item" href="/article/post">Tạo bài viết</a></li>
+            <li><a className="dropdown-item" href="/my-info">Thông tin cá nhân</a></li>
+            <li><a className="dropdown-item" href="/article/post">Đổi mật khẩu</a></li>
             <li><hr className="dropdown-divider" /></li>
-            <li onClick={handleClickLogOut}><button className="dropdown-item">Sign out</button></li>
+            <li onClick={handleClickLogOut}><button className="dropdown-item">Đăng xuất</button></li>
           </ul>
         </div>)
       }

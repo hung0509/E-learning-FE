@@ -19,5 +19,7 @@ export const API_ENDPOINTS = {
   AUTH_BY_GOOGLE: '/auth/outbound/authentication',
   COMMENT: '/comments',
   DOCUMENT: '/documents',
-  QUIZ: '/quizzes'
+  QUIZ: '/quizzes',
+  QUIZ_SCORE: "/quizzes/score",
+  USER_INFO_UPDATE: "/users/update"
 };

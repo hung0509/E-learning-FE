@@ -1,6 +1,6 @@
-const Article1 = ({ data, index }) => {
+const Article2 = ({ data, index }) => {
    return (
-      <div className={`w-75 btn card profile-card-5 cursor-pointer d-flex flex-row ${index % 2 !== 0 ? 'float-end' : ''
+      <div className={`w-100 btn card profile-card-5 cursor-pointer d-flex flex-row ${index % 2 !== 0 ? 'float-end' : ''
          }`} style={{ alignItems: 'center', minHeight: '220px' }} >
          <div class="card-body">
             <h5 class="card-title mt-3 fs-4">{data.title}</h5>
@@ -13,4 +13,4 @@ const Article1 = ({ data, index }) => {
    );
 }
 
-export default Article1;
+export default Article2;

@@ -45,7 +45,7 @@ const Courses = () => {
         </div>
         <div className="row px-5">
           {data.map((item) => (
-              <div key={item.id} className="col-sm-12 col-md-6 col-lg-4 mb-4 d-flex justify-content-center" onClick={() => handleClickCourse(item.id)}>
+              <div key={item.id} className="col-sm-12 col-md-6 col-lg-4 mb-5 d-flex justify-content-center" onClick={() => handleClickCourse(item.id)}>
                     <Course data={item}/>
               </div>
           ))}

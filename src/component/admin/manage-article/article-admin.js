@@ -168,7 +168,7 @@ const ArticleAdmin = () => {
                                     <td><img src={item.image} alt="hình ảnh" /></td>
                                     <td>{item.title}</td>
                                     <td>{formatDate(item.publishedDate)}</td>
-                                    {item.status == STATUS.PENDING && <td >
+                                    {item.status == STATUS.PENDING ? <td >
                                         {/* <div >
                                             <button type="button" className='mx-2 border-0'><i class="bi bi-three-dots-vertical"></i></button>
                                         </div> */}
@@ -177,7 +177,7 @@ const ArticleAdmin = () => {
                                             onAccept={approveArticle}
                                             onReject={rejectArticle}
                                         />
-                                    </td>}
+                                    </td> : <td> <i class="btn btn-danger bi bi-slash-circle me-1"></i></td>}
                                 </tr>
                             </React.Fragment>
                         ))}

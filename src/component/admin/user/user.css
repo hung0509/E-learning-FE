@@ -5,6 +5,7 @@
 .user-admin .table td,.user-admin .table th {
     border: none !important;
     cursor: pointer;
+    align-content: center;
 }
 
 

@@ -256,7 +256,7 @@ const CourseDes = () => {
               }}
             >
               <a
-                href={isRegistered ? "" : '#'}
+                href={isRegistered ? `/quiz/${quiz.id}` : '#'}
                 onClick={(e) => {
                   if (!isRegistered) {
                     e.preventDefault(); // Không cho click nếu chưa đăng ký
@@ -282,7 +282,7 @@ const CourseDes = () => {
     <div className=" col-sm-12 col-xl-4 px-4">
       <div className="p-3 text-center" >
         <img className="w-100 pb-3" style={{ borderRadius: '18px' }} src="https://th.bing.com/th/id/OIP.NK8Sm1NoQz41q1_DhhToUwHaEK?rs=1&pid=ImgDetMain" alt="" />
-        <h4 className="color-common">{data.priceAfterReduce === 0 ? 'Miễn phí' : "$" + Number(data.priceEntered).toLocaleString('vi-VN')}</h4>
+        {/* {!isRegistered && <h4 style={{display: ""}} className="">{data.priceAfterReduce === 0 ? 'Miễn phí' : "Số tiền: $" + Number(data.priceEntered).toLocaleString('vi-VN')}</h4>} */}
         {/* <div style={{ borderRadius: '18px' }} className="btn btn-primary fw-bold fs-6" onClick={() => handleRegister(data.id)}>ĐĂNG KÝ HỌC</div> */}
         <div
           style={{
@@ -295,8 +295,10 @@ const CourseDes = () => {
             if (!isRegistered) handleRegister(data);  // Chỉ gọi khi chưa đăng ký
           }}
         >
-          {isRegistered ? isFree(data.priceAfterReduce) : "ĐĂNG KÝ HỌC"}  {/* Thay đổi nội dung nút */}
+          {isRegistered ? isFree(data.priceAfterReduce)  : "ĐĂNG KÝ HỌC"}  {/* Thay đổi nội dung nút */}
         </div>
+          
+        
       </div>
       <ul style={{ marginLeft: '25%' }}>
         <li className="list-unstyled"><i style={{ marginRight: '6px' }} className="bi bi-rocket-fill fw-bold"></i>{data.level}</li>

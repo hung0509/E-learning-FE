@@ -3,14 +3,16 @@ import Course from "../../component/course/course";
 import "./my-info.css";
 import UserInfoDto from "../../dto/user-info-dto";
 import { useUserInfo } from "../../hook/useUserInfo";
-import Article from "../../component/article/article";
+
 import { useNavigate } from "react-router-dom";
+import Article1 from "../../component/article/article";
+
 
 const MyInfo = () => {
     const [tab, setTab] = useState(true);
     const [data, setData] = useState(new UserInfoDto());
     const [isEdit, setIsEdit] = useState(false);
-    const { handleMyInfo } = useUserInfo();
+    const { handleMyInfo, handleUpdate } = useUserInfo();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -49,6 +51,24 @@ const MyInfo = () => {
         setIsEdit(!isEdit);
     }
 
+    const handleUpdateUser = async () => {
+        console.log("data: ", data);
+        const result = await handleUpdate(data);
+
+        const info = UserInfoDto.fromUserInfoResponse(result);
+        window.location.href = "/my-info"
+        setIsEdit(!isEdit);
+    }
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+
     return (
         <div className="my-info py-5">
             <div class="team-single">
@@ -74,7 +94,7 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Họ và tên</h6>
                                         </div>
-                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 p-2" value={data.firstName + " " + data.lastName} readOnly={!isEdit} />
+                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 p-2" value={data.firstName + " " + data.lastName} readOnly={!isEdit} onChange={(e) => handleInputChange(e)} />
                                     </div>
                                 </div>
 
@@ -83,7 +103,7 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Email</h6>
                                         </div>
-                                        <input type='email' class="col-sm-9 text-secondary rounded border-0 p-2" value={data.email} readOnly={!isEdit} />
+                                        <input name="email" type='email' class="col-sm-9 text-secondary rounded border-0 p-2" value={data.email} readOnly={!isEdit} onChange={(e) => handleInputChange(e)} />
                                     </div>
                                 </div>
 
@@ -92,7 +112,16 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Giới tính</h6>
                                         </div>
-                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 p-2"  readOnly={!isEdit} value={data.gender} />
+                                        <select
+                                            className="col-sm-9 text-secondary rounded border-0 p-2"
+                                            disabled={!isEdit}
+                                            value={data.gender}
+                                            onChange={(e) => setData({ ...data, gender: e.target.value })}
+                                        >
+                                            <option value="">-- Chọn giới tính --</option>
+                                            <option value="MALE">Nam</option>
+                                            <option value="FEMALE">Nữ</option>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -101,7 +130,23 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Địa chỉ</h6>
                                         </div>
-                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 p-2" value={data.addess} readOnly={!isEdit} />
+                                        <input type='text' name="address" class="col-sm-9 text-secondary rounded border-0 p-2" value={data.address} readOnly={!isEdit} onChange={(e) => handleInputChange(e)} />
+                                    </div>
+                                </div>
+
+                                <div className="card-body border-bottom">
+                                    <div className="row">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Ngày sinh</h6>
+                                        </div>
+                                        <input
+                                            type='date'
+                                            className="col-sm-9 text-secondary rounded border-0 p-2"
+                                            value={data.dateOfBirth}
+                                            readOnly={!isEdit}
+                                            name="dateOfBirth"
+                                            onChange={(e) => handleInputChange(e)}
+                                        />
                                     </div>
                                 </div>
 
@@ -110,20 +155,20 @@ const MyInfo = () => {
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">Số điện thoại</h6>
                                         </div>
-                                        <input type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value={data.phone} readOnly={!isEdit} />
+                                        <input name="phone" type='text' class="col-sm-9 text-secondary rounded border-0 px-2" value={data.phone} readOnly={!isEdit} onChange={(e) => handleInputChange(e)} />
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    { !isEdit ? (
-                                    <div class="col-sm-12">
-                                        <div style={{ float: 'right' }} class="btn btn-info text-white" onClick={handleIsEdit}>Edit</div>
-                                    </div>) :
-                                    (<div class="col-sm-12">
-                                        <div style={{ float: 'right' }} class="btn btn-info text-white" onClick={handleIsEdit}>Save</div>
-                                        <div style={{ float: 'right' }} class="btn btn-outline-danger" onClick={handleIsEdit}>Cancle</div>
-                                    </div>
-                                    )
+                                    {!isEdit ? (
+                                        <div class="col-sm-12">
+                                            <div style={{ float: 'right' }} class="btn btn-info text-white" onClick={handleIsEdit}>Edit</div>
+                                        </div>) :
+                                        (<div class="col-sm-12">
+                                            <div style={{ float: 'right' }} class="btn btn-info text-white" onClick={handleUpdateUser}>Save</div>
+                                            <div style={{ float: 'right' }} class="btn btn-outline-danger" onClick={handleIsEdit}>Cancle</div>
+                                        </div>
+                                        )
                                     }
                                 </div>
                             </div>
@@ -145,13 +190,18 @@ const MyInfo = () => {
                         <div className="row px-5 py-5">
                             {tab === true ?
                                 data.courses.map((item) => (
-                                    <div className="col-sm-12 col-md-6 col-lg-6 mb-4 d-flex justify-content-center" onClick={() => handleClickCourse(item.id)}>
+                                    <div className="col-sm-12 col-md-6 col-lg-6 mb-5 d-flex justify-content-center" onClick={() => handleClickCourse(item.id)}>
                                         <Course data={item} />
                                     </div>
                                 )) :
-                                data.articles.map((item1) => (
-                                    <div class="w-75 m-auto mt-4" onClick={() => handleClickArticle(item1.id)}>
-                                        <Article data={item1} />
+                                data.articles?.map((item1, index) => (
+                                    <div
+                                        key={index}
+                                        className={`flex flex-col md:flex-row items-center rounded-xl shadow-md p-6 gap-6 cursor-pointer transition hover:shadow-lg my-3`}
+                                        onClick={() => handleClickArticle(item1.id)}
+                                    >
+                                        <Article1 data={item1}
+                                        index={index} />
                                     </div>
                                 ))
                             }

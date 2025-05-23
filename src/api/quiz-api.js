@@ -17,6 +17,20 @@ export const QuizApi = {
         }
     },
 
+    score: async (credential) => {
+        try {
+            const res = await axiosInstance.post(`${API_URL}${API_ENDPOINTS.QUIZ_SCORE}`, credential);
+
+            return res.data;
+        } catch (err) {
+            console.error("API Error:", err.response?.data?.message || err.message);
+            return {
+                code: CODE.FAIL,
+                message: err.response?.data?.message || "Lỗi không xác định",
+            };
+        }
+    },
+
     delete: async (credential) => {
         try {
             const res = await axiosInstance.delete(`${API_URL}${API_ENDPOINTS.QUIZ}/${credential}`);
@@ -29,5 +43,19 @@ export const QuizApi = {
                 message: err.response?.data?.message || "Lỗi không xác định",
             };
         }
-    }
+    },
+
+    getById: async (credential) => {
+        try {
+            const res = await axiosInstance.get(`${API_URL}${API_ENDPOINTS.QUIZ}/${credential}`);
+
+            return res.data;
+        } catch (err) {
+            console.error("API Error:", err.response?.data?.message || err.message);
+            return {
+                code: CODE.FAIL,
+                message: err.response?.data?.message || "Lỗi không xác định",
+            };
+        }
+    },
 }

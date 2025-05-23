@@ -1,3 +1,4 @@
+import { showError, showSuccess } from "../service/toast";
 import { UserInfoService } from "../service/user-info-service";
 
 export const useUserInfo = () => {
@@ -8,6 +9,20 @@ export const useUserInfo = () => {
                 return data.result;
             }
         } catch (err) {
+           console.log("Have one issue", err);
+           throw err;
+        }
+    }
+
+    const handleUpdate = async (credential) => {
+        try {
+            const data = await UserInfoService.update(credential);
+            if(data.code === 0){
+                showSuccess("Cập nhật thông tin người dùng thành công");
+                return data.result;
+            }
+        } catch (err) {
+           showError("Cập nhật thông tin người dùng thất bại!");
            console.log("Have one issue", err);
            throw err;
         }
@@ -25,5 +40,5 @@ export const useUserInfo = () => {
         }
     }
 
-    return { handleMyInfo, handleGetAll };
+    return { handleMyInfo, handleGetAll, handleUpdate };
 }

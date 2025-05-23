@@ -1,6 +1,7 @@
 .article-admin .table td,.article-admin .table th{
     border: none !important;
     cursor: pointer;
+    align-content: center;
 }
 
 .article-admin .table img{

@@ -6,6 +6,7 @@ import ArticleDto from "../../dto/article-dto";
 import { useArticle } from "../../hook/useArticle";
 
 export default function EditorApp() {
+    const userId = localStorage.getItem("userId");
     const [htmlContent, setHtmlContent] = useState(null);
     const [data, setData] = useState(new ArticleDto());
     const {handleAddArticle} = useArticle();
@@ -37,7 +38,7 @@ export default function EditorApp() {
         const formData = new FormData();
 
         htmlContent.replaceAll(/<img(.*?)>/g, '<img$1 />')
-        formData.append('instructorId', 1); // Temporary instructorId
+        formData.append('instructorId', userId); // Temporary instructorId
         formData.append('content', htmlContent);
         formData.append('description', data.description);
         formData.append('title', data.title);

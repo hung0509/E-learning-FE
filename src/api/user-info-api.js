@@ -17,6 +17,20 @@ export const UserInfoApi = {
         }
     },
 
+    update : async (credential) => {
+        try {
+            const res = await axiosInstance.post(`${API_URL}${API_ENDPOINTS.USER_INFO_UPDATE}`, credential);
+
+            return res.data;
+        } catch (err) {
+            console.error("API Error:", err.response?.data?.message || err.message);
+            return {
+                code: CODE.FAIL,
+                message: err.response?.data?.message || "Lỗi không xác định",
+            };
+        }
+    },
+
     getAll: async (credential) => {
         try {
             const res = await axiosInstance.get(`${API_URL}${API_ENDPOINTS.USERS}${credential}`);

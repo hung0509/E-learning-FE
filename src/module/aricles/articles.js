@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import Article from '../../component/article/article';
 import { useArticle } from '../../hook/useArticle';
 
 import { useNavigate } from 'react-router-dom';
 import ArticleDto from '../../dto/article-dto';
+import Article2 from '../../component/article/article2';
 
 const Articles = () => {
   const [data, setData] = useState([]);
@@ -38,7 +38,7 @@ const Articles = () => {
     <div className="row px-5">
       {data.map((item) => (
         <div class="col-md-6 mt-4" onClick={() => handleClickArticle(item.id)}>
-          <Article data={item} />
+          <Article2 data={item} />
         </div>
       ))}
 
