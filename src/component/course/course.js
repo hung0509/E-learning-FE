@@ -22,10 +22,10 @@ const Course = ({data}) => {
                 </h4>   
                 <div className="card-meta text-dark mb-2 fw-bold">{data.courseName}</div>
                 <div className='d-flex justify-content-between info' style={{fontSize: "13px"}}>
-                    <i class="bi bi-stopwatch"><span className='px-3'>{formatSecondsToHMS(data.courseDuration)}</span></i>
-                    <i class="bi">{Number(data.priceEntered).toLocaleString('vi-VN')} VND</i>
+                    <i class="bi bi-stopwatch"><span className='px-1'>{formatSecondsToHMS(data.courseDuration)}</span></i>
+                    <i class="bi">{Number(data.priceEntered).toLocaleString('vi-VN')} $</i>
                 </div>
-                <div className='p-3 text-muted'>{data.description}</div>
+                {/* <div className='p-3 text-muted'>{data.description}</div> */}
             </div>
             <div className="card-footer">
                 <div className="media d-flex justify-content-between" style={{alignItems: "center"}}>

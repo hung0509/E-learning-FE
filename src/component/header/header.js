@@ -57,7 +57,7 @@ const Header = () => {
           >
             <li><a className="dropdown-item" href="/article/post">Tạo bài viết</a></li>
             <li><a className="dropdown-item" href="/my-info">Thông tin cá nhân</a></li>
-            <li><a className="dropdown-item" href="/article/post">Đổi mật khẩu</a></li>
+            <li><a className="dropdown-item" href="/change-password">Đổi mật khẩu</a></li>
             <li><hr className="dropdown-divider" /></li>
             <li onClick={handleClickLogOut}><button className="dropdown-item">Đăng xuất</button></li>
           </ul>

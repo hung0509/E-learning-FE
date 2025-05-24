@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const nonAuthEndpointsPost = ["/auth", "/auth/logout", "/accounts"]; // Các endpoint không cần xác thực
+  const nonAuthEndpointsPost = ["/auth", "/auth/logout", "/accounts", "/auth/reset"]; // Các endpoint không cần xác thực
   const nonAuthEndpointsGet = ["/articles/**", "/courses/**"];
 
   // Lấy đường dẫn của URL hiện tại
@@ -18,7 +18,8 @@ axiosInstance.interceptors.request.use((config) => {
 
   // Kiểm tra nếu đường dẫn bắt đầu bằng /auth và phương thức là POST
   const isNonAuthRequest = nonAuthEndpointsPost.some(endpoint => path.startsWith("/elearning-service" + endpoint)) &&
-    "post".includes(config.method.toLowerCase());
+    "post".includes(config.method.toLowerCase() &&
+  path !== "/elearning-service/accounts/update");
 
   const isNonAuthGet = nonAuthEndpointsGet.some(ep => {
     const prefix = ep.replace("/**", ""); // xử lý wildcard

@@ -100,7 +100,7 @@ const Login = () => {
                     {/* <hr class="mt-5 mb-4 border-secondary-subtle"> */}
                     <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
                       <a href="/register" class="link-secondary text-decoration-none">Create new account</a>
-                      <a href="/forgot-password" class="link-secondary text-decoration-none">Forgot password</a>
+                      <a href="/reset-password" class="link-secondary text-decoration-none">Forgot password</a>
                     </div>
                   </div>
                 </div>

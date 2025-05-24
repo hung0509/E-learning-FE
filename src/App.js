@@ -1,4 +1,4 @@
-import {BrowserRouter, Routes, Route, useLocation} from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import Header from './component/header/header';
 import Footer from './component/footer/footer';
@@ -29,6 +29,9 @@ import ArticleDetail from './module/article-detail/article-detail';
 import PaymentSuccess from './component/status/success/payment-success';
 import PaymentError from './component/status/error/payment-error';
 import QuizForm from './module/quiz/quiz';
+import ResetPassword from './component/password/reset-password/reset-password';
+import ChangePassword from './component/password/change-password/change-password';
+import ProtectedRoute from './guard/auth-guard';
 
 
 function App() {
@@ -76,51 +79,56 @@ function App() {
 
   return (
     <div className="App">
-        <ToastContainer />
-         {!noHeader.some(path => location.pathname.startsWith(path)) && <Header />}
-          <div className='d-flex'>
-            <div className='container-leftbar'>
-            {!noLeftBar.some(path => location.pathname.startsWith(path)) && <Leftbar />}
-            {adminLeftBar.includes(location.pathname) && <AdminLeftbar />}
-            </div>
-            <div className='container-content flex-grow-1'>
-                <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/course" element={<Courses/>}/>
-                    <Route path="/article" element={<Articles/>}/>
-                    <Route path="/article/post" element={<ToolbarPlugin/>}/>
-                    <Route path="/about-us" element={<AboutUs/>}/>
-                    <Route path="/quiz/:quizId" element={<QuizForm/>}/>
-                    <Route path="/my-info" element={<MyInfo/>}/>
-                    <Route path="/sign-in" element={<Login/>}/>
-                    <Route path="/register" element={<Register/>}/>
-                    <Route path="/admin" element={<Dashboard/>}/>
-                    <Route path="/lesson" element={<Learning/>}/>
-                    <Route path="/course-des/:courseId" element={<CourseDes/>}/>
-                    <Route path="/admin/course" element={<CourseAdmin/>}/>
-                    <Route path="/admin/user" element={<User/>}/>
-                    <Route path="/admin/article" element={<ArticleAdmin/>}/>
-                    <Route path="/admin/discount" element={<Discount/>}/>
-                    <Route path="/admin/course/add" element={<CourseAddition/>}/>
-                    <Route path="/admin/course/:courseId" element={<EditCoursePage/>}/>
-                    <Route path="/article-detail/:articleId" element={<ArticleDetail />}/>
-                    <Route path="/payment/success" element={<PaymentSuccess />}/>
-                    <Route path="/payment/error" element={<PaymentError />}/>
-                    <Route path="/404" element={<PageError/>}/>
-                </Routes>
-            </div>
-          </div>
-          <Footer/>
-         
+      <ToastContainer />
+      {!noHeader.some(path => location.pathname.startsWith(path)) && <Header />}
+      <div className='d-flex'>
+        <div className='container-leftbar'>
+          {!noLeftBar.some(path => location.pathname.startsWith(path)) && <Leftbar />}
+          {adminLeftBar.includes(location.pathname) && <AdminLeftbar />}
+        </div>
+        <div className='container-content flex-grow-1'>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/course" element={<Courses />} />
+            <Route path="/article" element={<Articles />} />
+            <Route path="/article/post" element={<ToolbarPlugin />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/quiz/:quizId" element={<QuizForm />} />
+            <Route path="/my-info" element={<MyInfo />} />
+            <Route path="/sign-in" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/admin" element={
+                        <ProtectedRoute>
+                                    <Dashboard />
+                        </ProtectedRoute>} />
+            <Route path="/lesson" element={<Learning />} />
+            <Route path="/course-des/:courseId" element={<CourseDes />} />
+            <Route path="/admin/course" element={<ProtectedRoute><CourseAdmin /></ProtectedRoute>} />
+            <Route path="/admin/user" element={<ProtectedRoute><User /></ProtectedRoute>} />
+            <Route path="/admin/article" element={<ProtectedRoute><ArticleAdmin /></ProtectedRoute>} />
+            <Route path="/admin/discount" element={<ProtectedRoute><Discount /></ProtectedRoute>} />
+            <Route path="/admin/course/add" element={<ProtectedRoute><CourseAddition /></ProtectedRoute>} />
+            <Route path="/admin/course/:courseId" element={<ProtectedRoute><EditCoursePage /></ProtectedRoute>} />
+            <Route path="/article-detail/:articleId" element={<ArticleDetail />} />
+            <Route path="/payment/success" element={<PaymentSuccess />} />
+            <Route path="/payment/error" element={<PaymentError />} />
+            <Route path="/404" element={<PageError />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/change-password" element={<ChangePassword />} />
+          </Routes>
+        </div>
+      </div>
+      <Footer />
+
     </div>
   );
 }
 
 function AppWrapper() {
   return (
-      <BrowserRouter>
-          <App/>
-      </BrowserRouter>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   );
 }
 

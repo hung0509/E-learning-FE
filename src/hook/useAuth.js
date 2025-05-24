@@ -1,6 +1,6 @@
 import { AuthContext } from "../context/auth-context";
 import { AuthService } from "../service/authentication-service";
-import { showError, showSuccess } from "../service/toast";
+import { showError, showSuccess, showWarning } from "../service/toast";
 import { jwtDecode } from 'jwt-decode';
 import { useContext } from "react";
 
@@ -10,12 +10,16 @@ export const useAuth = () => {
   const handleLogin = async (credentials) => {
     try {
       const data = await AuthService.login(credentials);
+
+      console.log(data);
       if (data.code === 0) {
         setUserId(extractUserId(data.result.token));
-        showSuccess("Đăng nhập thành công" + extractUserId(data.result.token));
+        showSuccess("Đăng nhập thành công");
         window.location.href = "/";
-      } else {
-        showError("Tên đăng nhập hoặc mật khẩu không chính xác");
+      } else if (data.code === 12222){
+        showWarning("Tài khoản chưa được kích hoạt!");
+      }else{
+        showError("Tên đăng nhập hoặc mật khẩu chưa chính xác!");
       }
     } catch (err) {
       showError(err.message);

@@ -21,5 +21,7 @@ export const API_ENDPOINTS = {
   DOCUMENT: '/documents',
   QUIZ: '/quizzes',
   QUIZ_SCORE: "/quizzes/score",
-  USER_INFO_UPDATE: "/users/update"
+  USER_INFO_UPDATE: "/users/update",
+  ACCOUNT: "/accounts/update",
+  RESET_PASSWORD: "/auth/reset"
 };

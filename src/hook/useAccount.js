@@ -33,5 +33,34 @@ export const useAccount = () => {
         }
     }
 
-    return { register, registerCourse };
+    const handleUpdateAccount = async (credentials) => {
+        try {
+            const data = await AccountService.update(credentials);
+            if (data.code === 0) {
+                showSuccess(data.message);
+            } else {
+                showError(data.message);
+            }
+        } catch (err) {
+            showError(err.message);
+            throw err;
+        }
+    };
+
+     const resetPassword = async (credentials) => {
+        try {
+            const data = await AccountService.resetPassword(credentials);
+            if (data.code !== 0) {
+                showError("Vui lòng kiểm tra lại Email!");
+                return -1;
+            }else{
+                return 0;
+            }
+        } catch (err) {
+            showError(err.message);
+            throw err;
+        }
+    };
+
+    return { register, registerCourse, handleUpdateAccount, resetPassword };
 }
