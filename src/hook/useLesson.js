@@ -1,5 +1,5 @@
 import { LessonService } from "../service/lesson-service";
-import { showError } from "../service/toast";
+import { showError, showSuccess } from "../service/toast";
 
 export const useLesson = () => {
     const handleGetLesson = async (credential) => {
@@ -38,5 +38,18 @@ export const useLesson = () => {
         }
     }
 
-    return { handleGetLesson, handleDeleteLesson, handleAddLesson };
+    const handleUpdate = async (id, credential) => {
+        try {
+            const data = await LessonService.update(id, credential);
+            if(data.code === 0){
+                showSuccess("Cập nhật thành công")
+                return data.result;
+            }
+        } catch (err) {
+            showError(err.message);
+            throw err;
+        }
+    }
+
+    return { handleGetLesson, handleDeleteLesson, handleAddLesson, handleUpdate };
 }

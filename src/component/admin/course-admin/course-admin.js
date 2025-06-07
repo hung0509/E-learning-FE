@@ -27,7 +27,7 @@ const CourseAdmin = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const results = await handleGetCourse2(`?page=${currentPage - 1}&pageSize=1&${param.toQueryParams()}`);
+            const results = await handleGetCourse2(`?page=${currentPage - 1}&pageSize=4&${param.toQueryParams()}`);
             const resultCategory = await handleCategory();
 
             const courses = results.result.map((item) => CourseDetailDto.fromCourseDetailResponse(item));

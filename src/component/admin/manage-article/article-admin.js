@@ -29,7 +29,7 @@ const ArticleAdmin = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const results = await handleGetAllArticle(`?page=${currentPage - 1}&pageSize=1&${param.toQueryParams()}`);
+            const results = await handleGetAllArticle(`?page=${currentPage - 1}&pageSize=4&${param.toQueryParams()}`);
 
             const articles = results.result.map((item) => ArticleDto.fromArticleUserResponse(item));
             const page = BaseRequestDto.fromBaseRequestResponse(results);

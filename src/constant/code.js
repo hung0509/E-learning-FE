@@ -15,3 +15,7 @@ export const OauthConfig = {
     authUri: "https://accounts.google.com/o/oauth2/auth"
 }
   
+
+export const Level = {
+    EXPERT: "Chuyên gia"
+}

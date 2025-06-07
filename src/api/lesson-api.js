@@ -33,7 +33,21 @@ export const LessonApi = {
 
     add: async (credential) => {
         try {
-            const res = await axiosInstance.post(`${API_URL}${API_ENDPOINTS.LESSON},${credential}`);
+            const res = await axiosInstance.post(`${API_URL}${API_ENDPOINTS.LESSON}`, credential);
+
+            return res.data;
+        } catch (err) {
+            console.error("API Error:", err.response?.data?.message || err.message);
+            return {
+                code: CODE.FAIL,
+                message: err.response?.data?.message || "Lỗi không xác định",
+            };
+        }
+    },
+
+    update: async (id, credential) => {
+        try {
+            const res = await axiosInstance.put(`${API_URL}${API_ENDPOINTS.LESSON}/${id}`, credential);
 
             return res.data;
         } catch (err) {

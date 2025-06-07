@@ -29,6 +29,8 @@ class LessonDto{
             json.isActive
         )
     }
+
+    
 }
 
 export default LessonDto;

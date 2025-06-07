@@ -1,38 +1,14 @@
-import { CommentApi } from "../api/comment-api";
+import { DashBoardApi } from "../api/dashboard-api";
+import { DiscountApi } from "../api/discount-api";
 import { CODE } from "../constant/code";
 import { MESSAGES } from "../constant/message";
 
-export const CommentService = {
-    postComment: async (credential) => {
+export const DiscountService = {
+    getAll: async (credential) => {
         try {
-            const data = await CommentApi.postComment(credential);
+            const data = await DiscountApi.getAll(credential);
 
-            const { code } = data;
-
-            if (code !== 0) {
-                return {
-                    code: code,
-                    message: MESSAGES.ERROR_UNKNOWN
-                }
-            }
-
-            return {
-                code: 0
-            }
-        } catch (err) {
-            const message = err.response?.data?.message || MESSAGES.ERROR_SERVER;
-            return {
-                code: false,
-                message: message
-            }
-        }
-    },
-
-     getAll: async (credential) => {
-        try {
-            const data = await CommentApi.getAll(credential);
-
-            const { code, result, currentPage, pageSize, totalPages, totalItems } = data;
+            const { code, result, currentPage, totalItems, totalPages, pageSize } = data;
 
             if (code !== 0) {
                 return {
@@ -58,11 +34,11 @@ export const CommentService = {
         }
     },
 
-    delete: async (credential) => {
+    create: async (credential) => {
         try {
-            const data = await CommentApi.delete(credential);
+            const data = await DiscountApi.create(credential);
 
-            const { code, result } = data;
+            const { code, result} = data;
 
             if (code !== 0) {
                 return {
@@ -71,10 +47,8 @@ export const CommentService = {
                 }
             }
 
-            console.log(result);
-
             return {
-                code: 0,
+                code: CODE.SUCCESS,
                 result: result,
             }
         } catch (err) {
@@ -85,4 +59,30 @@ export const CommentService = {
             }
         }
     },
+
+    update: async (credential) => {
+        try {
+            const data = await DiscountApi.update(credential);
+
+            const { code, result} = data;
+
+            if (code !== 0) {
+                return {
+                    code: code,
+                    message: MESSAGES.ERROR_UNKNOWN
+                }
+            }
+
+            return {
+                code: CODE.SUCCESS,
+                result: result,
+            }
+        } catch (err) {
+            const message = err.response?.data?.message || MESSAGES.ERROR_SERVER;
+            return {
+                code: false,
+                message: message
+            }
+        }
+    }
 }

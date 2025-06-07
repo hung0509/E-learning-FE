@@ -32,6 +32,7 @@ import QuizForm from './module/quiz/quiz';
 import ResetPassword from './component/password/reset-password/reset-password';
 import ChangePassword from './component/password/change-password/change-password';
 import ProtectedRoute from './guard/auth-guard';
+import LessonEdition from './component/admin/lesson-editiion/lesson-edittion';
 
 
 function App() {
@@ -84,7 +85,11 @@ function App() {
       <div className='d-flex'>
         <div className='container-leftbar'>
           {!noLeftBar.some(path => location.pathname.startsWith(path)) && <Leftbar />}
-          {adminLeftBar.includes(location.pathname) && <AdminLeftbar />}
+          {(
+            adminLeftBar.includes(location.pathname) 
+            || adminLeftBar.some(path => location.pathname.startsWith("/admin/lesson"))
+          ) 
+          && <AdminLeftbar />}
         </div>
         <div className='container-content flex-grow-1'>
           <Routes>
@@ -115,6 +120,8 @@ function App() {
             <Route path="/404" element={<PageError />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/change-password" element={<ChangePassword />} />
+            <Route path="/admin/lesson/:lessonId" element={<LessonEdition />} />
+            <Route path="*" element={<PageError />} />
           </Routes>
         </div>
       </div>

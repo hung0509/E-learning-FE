@@ -2,7 +2,7 @@ import { useState } from "react";
 import LessonDto from "../../../dto/lesson-dto";
 import { useLesson } from "../../../hook/useLesson";
 
-const LessonInfo = ({closeModal, addLesson}) => {
+const LessonInfo = ({ courseId, closeModal, addLesson }) => {
     const [lesson, setLesson] = useState(new LessonDto());
     const { handleAddLesson } = useLesson();
 
@@ -11,28 +11,73 @@ const LessonInfo = ({closeModal, addLesson}) => {
         setLesson({ ...lesson, [name]: value });
     };
 
-    const handleSubmit = async () => {
-        //   const formData = new FormData();
-    
-        // formData.append('courseId', courseId); // Temporary instructorId
-        // formData.append('documentName', document.documentName);
-        // formData.append('documentUrl', document.documentUrl);
-
-
-        // const value = await handleAddLesson(lesson);
+    const handleChangeFile = (e) => {
+        const file = e.target.files[0];
+        setLesson((prev) => ({
+            ...prev,
+            urlLesson: file, // Đây chính là File object cần dùng cho createObjectURL
+        }));
     };
+
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+
+    formData.append('courseId', courseId);
+    formData.append('lessonName', lesson.lessonName || '');
+    formData.append('description', lesson.description || '');
+    formData.append('urlLesson', lesson.urlLesson); // Gửi video file
+
+    const getVideoDuration = () => {
+        return new Promise((resolve, reject) => {
+            if (!(lesson.urlLesson instanceof File)) {
+                reject(new Error('Video file không hợp lệ'));
+                return;
+            }
+
+            const videoElement = document.createElement('video');
+            videoElement.preload = 'metadata';
+
+            const objectUrl = URL.createObjectURL(lesson.urlLesson);
+            videoElement.src = objectUrl;
+
+            videoElement.onloadedmetadata = () => {
+                URL.revokeObjectURL(objectUrl);
+                const duration = Math.floor(videoElement.duration);
+                formData.append('lessonTime', duration);
+                resolve();
+            };
+
+            videoElement.onerror = () => {
+                URL.revokeObjectURL(objectUrl);
+                reject(new Error('Không thể đọc metadata từ video'));
+            };
+        });
+    };
+
+    try {
+        await getVideoDuration();
+        const value = await handleAddLesson(formData);
+        addLesson(value);
+        closeModal(); // Optionally đóng modal
+    } catch (err) {
+        console.error('Error handling submit:', err);
+    }
+};
+
+
 
     return (
         <form >
             <div className="mb-3">
-                <label className="form-label fw-bold">Tên khóa học</label>
+                <label className="form-label fw-bold">Tên bài học</label>
                 <input
                     type="text"
-                    name="course_name"
+                    name="lessonName"
                     value={lesson.lessonName}
                     onChange={handleChange}
                     className="form-control"
-                    placeholder="Nhập tên khóa học"
+                    placeholder="Nhập tên bài học"
                 />
             </div>
             <div className="mb-3">
@@ -40,7 +85,7 @@ const LessonInfo = ({closeModal, addLesson}) => {
                 <textarea
                     name="description"
                     value={lesson.description}
-                    onChange={handleChange}
+                    onChange={(e) => handleChange(e)}
                     className="form-control"
                     placeholder="Nhập mô tả khóa học"
                     rows="4"
@@ -52,11 +97,10 @@ const LessonInfo = ({closeModal, addLesson}) => {
                     <label className="form-label fw-bold">Video</label>
                     <input
                         type="file"
-                        name="price_entered"
-                        value={lesson.urlLesson}
-                        onChange={handleChange}
+                        name="video"
+                        onChange={handleChangeFile}
                         className="form-control"
-                        placeholder="Nhập giá gốc"
+                        placeholder="Nhập tệp"
                     />
                 </div>
             </div>

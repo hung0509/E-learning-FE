@@ -413,7 +413,7 @@ const EditCoursePage = ({ courseSelected, changeData }) => {
         {activeTab === 1 &&
           <div>
             <CourseLessonTab
-              lessons={course.lessons}
+              course={course}
               addLesson={addLesson}
               deleteLesson={deleteLesson}
             />

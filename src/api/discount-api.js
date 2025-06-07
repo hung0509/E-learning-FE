@@ -2,10 +2,10 @@ import { API_ENDPOINTS, API_URL } from "../constant"
 import { CODE } from "../constant/code";
 import axiosInstance from "../interceptor/config"
 
-export const CommentApi = {
-    postComment: async (credential) => {
+export const DiscountApi = {
+    getAll: async (credential) => {
         try {
-            const res = await axiosInstance.post(`${API_URL}${API_ENDPOINTS.COMMENT}`, credential);
+            const res = await axiosInstance.get(`${API_URL}${API_ENDPOINTS.DISCOUNT}${credential}`);
 
             return res.data;
         } catch (err) {
@@ -17,9 +17,9 @@ export const CommentApi = {
         }
     },
 
-    getAll:  async (credential) => {
+    create: async (credential) => {
         try {
-            const res = await axiosInstance.get(`${API_URL}${API_ENDPOINTS.COMMENT}${credential}`);
+            const res = await axiosInstance.post(`${API_URL}${API_ENDPOINTS.DISCOUNT}`, credential);
 
             return res.data;
         } catch (err) {
@@ -30,11 +30,10 @@ export const CommentApi = {
             };
         }
     },
-    
-     delete: async (credential) => {
+
+    update: async (credential) => {
         try {
-            const res = await axiosInstance.delete(`${API_URL}${API_ENDPOINTS.COMMENT}/${credential}`);
-            console.log(res.data);
+            const res = await axiosInstance.put(`${API_URL}${API_ENDPOINTS.DISCOUNT}`, credential);
 
             return res.data;
         } catch (err) {

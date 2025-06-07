@@ -23,5 +23,6 @@ export const API_ENDPOINTS = {
   QUIZ_SCORE: "/quizzes/score",
   USER_INFO_UPDATE: "/users/update",
   ACCOUNT: "/accounts/update",
-  RESET_PASSWORD: "/auth/reset"
+  RESET_PASSWORD: "/auth/reset",
+  DISCOUNT: "/discounts"
 };

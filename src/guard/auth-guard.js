@@ -11,7 +11,7 @@ const ProtectedRoute = ({ children }) => {
 
   showInfo("Bạn không đủ quyền để truy cập vào trang này!");
 
-  return <Navigate to="/" replace />;
+  return <Navigate to="/404" replace />;
 };
 
 export default ProtectedRoute;

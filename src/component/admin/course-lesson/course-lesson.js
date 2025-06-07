@@ -2,7 +2,7 @@ import { useState } from "react";
 import LessonInfo from "../lesson-add/lesson-add";
 import { useLesson } from "../../../hook/useLesson";
 
-const CourseLessonTab = ({ lessons, addLesson, deleteLesson }) => {
+const CourseLessonTab = ({ course, addLesson, deleteLesson }) => {
     const [isEditModalOpen, setEditModalOpen] = useState(false);
     const { handleDeleteLesson } = useLesson();
 
@@ -32,6 +32,7 @@ const CourseLessonTab = ({ lessons, addLesson, deleteLesson }) => {
         setEditModalOpen(true); // Mở modal
     };
 
+
     return (
         <ul className="list-unstyled course-lesson">
             <div className="d-flex justify-content-between">
@@ -44,6 +45,7 @@ const CourseLessonTab = ({ lessons, addLesson, deleteLesson }) => {
                     <div className="modal-content w-25">
                         {/* <button className="close-btn btn btn-outline-danger" onClick={closeModal}>×</button> */}
                             <LessonInfo 
+                               courseId={course.id}
                                 closeModal={closeModal}
                                 addLesson={addLesson}
                             />
@@ -51,7 +53,7 @@ const CourseLessonTab = ({ lessons, addLesson, deleteLesson }) => {
                 </div>
             )}
 
-            {lessons.map((lesson, index) => (
+            {course.lessons.map((lesson, index) => (
                 <li
                     key={lesson.id}
                     className="py-3 px-3"
