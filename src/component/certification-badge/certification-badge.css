@@ -1,0 +1,35 @@
+.badge-wrapper {
+  display: inline-block;
+  padding: 1rem;
+}
+
+.badge-shape {
+  background: linear-gradient(135deg, #fda085, #f6d365);
+  clip-path: polygon(50% 0%, 100% 30%, 85% 100%, 15% 100%, 0% 30%);
+  width: 120px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-content {
+  text-align: center;
+  font-family: sans-serif;
+  color: #333;
+}
+
+.badge-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.badge-subtitle {
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.badge-icon {
+  font-size: 14px;
+  margin-top: 6px;
+}

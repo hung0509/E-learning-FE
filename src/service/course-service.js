@@ -30,6 +30,33 @@ export const CourseService = {
         }
     },
 
+    update: async (credential) => {
+        try{
+            const data = await CourseApi.update(credential);
+
+            const {code, result} = data;
+            if(code !== 0){
+                return {
+                    code: code,
+                    message: "Thông tin khóa học chưa đúng"
+                }
+            }
+
+            return {
+                code: CODE.SUCCESS,
+                result: result
+            }
+
+        }catch(err){
+            const message = err.response?.data?.message || MESSAGES.ERROR_SERVICE;
+            console.error(message);
+            return {
+                code: CODE.FAIL,
+                message: message
+            }
+        }
+    },
+
     getCourses: async (credential) => {
         try{
             const data = await CourseApi.getCourses(credential);

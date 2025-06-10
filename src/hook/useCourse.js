@@ -19,6 +19,22 @@ export const useCourse = () => {
         }
     }
 
+    const handleUpdate = async (credential) => {
+        try{
+            const data = await CourseService.update(credential);
+
+            if(data.code === 0){
+                showSuccess("Khóa học " + data.result.courseName + " cập nhật thành công");
+                return data.result;
+            }else {
+                showError(data.message);
+            }
+        }catch(err){
+            showError(err.message);
+            throw err;
+        }
+    }
+
     const handleGetCourse = async (credential) => {
         try{
             const data = await CourseService.getCourses(credential);
@@ -67,5 +83,5 @@ export const useCourse = () => {
         }
     }
 
-    return { handleAddSourse, handleGetCourse, handleGetDetailCourse, handleCourseSpecial, handleGetCourse2 };
+    return { handleAddSourse, handleGetCourse, handleGetDetailCourse, handleCourseSpecial, handleGetCourse2, handleUpdate };
 }

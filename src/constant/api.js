@@ -24,5 +24,6 @@ export const API_ENDPOINTS = {
   USER_INFO_UPDATE: "/users/update",
   ACCOUNT: "/accounts/update",
   RESET_PASSWORD: "/auth/reset",
-  DISCOUNT: "/discounts"
+  DISCOUNT: "/discounts",
+  LEARN: "/users/learning"
 };

@@ -6,6 +6,7 @@ import { useUserInfo } from "../../hook/useUserInfo";
 
 import { useNavigate } from "react-router-dom";
 import Article1 from "../../component/article/article";
+import MyBadges from "../../component/my-badge/my-badge";
 
 
 const MyInfo = () => {
@@ -176,6 +177,10 @@ const MyInfo = () => {
                     </div>
 
                     <div className="col-lg-8">
+                        <div>
+                            <MyBadges />
+                        </div>
+
                         <ul class="nav nav-tabs border-bottom" >
                             <li class="nav-item" onClick={handleClickTab}>
                                 <a style={{ fontWeight: '600' }}

@@ -1,7 +1,7 @@
-class CourseDetailDto{
+class CourseDetailDto {
     constructor(
         id,
-        courseName ,
+        courseName,
         description,
         avatar,
         trailer,
@@ -11,12 +11,15 @@ class CourseDetailDto{
         courseDuration,
         quantity,
         createdAt,
-        certificate ,
+        completedLesson,
+        totalLesson,
+        completionPercentage,
+        certificate,
         discount,
-        category ,
+        category,
         lessons = [],
         quizs = [],
-        documents = [] 
+        documents = []
     ) {
         this.id = id;
         this.courseName = courseName;
@@ -32,9 +35,12 @@ class CourseDetailDto{
         this.lessons = lessons;
         this.quizs = quizs;
         this.documents = documents;
-         this.certificate = certificate;
+        this.certificate = certificate;
         this.discount = discount;
         this.category = category;
+        this.completedLesson = completedLesson;
+        this.totalLesson = totalLesson;
+        this.completionPercentage = completionPercentage;
     }
 
     // Hàm tùy chọn để chuyển đổi sang JSON
@@ -73,6 +79,9 @@ class CourseDetailDto{
             data.courseDuration,
             data.quantity,
             new Date(data.createdAt), // Chuyển đổi sang kiểu Date
+            data.completedLesson,
+            data.totalLesson,
+            data.completionPercentage,
             data.certificate,
             data.discount,
             data.category,

@@ -209,9 +209,9 @@ const CourseAddition = () => {
                                         <h6 className="mb-0">Course Level</h6>
                                     </div>
                                     <select value={data.level} onChange={handleInputChange} id="level" name="level" className="w-50 col-sm-9 text-secondary rounded border p-2">
-                                        <option className='px-2' value="BEGINNER">Beginner</option>
-                                        <option className='px-2' value="INTERMEDIATE">Intermediate</option>
-                                        <option className='px-2' value="EXPERT">Expert</option>
+                                        <option className='px-2' value="BEGINNER">Người bắt đầu</option>
+                                        <option className='px-2' value="INTERMEDIATE">Trung cấp</option>
+                                        <option className='px-2' value="EXPERT">Chuyên gia</option>
                                     </select>
                                 </div>
                             </div>

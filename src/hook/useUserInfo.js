@@ -40,5 +40,17 @@ export const useUserInfo = () => {
         }
     }
 
-    return { handleMyInfo, handleGetAll, handleUpdate };
+     const handleLearning = async (credential) => {
+        try {
+            const data = await UserInfoService.learnLesson(credential);
+            if(data.code === 0){
+                console.log("Hoàn thành bài học")
+            }
+        } catch (err) {
+           console.log("Have one issue", err);
+           throw err;
+        }
+    }
+
+    return { handleMyInfo, handleGetAll, handleUpdate, handleLearning };
 }

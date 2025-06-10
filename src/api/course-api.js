@@ -19,6 +19,21 @@ export const CourseApi = {
         }
     },
 
+    update: async (credential) => {
+        try{
+            const res = await axiosInstance.put(`${API_URL}${API_ENDPOINTS.COURSE}`, credential);
+
+            return res.data;
+        }catch(err){
+            const message = err.response?.data?.message || MESSAGES.ERROR_UNKNOWN;
+            console.log(message);
+            return {
+                code: CODE.FAIL,
+                message: message
+            }
+        }
+    },
+
     getCourses: async (credential) => {
         try{
             const res = await axiosInstance.get(`${API_URL}${API_ENDPOINTS.COURSE}${credential}`, );

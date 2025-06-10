@@ -88,4 +88,31 @@ export const UserInfoService = {
             }
         }
     },
+
+    learnLesson: async (credential) => {
+        try{
+            const data = await UserInfoApi.learnLesson(credential);
+
+            const {code, result} = data;
+            if(code !== 0){
+                return {
+                    code: code,
+                    message: MESSAGES.ERROR_SERVER
+                }
+            }
+
+            return {
+                code: CODE.SUCCESS,
+                result: result
+            }
+
+        }catch(err){
+            const message = err.response?.data?.message || MESSAGES.ERROR_SERVICE;
+            console.error(message);
+            return {
+                code: CODE.FAIL,
+                message: message
+            }
+        }
+    },
 }

@@ -362,6 +362,25 @@ const EditCoursePage = ({ courseSelected, changeData }) => {
     }));
   };
 
+  const editCourse = (c) => {
+     setCourse((prev) => ({
+      ...prev,
+      courseName: c.courseName,
+      description: c.description,
+      priceEntered: c.priceEntered,
+      isActive: c.isActive,
+      level: c.level,
+      certificate: {
+        ...prev.certificate,
+        certificateName: c.certificateName
+      },
+      discount: {
+        ...prev.discount,
+        discountCode: c.discountCode
+      }
+    }));
+  }
+
   return (
     <div className="col-lg-12">
       <ul className="nav nav-tabs border-bottom">
@@ -407,7 +426,9 @@ const EditCoursePage = ({ courseSelected, changeData }) => {
         {
           activeTab === 0 &&
           <div>
-            <CourseInfoTab courses={course} />
+            <CourseInfoTab 
+              courses={course} 
+              editCourse={editCourse}/>
           </div>
         }
         {activeTab === 1 &&

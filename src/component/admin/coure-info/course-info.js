@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { Level } from "../../../constant/code";
 import { useDiscount } from "../../../hook/useDiscount";
 import DiscountDto from "../../../dto/discount-dto";
+import { useCourse } from "../../../hook/useCourse";
 
-const CourseInfoTab = ({ courses }) => {
+const CourseInfoTab = ({ courses, editCourse }) => {
   const initialCourse = {
+    id: courses.id,
     courseName: courses.courseName,
     level: courses.level,
     certificateName: courses.certificate?.certificateName || "",
@@ -17,7 +19,11 @@ const CourseInfoTab = ({ courses }) => {
   const [course, setCourse] = useState(initialCourse);
   const [showDiscountList, setShowDiscountList] = useState(false);
   const [availableDiscountCodes, setAvailableDiscountCodes] = useState([]);
+  const [discountInput, setDiscountInput] = useState(course.discountCode || "");
   const { handleGetAll } = useDiscount();
+  const { handleUpdate } = useCourse();
+
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await handleGetAll(`?isActive=Y&expiredDate=${new Date().toISOString().split("T")[0]}`);
@@ -34,14 +40,37 @@ const CourseInfoTab = ({ courses }) => {
     setCourse({ ...course, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-
+  const handleSubmit = async () => {
+    console.log(course.discountCode);
+    const courseUpdate = await handleUpdate({
+      id: course.id,
+      courseName: course.courseName,
+      discountCode: course.discountCode,
+      isActive: course.isActive,
+      level: course.level,
+      description: course.description,
+      priceEntered: course.priceEntered,
+      certificateName: course.certificateName
+    });
+    // setCourse(courseUpdate);
+    editCourse(courseUpdate)
   };
 
   const handleDiscountClick = (code) => {
-    setCourse({ ...course, discountCode: code });
+    setDiscountInput(code);
+    setCourse(prev => ({
+      ...prev,
+      discountCode: code
+    }));
+
+    console.log(course);
     setShowDiscountList(false);
   };
+
+  const handleInputChange = (e) => {
+    setDiscountInput(e.target.value);
+  };
+
   return (
     <form >
       <div className="mb-3">
@@ -86,8 +115,8 @@ const CourseInfoTab = ({ courses }) => {
           <input
             type="text"
             name="discountCode"
-            value={course.discountCode}
-            onChange={handleChange}
+            value={discountInput}
+            onChange={handleInputChange}
             onFocus={() => setShowDiscountList(true)}
             onBlur={() => setTimeout(() => setShowDiscountList(false), 200)}
             className="form-control"
@@ -96,9 +125,7 @@ const CourseInfoTab = ({ courses }) => {
           {showDiscountList && (
             <ul className="list-group position-absolute w-100 z-3" style={{ top: "100%", maxHeight: "150px", overflowY: "auto" }}>
               {availableDiscountCodes
-                .filter((c) =>
-                  c.toLowerCase().includes(course.discountCode.toLowerCase())
-                )
+                .filter((c) => c.toLowerCase().includes(discountInput.toLowerCase()))
                 .map((code, index) => (
                   <li
                     key={index}

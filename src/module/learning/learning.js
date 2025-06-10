@@ -139,8 +139,8 @@ const Learning = () => {
 
                 </a>
                 <div className="d-flex">
-                    <div width="8px" height="8px" style={{ border: '1px solid rgb(255, 147, 7)', fontSize: '13px' }} className="text-white p-2 rounded-circle">58%</div>
-                    <div className="align-content-center px-3">0/{course.quantity} Bài học</div>
+                    <div width="8px" height="8px" style={{ border: '1px solid rgb(255, 147, 7)', fontSize: '13px' }} className="text-white p-2 rounded-circle">{course.completionPercentage}%</div>
+                    <div className="align-content-center px-3">{course.completedLesson}/{course.totalLesson} Bài học</div>
                 </div>
             </div>
             <div className="learning-sign-in d-flex padding-custom" >
@@ -217,7 +217,7 @@ const Learning = () => {
                         (
                             <li
                                 key={lesson.lesson_id}
-                                className="py-2 px-3 list-unstyled"
+                                className="py-2 px-3 list-unstyled d-flex justify-content-between"
                                 style={{ cursor: 'pointer', fontWeight: '500' }}
                                 onClick={() => handleClickLesson(lesson)}
                             >
@@ -229,8 +229,9 @@ const Learning = () => {
                                         <i className="bi bi-play-circle px-2"></i>{formatSecondsToHMS(lesson.lessonTime)}
                                     </span>
                                 </div>
+                                {lesson.status === 'COM' && <span><i class="bi bi-check-circle-fill text-success"></i></span>}
                             </li>
-                        ))}
+                        ))} 
                     </ul>
                 </div>
             </div>
