@@ -13,6 +13,7 @@ class UserInfoDto {
         createdAt,
         courses = [],
         articles = [],
+        certificates = []
     ) {
         this.id = id;
         this.firstName =  firstName;
@@ -27,6 +28,7 @@ class UserInfoDto {
         this.courses = courses;
         this.createdAt = createdAt;
         this.articles = articles;
+        this.certificates = certificates;
     }
 
     // Hàm tùy chọn để chuyển đổi sang JSON
@@ -44,7 +46,8 @@ class UserInfoDto {
             avatar: this.avatar,
             courses: this.courses,
             articles: this.articles,
-            createdAt: this.createdAt
+            createdAt: this.createdAt,
+            certificates: this.certificates
         };
     }
 
@@ -63,6 +66,7 @@ class UserInfoDto {
             data.createdAt,
             data.courses,
             data.articles,
+            data.certificates
         );
     }
 }

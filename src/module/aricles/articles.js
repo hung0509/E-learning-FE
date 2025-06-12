@@ -4,26 +4,36 @@ import { useArticle } from '../../hook/useArticle';
 import { useNavigate } from 'react-router-dom';
 import ArticleDto from '../../dto/article-dto';
 import Article2 from '../../component/article/article2';
+import BaseRequestDto from '../../dto/base-request-dto';
+import Pagination from '../../component/pagination/pagination';
 
 const Articles = () => {
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(new BaseRequestDto());
+  const [currentPage, setCurrentPage] = useState(1);
   const { handleGetAllArticle } = useArticle();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await handleGetAllArticle("");
+        const result = await handleGetAllArticle(`?page=${currentPage - 1}&pageSize=6`);
         const articles = result.result.map((item) => ArticleDto.fromArticleResponse(item))
+        const page = BaseRequestDto.fromBaseRequestResponse(result);
 
         setData(articles);
+        setPage(page)
       } catch (err) {
         console.error("Error fetching articles:", err);
       }
     }
 
     fetchData();
-  }, []);
+  }, [currentPage]);
+
+  const onPageChange = (page) => {
+    setCurrentPage(page);
+  }
 
   const handleClickArticle = (id) => {
     navigate(`/article-detail/${id}`);
@@ -41,7 +51,11 @@ const Articles = () => {
           <Article2 data={item} />
         </div>
       ))}
-
+       <Pagination
+          currentPage={currentPage}
+          totalPages={page.totalPage}
+          onPageChange={onPageChange}
+        />
     </div>
   </div>
   );

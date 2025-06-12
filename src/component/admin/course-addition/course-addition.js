@@ -24,10 +24,10 @@ const category = [
 ]
 
 const steps = [
-    { number: 1, label: "Basic Information" },
-    { number: 2, label: "Courses Media" },
-    { number: 3, label: "Curriculum" },
-    { number: 4, label: "Complete" }
+    { number: 1, label: "Thông tin cơ bản" },
+    { number: 2, label: "Mô tả khóa học" },
+    { number: 3, label: "Các bài học" },
+    { number: 4, label: "Hoàn tất" }
 ];
 
 const CourseAddition = () => {
@@ -173,12 +173,12 @@ const CourseAddition = () => {
             <div className="stepper-content mt-4 ">
                 {currentStep === 1 && (
                     <div className="w-50 m-auto">
-                        <h2>Basic Infomation</h2>
+                        <h2>Thông tin cơ bản</h2>
                         <div className="card p-3">
                             <div className="card-body border-bottom">
                                 <div className="row">
                                     <div className="col-sm-3">
-                                        <h6 className="mb-0">Course Title</h6>
+                                        <h6 className="mb-0">Tên khóa học</h6>
                                     </div>
                                     <input
                                         value={data.courseName}
@@ -195,7 +195,7 @@ const CourseAddition = () => {
                             <div className="card-body border-bottom">
                                 <div className="row">
                                     <div className="col-sm-3">
-                                        <h6 className="mb-0">Course Category</h6>
+                                        <h6 className="mb-0">Thể loại</h6>
                                     </div>
                                     <select value={data.categoryId} onChange={handleInputChange} id="categoryId" name="categoryId" className="w-50 col-sm-9 text-secondary rounded border p-2">
                                         {category.map((item) => (<option className='px-2' key={item.id} value={item.id}>{item.category_name}</option>))}
@@ -206,7 +206,7 @@ const CourseAddition = () => {
                             <div className="card-body border-bottom">
                                 <div className="row">
                                     <div className="col-sm-3">
-                                        <h6 className="mb-0">Course Level</h6>
+                                        <h6 className="mb-0">Cấp bậc</h6>
                                     </div>
                                     <select value={data.level} onChange={handleInputChange} id="level" name="level" className="w-50 col-sm-9 text-secondary rounded border p-2">
                                         <option className='px-2' value="BEGINNER">Người bắt đầu</option>
@@ -219,7 +219,7 @@ const CourseAddition = () => {
                             <div className="card-body border-bottom">
                                 <div className="row">
                                     <div className="col-sm-3">
-                                        <h6 className="mb-0">Course Description</h6>
+                                        <h6 className="mb-0">Mô tả</h6>
                                     </div>
                                     <input
                                         value={data.description}
@@ -235,7 +235,7 @@ const CourseAddition = () => {
                             <div className="card-body border-bottom">
                                 <div className="row">
                                     <div className="col-sm-3">
-                                        <h6 className="mb-0">Course Price</h6>
+                                        <h6 className="mb-0">Giá </h6>
                                     </div>
                                     <input
                                         value={data.priceEntered}
@@ -251,7 +251,7 @@ const CourseAddition = () => {
                             <div className="card-body border-bottom">
                                 <div className="row">
                                     <div className="col-sm-3">
-                                        <h6 className="mb-0">Course Certificate</h6>
+                                        <h6 className="mb-0">Chứng chỉ</h6>
                                     </div>
                                     <input
                                         value={data.certificateName}
@@ -265,18 +265,18 @@ const CourseAddition = () => {
                             </div>
 
                         </div>
-                        <button className="btn btn-primary mt-3" onClick={() => navigateStep(2)}>Next</button>
+                        <button className="btn btn-primary mt-3" onClick={() => navigateStep(2)}>Tiếp theo</button>
                     </div>
                 )}
 
                 {currentStep === 2 && (
                     <div className="w-50 m-auto">
-                        <h2>Courses Media</h2>
+                        <h2>Mô tả khóa học</h2>
                         <div className="card p-3">
                             <div className="card-body border-bottom">
                                 <div className="row">
                                     <div className="col-sm-3">
-                                        <h6 className="mb-0">Course Image</h6>
+                                        <h6 className="mb-0">Ảnh</h6>
                                     </div>
                                     <input type='file'
                                         name='avatar'
@@ -291,7 +291,7 @@ const CourseAddition = () => {
                             <div className="card-body border-bottom">
                                 <div className="row">
                                     <div className="col-sm-3">
-                                        <h6 className="mb-0">Course Trailer</h6>
+                                        <h6 className="mb-0">Trailer khóa học</h6>
                                     </div>
                                     <input
                                         type='file'
@@ -312,7 +312,7 @@ const CourseAddition = () => {
 
                 {currentStep === 3 && (
                     <div className="w-75 m-auto">
-                        <h2>Curriculum</h2>
+                        <h2>Các bài học</h2>
 
                         <div className='btn add-course' onClick={addLesson}>
                             + Thêm bài học
@@ -372,7 +372,7 @@ const CourseAddition = () => {
                         <p className="d-inline mx-5">Bạn đã sẵn sàng để tạo một khóa học mới chưa?</p>
 
                         <div>
-                            <button className="btn btn-secondary mt-3" onClick={() => navigateStep(3)}>Previous</button>
+                            <button className="btn btn-secondary mt-3" onClick={() => navigateStep(3)}>Trước</button>
                             <button onClick={handleCreateCourse} className="btn btn-primary mt-3">Tạo khóa học</button>
                         </div>
                     </div>

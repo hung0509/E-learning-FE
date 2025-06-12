@@ -178,7 +178,7 @@ const MyInfo = () => {
 
                     <div className="col-lg-8">
                         <div>
-                            <MyBadges />
+                            <MyBadges certificates={data.certificates}/>
                         </div>
 
                         <ul class="nav nav-tabs border-bottom" >

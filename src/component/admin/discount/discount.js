@@ -100,9 +100,9 @@ const Discount = () => {
         <div className="px-5 discount-admin">
             <div class="app-header d-flex align-items-center">
                 <div class="d-flex py-2">
-                    <a href="">Home</a>
+                    <a href="">Bảng điều khiển</a>
                     <i class="bi bi-chevron-right fs-5 px-2"></i>
-                    <a href="">Discount</a>
+                    <a href="">Phiếu giảm giá</a>
                 </div>
             </div>
 

@@ -24,15 +24,15 @@ const Dashboard = () => {
 
     return (<div className='px-5'>
         <div class="app-header d-flex align-items-center">
-            <div class="d-flex py-2">
-                <a href="/admin/dashboard">Home</a>
+            {/* <div class="d-flex py-2">
+                <a href="/admin/dashboard">Bảng điều khiển</a>
                 <i class="bi bi-chevron-right fs-5 px-2"></i>
                 <a href="/admin">Dashboard</a>
-            </div>
+            </div> */}
         </div>
 
         <div class="container-fluid pt-4 px-4">
-            <h4>Dashboard</h4>
+            <h4>Bảng điều khiển</h4>
             <div class="row g-4">
                 <div class="col-sm-6 col-xl-3">
                     <div class="h-100 border bg-light rounded d-flex align-items-end justify-content-between p-4">

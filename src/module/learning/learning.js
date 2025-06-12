@@ -11,6 +11,8 @@ import { useComment } from "../../hook/useComment";
 import { Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import CommentDto from "../../dto/comment-dto";
+import BaseRequestDto from "../../dto/base-request-dto";
+import Pagination from "../../component/pagination/pagination";
 
 
 const Learning = () => {
@@ -20,6 +22,8 @@ const Learning = () => {
     const [searchParams] = useSearchParams();
     const courseId = searchParams.get("courseId");
     const lessonId = searchParams.get("lessonId");
+    const [page, setPage] = useState(new BaseRequestDto());
+    const [currentPage, setCurrentPage] = useState(1);
     const [course, setCourse] = useState(new CourseDetailDto());
     const { handleGetDetailCourse } = useCourse();
     const [selectedLesson, setSelectedLesson] = useState(new LessonDto());
@@ -77,14 +81,21 @@ const Learning = () => {
     useEffect(() => {
         if (selectedLesson && selectedLesson.id != null) {
             const fetchCourse = async () => {
-                const result = await handleGetAll(`?lessonId=${selectedLesson.id}`);
+                const result = await handleGetAll(`?lessonId=${selectedLesson.id}&page=${currentPage - 1}&pageSize=6`);
                 const comments = result.result.map((item) => CommentDto.fromCommentDto(item));
+
+                const page = BaseRequestDto.fromBaseRequestResponse(result);
                 setComment(comments);
+                setPage(page);
             };
-        
+
             fetchCourse();
         }
-    }, [selectedLesson.id]);
+    }, [selectedLesson.id, currentPage]);
+
+    const onPageChange = (page) => {
+        setCurrentPage(page);
+    }
 
 
     const handleClickLesson = (lesson) => {
@@ -122,14 +133,14 @@ const Learning = () => {
     const formatDateToSharedPublicly = (dateString) => {
         const date = new Date(dateString);
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
         const month = monthNames[date.getMonth()];
         const year = date.getFullYear();
-    
+
         return `${month} ${year}`;
     };
-    
+
 
     return (
         <div>
@@ -189,7 +200,7 @@ const Learning = () => {
                                 <div class="d-flex flex-column comment-section w-100">
                                     <div class="">
                                         <div class="d-flex flex-row user-info">
-                                            <img class="rounded-circle mx-3" src={item.avatar ||  "https://pluspng.com/img-png/user-png-icon-user-2-icon-png-file-512x512-pixel-512.png"} width="40" />
+                                            <img class="rounded-circle mx-3" src={item.avatar || "https://pluspng.com/img-png/user-png-icon-user-2-icon-png-file-512x512-pixel-512.png"} width="40" />
                                             <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">{item.firstName + " " + item.lastName}</span><span class="date text-black-50">{formatDateToSharedPublicly(item.createdAt)}</span></div>
                                         </div>
                                         <div class="mt-2">
@@ -207,17 +218,22 @@ const Learning = () => {
                                 </div>
                             </div>
                         ))}
-
                     </div>
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={page.totalPage}
+                        onPageChange={onPageChange}
+                    />
                 </div>
+
                 <div class='lesson col-sm-12 col-xl-3 rounded '>
                     <h5 className="p-4 fs-6 border-bottom fw-bold">Nội dung khóa học</h5>
                     <ul className="p-0">
                         {course.lessons.map((lesson, index) =>
                         (
-                            <li
+                            <li 
                                 key={lesson.lesson_id}
-                                className="py-2 px-3 list-unstyled d-flex justify-content-between"
+                                className="py-2 px-3 list-unstyled d-flex justify-content-between lesson-course"
                                 style={{ cursor: 'pointer', fontWeight: '500' }}
                                 onClick={() => handleClickLesson(lesson)}
                             >
@@ -231,7 +247,7 @@ const Learning = () => {
                                 </div>
                                 {lesson.status === 'COM' && <span><i class="bi bi-check-circle-fill text-success"></i></span>}
                             </li>
-                        ))} 
+                        ))}
                     </ul>
                 </div>
             </div>

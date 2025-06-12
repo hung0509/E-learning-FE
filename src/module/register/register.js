@@ -32,9 +32,9 @@ const Register = () => {
                 <div class="row">
                     <div class="col-12 col-md-6 bsb-tpl-bg-platinum">
                         <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 p-xl-5">
-                            <h3 class="m-0">Welcome!</h3>
+                            <h3 class="m-0">Chào mứng!</h3>
                             <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="https://bootstrapbrain.com/demo/components/registrations/registration-3/assets/img/bsb-logo.svg" width="245" height="80" alt="BootstrapBrain Logo" />
-                            <p class="mb-0">Not a member yet? <a href="#!" class="link-secondary text-decoration-none">Register now</a></p>
+                            <p class="mb-0">Ban chưa phải là thành viên? <a href="#!" class="link-secondary text-decoration-none">Đăng ký ngay!</a></p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 bsb-tpl-bg-lotion">
@@ -42,15 +42,15 @@ const Register = () => {
                             <div class="row">
                                 <div class="col-12">
                                     <div class="mb-5">
-                                        <h2 class="h3">Registration</h2>
-                                        <h3 class="fs-6 fw-normal text-secondary m-0">Enter your details to register</h3>
+                                        <h2 class="h3">Đăng ký</h2>
+                                        <h3 class="fs-6 fw-normal text-secondary m-0">Nhập thông tin của bạn vào biểu mẫu dưới</h3>
                                     </div>
                                 </div>
                             </div>
                             <form action="#!">
                                 <div class="row gy-3 gy-md-4 overflow-hidden">
                                     <div class="col-12">
-                                        <label for="username" class="form-label">User Name <span class="text-danger">*</span></label>
+                                        <label for="username" class="form-label">Tên đăng nhập <span class="text-danger">*</span></label>
                                         <input 
                                             value={data.username}
                                             onChange={handleChange}
@@ -58,12 +58,12 @@ const Register = () => {
                                             class="form-control" 
                                             name="username" 
                                             id="username" 
-                                            placeholder="User Name" 
+                                            placeholder="Tên đăng nhập" 
                                             required 
                                         />
                                     </div>
                                     <div class="col-12">
-                                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                                        <label for="password" class="form-label">Mật khẩu <span class="text-danger">*</span></label>
                                         <input 
                                             value = {data.password}
                                             onChange={handleChange}
@@ -71,12 +71,12 @@ const Register = () => {
                                             class="form-control" 
                                             name="password" 
                                             id="password" 
-                                            placeholder="Password" 
+                                            placeholder="Mật khẩu" 
                                             required 
                                         />
                                     </div>
                                     <div class="col-12">
-                                        <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
+                                        <label for="firstName" class="form-label">Họ <span class="text-danger">*</span></label>
                                         <input
                                             value={data.firstName}
                                             onChange={handleChange}
@@ -84,12 +84,12 @@ const Register = () => {
                                             class="form-control" 
                                             name="firstName" 
                                             id="firstName" 
-                                            placeholder="First Name" 
+                                            placeholder="Họ" 
                                             required 
                                         />
                                     </div>
                                     <div class="col-12">
-                                        <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
+                                        <label for="lastName" class="form-label">Tên<span class="text-danger">*</span></label>
                                         <input 
                                             value={data.lastName}
                                             onChange={handleChange}
@@ -97,7 +97,7 @@ const Register = () => {
                                             class="form-control" 
                                             name="lastName" 
                                             id="lastName" 
-                                            placeholder="Last Name" 
+                                            placeholder="Tên" 
                                             required 
                                         />
                                     </div>
@@ -115,7 +115,7 @@ const Register = () => {
                                         />
                                     </div>
                                     <div class="col-12">
-                                        <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
+                                        <label for="phone" class="form-label">Số điện thoại <span class="text-danger">*</span></label>
                                         <input 
                                             value={data.phone}
                                             onChange={handleChange}
@@ -123,7 +123,7 @@ const Register = () => {
                                             class="form-control" 
                                             name="phone" 
                                             id="phone" 
-                                            placeholder="Phone" 
+                                            placeholder="Số điện thoại" 
                                             required 
                                         />
                                     </div>
@@ -131,20 +131,20 @@ const Register = () => {
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value="" name="iAgree" id="iAgree" required />
                                             <label class="form-check-label text-secondary" for="iAgree">
-                                                I agree to the <a href="#!" class="link-primary text-decoration-none">terms and conditions</a>
+                                                Tôi đồng ý <a href="#!" class="link-primary text-decoration-none"> với các điều khoản và chính sách</a>
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="d-grid">
-                                            <button onClick={handleClickSignup} class="btn bsb-btn-xl btn-primary" type="submit">Sign up</button>
+                                            <button onClick={handleClickSignup} class="btn bsb-btn-xl btn-primary" type="submit">Đăng ký</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                             <div class="row">
                                 <div class="col-12">
-                                    <p class="m-0 text-secondary text-end">Already have an account? <a href="/sign-in" class="link-primary text-decoration-none">Sign in</a></p>
+                                    <p class="m-0 text-secondary text-end">Bạn đã có tài khoản? <a href="/sign-in" class="link-primary text-decoration-none">Đăng nhập</a></p>
                                 </div>
                             </div>
                         </div>

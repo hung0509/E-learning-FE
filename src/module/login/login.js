@@ -48,14 +48,14 @@ const Login = () => {
                 <div class="row">
                   <div class="col-12">
                     <div class="mb-5">
-                      <h3>Log in</h3>
+                      <h3>Đăng nhập</h3>
                     </div>
                   </div>
                 </div>
                 <form action="#!">
                   <div class="row gy-3 gy-md-4 overflow-hidden">
                     <div class="col-12">
-                      <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                      <label for="email" class="form-label">Tên đăng nhập <span class="text-danger">*</span></label>
                       <input
                         value={data.username}
                         onChange={handleChange}
@@ -68,14 +68,14 @@ const Login = () => {
                       />
                     </div>
                     <div class="col-12">
-                      <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                      <label for="password" class="form-label">Mật khẩu <span class="text-danger">*</span></label>
                       <input
                         value={data.password}
                         onChange={handleChange}
                         type="password"
                         class="form-control"
                         name="password"
-                        id="password"
+                        id="Mật khẩu"
                         required
                       />
                     </div>
@@ -83,13 +83,13 @@ const Login = () => {
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" name="remember_me" id="remember_me" />
                         <label class="form-check-label text-secondary" for="remember_me">
-                          Keep me logged in
+                          Lưu đăng nhập
                         </label>
                       </div>
                     </div>
                     <div class="col-12">
                       <div class="d-grid">
-                        <button onClick={handleSubmit} class="btn bsb-btn-xl btn-primary" type='button'>Log in now</button>
+                        <button onClick={handleSubmit} class="btn bsb-btn-xl btn-primary" type='button'>Đăng nhập</button>
                       </div>
                     </div>
                   </div>
@@ -99,15 +99,15 @@ const Login = () => {
                   <div class="col-12">
                     {/* <hr class="mt-5 mb-4 border-secondary-subtle"> */}
                     <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
-                      <a href="/register" class="link-secondary text-decoration-none">Create new account</a>
-                      <a href="/reset-password" class="link-secondary text-decoration-none">Forgot password</a>
+                      <a href="/register" class="link-secondary text-decoration-none">Tạo tài khoản mới</a>
+                      <a href="/reset-password" class="link-secondary text-decoration-none">Quên mật khẩu</a>
                     </div>
                   </div>
                 </div>
 
                 <div class="row">
                   <div class="col-12">
-                    <p class="mt-5 mb-4">Or sign in with</p>
+                    <p class="mt-5 mb-4">Hoặc đăng nhập với</p>
                     <div class="d-flex gap-3 flex-column flex-xl-row">
                       <div onClick={loginByGoogle} class="btn bsb-btn-xl btn-outline-primary">
                         <i class="bi bi-google"></i>

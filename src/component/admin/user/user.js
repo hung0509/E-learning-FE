@@ -38,9 +38,9 @@ const User = () => {
     return (<div className='user-admin'>
         <div class="app-header d-flex align-items-center px-5">
             <div class="d-flex py-2">
-                <a href="">Home</a>
+                <a href="">Bảng điều khiển</a>
                 <i class="bi bi-chevron-right fs-5 px-2"></i>
-                <a href="">User</a>
+                <a href="">Người dùng</a>
             </div>
         </div>
         <div className="col-sm-12 col-xl-10 py-3 mx-5">
@@ -53,10 +53,10 @@ const User = () => {
                 <thead className="thead-dark">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Avater</th>
-                        <th scope="col">First name</th>
-                        <th scope="col">Last name</th>
-                        <th scope="col">Date of Birth</th>
+                        <th scope="col">Hình ảnh</th>
+                        <th scope="col">Họ đệm</th>
+                        <th scope="col">Tên</th>
+                        <th scope="col">Ngày sinh</th>
                     </tr>
                 </thead>
                 <tbody>

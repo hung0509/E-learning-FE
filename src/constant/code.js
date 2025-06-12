@@ -1,6 +1,9 @@
 export const CODE = {
     SUCCESS: 0,
-    FAIL: -1
+    FAIL: -1,
+    EXPERT: "EXPERT",
+    INTERMEDIATE: "INTERMEDIATE",
+    BEGINNER: "BEGINNER"
 };
 
 export const STATUS = {
@@ -17,5 +20,8 @@ export const OauthConfig = {
   
 
 export const Level = {
-    EXPERT: "Chuyên gia"
+    EXPERT: "Chuyên gia",
+    INTERMEDIATE: "Trung cấp",
+    BEGINNER: "Người bắt đầu"
 }
+

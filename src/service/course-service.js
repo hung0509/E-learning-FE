@@ -34,7 +34,7 @@ export const CourseService = {
         try{
             const data = await CourseApi.update(credential);
 
-            const {code, result} = data;
+            const {code, result, currentPage, totalItems, totalPages, pageSize} = data;
             if(code !== 0){
                 return {
                     code: code,
@@ -42,10 +42,14 @@ export const CourseService = {
                 }
             }
 
-            return {
+             return {
                 code: CODE.SUCCESS,
-                result: result
-            }
+                result: result,
+                currentPage: currentPage,
+                pageSize: pageSize,
+                totalPages: totalPages,
+                totalItems: totalItems
+            } 
 
         }catch(err){
             const message = err.response?.data?.message || MESSAGES.ERROR_SERVICE;

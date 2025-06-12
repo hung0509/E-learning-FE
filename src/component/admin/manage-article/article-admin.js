@@ -72,31 +72,28 @@ const ArticleAdmin = () => {
 
     const approveArticle = async (id) => {
         console.log(id);
-
-        const formData = new FormData();
-        formData.append('id', id)
-        formData.append('status', STATUS.APPROVE);
-
-        await handleUpdateArticle(formData);
+        await handleUpdateArticle({
+            id: id,
+            status: STATUS.APPROVE
+        });
     }
 
     const rejectArticle = async (id) => {
         console.log(id);
         
-        const formData = new FormData();
-        formData.append('id', id)
-        formData.append('status', STATUS.REJECT);
-
-        await handleUpdateArticle(formData);
+        await handleUpdateArticle({
+            id: id,
+            status: STATUS.REJECT
+        });
     }
 
     return (
         <div className="article-admin row px-5">
             <div class="app-header d-flex align-items-center">
                 <div class="d-flex py-2">
-                    <a href="">Home</a>
+                    <a href="">Bảng điều khiển</a>
                     <i class="bi bi-chevron-right fs-5 px-2"></i>
-                    <a href="">Article</a>
+                    <a href="">Bài viết</a>
                 </div>
             </div>
             <div className="col-sm-12 col-xl-2 px-2">
@@ -154,10 +151,10 @@ const ArticleAdmin = () => {
                     <thead className="thead-dark">
                         <tr>
                             <th className='text-center' scope="col">#</th>
-                            <th className='text-center' scope="col">Image</th>
-                            <th className='text-center' scope="col">Name</th>
-                            <th className='text-center' scope="col">Publish Date</th>
-                            <th className='text-center' scope="col">Action</th>
+                            <th className='text-center' scope="col">Hình ảnh</th>
+                            <th className='text-center' scope="col">Tên</th>
+                            <th className='text-center' scope="col">Ngày đăng</th>
+                            <th className='text-center' scope="col">Hành động</th>
                         </tr>
                     </thead>
                     <tbody className='text-center'>

@@ -56,7 +56,8 @@ export const useArticle = () => {
             const data = await ArticleService.updateArticle(credential);
 
             if(data.code === 0){
-                navigate('/admin/article');
+                showSuccess("Cập nhật trạng thái bài viết thành công")
+                window.location.href = '/admin/article';
             }else {
                 showError(data.message);
             }

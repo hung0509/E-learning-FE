@@ -111,7 +111,7 @@ const CourseInfoTab = ({ courses, editCourse }) => {
         </div>
 
         <div className="col-md-6 mb-3 position-relative">
-          <label className="form-label fw-bold">Discount</label>
+          <label className="form-label fw-bold">Phiếu giảm giá</label>
           <input
             type="text"
             name="discountCode"
@@ -156,7 +156,7 @@ const CourseInfoTab = ({ courses, editCourse }) => {
           </select>
         </div>
         <div className="col-md-4 mb-3">
-          <label className="form-label fw-bold">Certificate</label>
+          <label className="form-label fw-bold">Chứng chỉ</label>
           <input
             type="text"
             name="certificateName"
@@ -167,7 +167,7 @@ const CourseInfoTab = ({ courses, editCourse }) => {
           />
         </div>
         <div className="col-md-4 mb-3">
-          <label className="form-label fw-bold">Level</label>
+          <label className="form-label fw-bold">Cấp bậc</label>
           <select
             name="level"
             value={course.level}

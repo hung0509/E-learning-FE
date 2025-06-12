@@ -15,31 +15,31 @@ const AdminLeftbar = () => {
         <li className="nav-item">
           <a href="/admin" className={`nav-link ${location.pathname === '/admin' ? '' : 'link-dark'}`} aria-current="page" style={{fontWeight: '600'}}>
             <i className="bi bi-house-fill mx-2"></i>
-            Dashboard
+            Bảng điều khiển
           </a>
         </li>
         <li>
           <a href="/admin/course" className={`nav-link ${location.pathname === '/admin/course' ? '' : 'link-dark'}`} style={{fontWeight: '600'}}>
             <i className="bi bi-book-fill mx-2"></i>
-            Courses
+            Khóa học
           </a>
         </li>
         <li>
           <a href="/admin/user" className={`nav-link ${location.pathname === '/admin/user' ? '' : 'link-dark'}`} style={{fontWeight: '600'}}>
             <i className="bi bi-people-fill mx-2"></i>
-            Users
+            Người dùng
           </a>
         </li>
         <li>
           <a href="/admin/article" className={`nav-link ${location.pathname === '/admin/article' ? '' : 'link-dark'}`} style={{fontWeight: '600'}}>
             <i className="bi bi-newspaper mx-2"></i>
-            Articles
+            Bài viết
           </a>
         </li>
         <li>
           <a href="/admin/discount" className={`nav-link ${location.pathname === '/admin/discount' ? '' : 'link-dark'}`} style={{fontWeight: '600'}}>
             <i className="bi bi-ticket-fill mx-2"></i>
-            Discounts
+            Phiếu giảm giá
           </a>
         </li>
       </ul>
@@ -47,7 +47,7 @@ const AdminLeftbar = () => {
         <hr />
         <a href="/logout" className="nav-link link-dark rounded p-3 fs-5" style={{fontWeight: '600'}}>
           <i className="bi bi-box-arrow-in-left mx-2"></i>
-          Log out
+          Đăng xuất
         </a>
       </div>
     </div>

@@ -64,7 +64,7 @@ const DiscountDetail = ({ discount }) => {
                             type="button"
                             onClick={handleToggle}
                         >
-                            {isActive ? 'VALID' : 'INVALID'}
+                            {isActive ? 'Hoạt động' : 'Ngừng hoạt động'}
                         </button>
                     </div>
                 </div>

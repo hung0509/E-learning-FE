@@ -4,28 +4,38 @@ import Course from '../../component/course/course';
 import { useCourse } from '../../hook/useCourse';
 import CourseHeaderDto from '../../dto/course-header-dto';
 import { useNavigate } from 'react-router-dom';
+import BaseRequestDto from '../../dto/base-request-dto';
+import Pagination from '../../component/pagination/pagination';
 
 
 const Courses = () => {
   const { handleGetCourse } = useCourse();
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(new BaseRequestDto());
+  const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         console.log("data");
-        const result = await handleGetCourse("");
+        const result = await handleGetCourse(`?page=${currentPage - 1}&pageSize=6`);
         const courses = result.result.map((item) => CourseHeaderDto.fromCourseHeaderResponse(item));
+        const page = BaseRequestDto.fromBaseRequestResponse(result);
 
         setData(courses);
+        setPage(page)
       } catch (err) {
         console.error("Error fetching articles:", err);
       }
     }
 
     fetchData();
-  }, []);
+  }, [currentPage]);
+
+  const onPageChange = (page) => {
+    setCurrentPage(page);
+  }
 
   const handleClickCourse = (id) => {
     navigate(`/course-des/${id}`);
@@ -45,11 +55,16 @@ const Courses = () => {
         </div>
         <div className="row px-5">
           {data.map((item) => (
-              <div key={item.id} className="col-sm-12 col-md-6 col-lg-4 mb-5 d-flex justify-content-center" onClick={() => handleClickCourse(item.id)}>
-                    <Course data={item}/>
-              </div>
+            <div key={item.id} className="col-sm-12 col-md-6 col-lg-4 mb-5 d-flex justify-content-center" onClick={() => handleClickCourse(item.id)}>
+              <Course data={item} />
+            </div>
           ))}
         </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={page.totalPage}
+          onPageChange={onPageChange}
+        />
       </div>
 
     </section>

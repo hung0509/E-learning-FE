@@ -10,6 +10,7 @@ import { useCategory } from '../../../hook/useCategory';
 import CategoryDto from '../../../dto/category-dto';
 import { useNavigate } from 'react-router-dom';
 import CourseDetailDto from '../../../dto/course-detail-dto';
+import { CODE, Level } from '../../../constant/code';
 
 
 const CourseAdmin = () => {
@@ -96,9 +97,9 @@ const CourseAdmin = () => {
         <div className="course-admin row px-5">
             <div class="app-header d-flex align-items-center">
                 <div class="d-flex py-2">
-                    <a href="/admin">Home</a>
+                    <a href="/admin">Bảng điều khiển</a>
                     <i class="bi bi-chevron-right fs-5 px-2"></i>
-                    <a href="/admin/course">Course</a>
+                    <a href="/admin/course">Khóa học</a>
                 </div>
             </div>
             <div className="col-sm-12 col-xl-2 px-2">
@@ -153,25 +154,25 @@ const CourseAdmin = () => {
                     <div class="form-check">
                         <input class="form-check-input" type="radio" value="ALL" id="flexCheckDefault" name="level" onChange={handleChange} checked={param.level === 'ALL'} />
                         <label class="form-check-label" for="flexCheckDefault">
-                            All Level
+                            Tất cả
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" value="BEGINNER" id="flexCheckChecked" name="level" onChange={handleChange} checked={param.level === 'BEGINNER'} />
                         <label class="form-check-label" for="flexCheckChecked">
-                            Beginner
+                            {Level.BEGINNER}
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" value="INTERMEDIATE" id="flexCheckChecked" name="level" onChange={handleChange} checked={param.level === 'INTERMEDIATE'} />
                         <label class="form-check-label" for="flexCheckChecked">
-                            Intermediate
+                            {Level.INTERMEDIATE}
                         </label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" value="EXPERT" id="flexCheckChecked" name="level" onChange={handleChange} checked={param.level === 'EXPERT'} />
                         <label class="form-check-label" for="flexCheckChecked">
-                            Expert
+                           {Level.EXPERT}
                         </label>
                     </div>
                 </div>
@@ -183,9 +184,9 @@ const CourseAdmin = () => {
                     <thead className="thead-dark">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Avater</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Price</th>
+                            <th scope="col">Hình ảnh</th>
+                            <th scope="col">Tên</th>
+                            <th scope="col">Giá cả</th>
                             <th scope="col">Số lượng bài</th>
                         </tr>
                     </thead>
@@ -225,7 +226,7 @@ const CourseAdmin = () => {
                                                     </div>
                                                     <div className='d-flex justify-content-between'>
                                                         <p style={{ fontSize: '14px' }} className="fw-bold">Trình độ: </p>
-                                                        <div>{item.level}</div>
+                                                        <div>{Level[item.level]}</div>
                                                     </div>
                                                     <div className='d-flex justify-content-between'>
                                                         <p style={{ fontSize: '14px' }} className="fw-bold">Thời gian học: </p>
