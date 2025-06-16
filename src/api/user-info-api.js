@@ -31,6 +31,20 @@ export const UserInfoApi = {
         }
     },
 
+    updateV2 : async (credential) => {
+        try {
+            const res = await axiosInstance.post(`${API_URL}${API_ENDPOINTS.USER_INFO_UPDATE2}`, credential);
+
+            return res.data;
+        } catch (err) {
+            console.error("API Error:", err.response?.data?.message || err.message);
+            return {
+                code: CODE.FAIL,
+                message: err.response?.data?.message || "Lỗi không xác định",
+            };
+        }
+    },
+
     getAll: async (credential) => {
         try {
             const res = await axiosInstance.get(`${API_URL}${API_ENDPOINTS.USERS}${credential}`);
@@ -48,6 +62,20 @@ export const UserInfoApi = {
     learnLesson: async (credential) => {
         try {
             const res = await axiosInstance.post(`${API_URL}${API_ENDPOINTS.LEARN}`,credential);
+
+            return res.data;
+        } catch (err) {
+            console.error("API Error:", err.response?.data?.message || err.message);
+            return {
+                code: CODE.FAIL,
+                message: err.response?.data?.message || "Lỗi không xác định",
+            };
+        }
+    },
+
+    getSpecial: async () => {
+        try {
+            const res = await axiosInstance.get(`${API_URL}${API_ENDPOINTS.USERS_SPECIAL}`);
 
             return res.data;
         } catch (err) {

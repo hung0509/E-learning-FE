@@ -8,9 +8,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useCourse } from '../../hook/useCourse';
 import CourseHeaderDto from '../../dto/course-header-dto';
 import { useAuth } from '../../hook/useAuth';
+import { useUserInfo } from '../../hook/useUserInfo';
+import UserInfoDto from '../../dto/user-info-dto';
 
 const Home = () => {
     const [data, setData] = useState([]);
+    const [dataUser, setDataUser] = useState([]);
+    const { handleGetSpecial } = useUserInfo()
     const { handleCourseSpecial } = useCourse();
     const { handleLoginByGoogle } = useAuth();
 
@@ -20,6 +24,16 @@ const Home = () => {
                 const result = await handleCourseSpecial();
                 const courses = result.map((item) => CourseHeaderDto.fromCourseHeaderResponse(item));
                 setData(courses);
+            } catch (err) {
+                console.error("Error fetching articles:", err);
+            }
+        };
+
+        const fetchUserSpecialData = async () => {
+            try {
+                const result = await handleGetSpecial();
+                const users = result.result.map((item) => UserInfoDto.fromUserInfoResponse(item));
+                setDataUser(users);
             } catch (err) {
                 console.error("Error fetching articles:", err);
             }
@@ -46,6 +60,7 @@ const Home = () => {
         }
     
         fetchData();
+        fetchUserSpecialData();
     }, []);
     
 
@@ -104,7 +119,7 @@ const Home = () => {
 
             <div className='w-100 h-25'>
                 <h2 className='fs-4 fw-bold my-5'>Tác giá nổi bật</h2>
-                <LogoSlider />
+                <LogoSlider data={dataUser}/>
             </div>
 
         </div>

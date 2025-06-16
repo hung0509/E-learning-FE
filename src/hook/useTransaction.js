@@ -15,5 +15,17 @@ export const useTransaction = () => {
         }
     }
 
-    return { handlePayment };
+    const handleGetAll = async (credential) => {
+        try {
+            const data = await TransactionService.getAll(credential);
+            if(data.code === 0){
+                  return data;
+            }
+        } catch (err) {
+            showError(err.message);
+            throw err;
+        }
+    }
+
+    return { handlePayment, handleGetAll };
 }

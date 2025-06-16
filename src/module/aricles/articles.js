@@ -6,6 +6,7 @@ import ArticleDto from '../../dto/article-dto';
 import Article2 from '../../component/article/article2';
 import BaseRequestDto from '../../dto/base-request-dto';
 import Pagination from '../../component/pagination/pagination';
+import { STATUS } from '../../constant/code';
 
 const Articles = () => {
   const [data, setData] = useState([]);
@@ -17,7 +18,7 @@ const Articles = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await handleGetAllArticle(`?page=${currentPage - 1}&pageSize=6`);
+        const result = await handleGetAllArticle(`?page=${currentPage - 1}&pageSize=6&status=${STATUS.APPROVE}`);
         const articles = result.result.map((item) => ArticleDto.fromArticleResponse(item))
         const page = BaseRequestDto.fromBaseRequestResponse(result);
 

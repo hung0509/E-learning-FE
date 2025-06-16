@@ -10,3 +10,28 @@
     object-fit: cover;
     border: 1px solid #d6d0d0;
 }
+
+.my-info  .upload-wrapper {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+  }
+
+ .my-info  .upload-wrapper input[type="file"] {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
+ /* .my-info  .upload-text {
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    border: 1px dashed #aaa;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+  } */

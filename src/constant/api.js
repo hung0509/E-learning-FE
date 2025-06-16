@@ -14,6 +14,7 @@ export const API_ENDPOINTS = {
   MY_INFO: '/users',
   CATEGORY: '/categories',
   USERS: '/users/all',
+  USERS_SPECIAL: '/users/special',
   LESSON: '/lessons',
   CREATE_PAYMENT: '/payments/create',
   AUTH_BY_GOOGLE: '/auth/outbound/authentication',
@@ -22,8 +23,10 @@ export const API_ENDPOINTS = {
   QUIZ: '/quizzes',
   QUIZ_SCORE: "/quizzes/score",
   USER_INFO_UPDATE: "/users/update",
+  USER_INFO_UPDATE2: "/users/update/v2",
   ACCOUNT: "/accounts/update",
   RESET_PASSWORD: "/auth/reset",
   DISCOUNT: "/discounts",
-  LEARN: "/users/learning"
+  LEARN: "/users/learning",
+  TRANSACTONS: "/transactions"
 };

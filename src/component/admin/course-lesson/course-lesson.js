@@ -32,6 +32,10 @@ const CourseLessonTab = ({ course, addLesson, deleteLesson }) => {
         setEditModalOpen(true); // Mở modal
     };
 
+    const handleEditLesson =(id) =>{
+        window.location.href = "/admin/lesson/" + id;
+    }
+
 
     return (
         <ul className="list-unstyled course-lesson">
@@ -72,7 +76,8 @@ const CourseLessonTab = ({ course, addLesson, deleteLesson }) => {
                         <span style={{ fontSize: '12px' }}>
                             <i className="bi bi-clock px-2"></i>
                             {formatDuration(lesson.lessonTime)}
-                            <span onClick={handleRemoveLesson} className="mx-5" style={{ cursor: 'pointer' }}><i class="bi bi-trash-fill"></i></span>
+                            <span onClick={() => handleEditLesson(lesson.id)}  style={{ cursor: 'pointer', marginLeft: '5rem', marginRight: '1rem' }}><i class="bi bi-pencil-square"></i></span>
+                            <span onClick={handleRemoveLesson} className="mx-2" style={{ cursor: 'pointer' }}><i class="bi bi-trash-fill"></i></span>
                         </span>
                     </div>
                 </li>

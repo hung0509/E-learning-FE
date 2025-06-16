@@ -13,7 +13,7 @@ const MyInfo = () => {
     const [tab, setTab] = useState(true);
     const [data, setData] = useState(new UserInfoDto());
     const [isEdit, setIsEdit] = useState(false);
-    const { handleMyInfo, handleUpdate } = useUserInfo();
+    const { handleMyInfo, handleUpdate, handleUpdateV2 } = useUserInfo();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -69,6 +69,18 @@ const MyInfo = () => {
         }));
     };
 
+    const handleChangeAvatar = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const formData = new FormData();
+
+            formData.append('id', data.id); // Temporary instructorId
+            formData.append('avatar', file);
+
+            await handleUpdateV2(formData);
+        }
+    }
+
 
     return (
         <div className="my-info py-5">
@@ -85,6 +97,13 @@ const MyInfo = () => {
                                 <div><a href=""><i class="bi bi-google p-2"></i></a></div>
                                 <div><a href=""><i class="bi bi-facebook p-2"></i></a></div>
                             </div>
+                            <div>
+                                <label class="upload-wrapper">
+                                    <div class="btn btn-outline-primary m-2 upload-text">Thay ảnh đại diện</div>
+                                    <input onChange={e => handleChangeAvatar(e)} type="file" accept="image/*" />
+                                </label>
+                            </div>
+
                         </div>
 
                         <div className="info-account px-3">
@@ -178,7 +197,7 @@ const MyInfo = () => {
 
                     <div className="col-lg-8">
                         <div>
-                            <MyBadges certificates={data.certificates}/>
+                            <MyBadges certificates={data.certificates} />
                         </div>
 
                         <ul class="nav nav-tabs border-bottom" >
@@ -206,7 +225,7 @@ const MyInfo = () => {
                                         onClick={() => handleClickArticle(item1.id)}
                                     >
                                         <Article1 data={item1}
-                                        index={index} />
+                                            index={index} />
                                     </div>
                                 ))
                             }

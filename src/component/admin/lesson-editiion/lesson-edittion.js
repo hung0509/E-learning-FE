@@ -122,10 +122,25 @@ const LessonEdition = () => {
     const handleHide = async (id) => {
         console.log(id);
         const idDelete = await handleDeleteComment(id);
-        setComment((prev) => 
+        setComment((prev) =>
             prev.filter(item => item.id !== idDelete),
         );
     }
+
+    function pad(num) {
+        return num.toString().padStart(2, '0');
+    }
+
+
+    function formatDuration(seconds) {
+        const totalSeconds = Math.floor(seconds);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const secs = totalSeconds % 60;
+
+        return `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;
+    }
+
 
     return (<div className="row p-5">
         <h3 style={{ color: "#ff9307" }} className="p-3">Chỉnh sửa bài học</h3>
@@ -168,7 +183,7 @@ const LessonEdition = () => {
                     name="lessonTime"
                     id="lessonTime"
                     placeholder="Enter lesson time"
-                    value={data.lessonTime}
+                    value={formatDuration(data.lessonTime)}
                     readOnly
                 />
             </div>
@@ -206,9 +221,9 @@ const LessonEdition = () => {
             </div>
         </div>
 
-        <div>
+        <div className="w-75 border m-3 p-2 bg-light">
             {/* Lesson */}
-            <h4 className="fs-5 fw-bold">Bình luận bài học</h4>
+            <h4 className="fs-5 fw-bold py-3">Bình luận bài học</h4>
             <ul className="p-0">
                 {comment.map((item, index) => (
                     <div class="d-flex" key={index}>

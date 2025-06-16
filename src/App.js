@@ -33,6 +33,7 @@ import ResetPassword from './component/password/reset-password/reset-password';
 import ChangePassword from './component/password/change-password/change-password';
 import ProtectedRoute from './guard/auth-guard';
 import LessonEdition from './component/admin/lesson-editiion/lesson-edittion';
+import TransactionAdmin from './component/admin/admin-transaction/admin-transaction';
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
     "/admin/article",
     "/admin/user",
     "/admin/course/add",
+    "/admin/transaction",
     "/404"
   ];
 
@@ -54,6 +56,7 @@ function App() {
     "/admin/article",
     "/admin/discount",
     "/admin/course/add",
+     "/admin/transaction",
     "/404"
   ]
 
@@ -76,6 +79,7 @@ function App() {
     "/admin/user",
     "/admin/article",
     "/admin/discount",
+    "/admin/transaction"
   ]
 
   return (
@@ -110,6 +114,7 @@ function App() {
             <Route path="/course-des/:courseId" element={<CourseDes />} />
             <Route path="/admin/course" element={<ProtectedRoute><CourseAdmin /></ProtectedRoute>} />
             <Route path="/admin/user" element={<ProtectedRoute><User /></ProtectedRoute>} />
+             <Route path="/admin/transaction" element={<ProtectedRoute><TransactionAdmin /></ProtectedRoute>} />
             <Route path="/admin/article" element={<ProtectedRoute><ArticleAdmin /></ProtectedRoute>} />
             <Route path="/admin/discount" element={<ProtectedRoute><Discount /></ProtectedRoute>} />
             <Route path="/admin/course/add" element={<ProtectedRoute><CourseAddition /></ProtectedRoute>} />

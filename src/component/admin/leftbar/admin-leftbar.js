@@ -25,6 +25,12 @@ const AdminLeftbar = () => {
           </a>
         </li>
         <li>
+          <a href="/admin/transaction" className={`nav-link ${location.pathname === '/admin/transaction' ? '' : 'link-dark'}`} style={{fontWeight: '600'}}>
+            <i class="bi bi-bookmark-fill mx-2"></i>
+            Lịch sử giao dịch
+          </a>
+        </li>
+        <li>
           <a href="/admin/user" className={`nav-link ${location.pathname === '/admin/user' ? '' : 'link-dark'}`} style={{fontWeight: '600'}}>
             <i className="bi bi-people-fill mx-2"></i>
             Người dùng

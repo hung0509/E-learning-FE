@@ -16,7 +16,7 @@ const logos = [
         null,
 ];
 
-const SwiperComponent = () => {
+const SwiperComponent = ({data}) => {
     return (
         <Swiper
             slidesPerView={3}
@@ -28,10 +28,10 @@ const SwiperComponent = () => {
             modules={[FreeMode, Pagination]}
             className="mySwiper-circle"
         >
-            {logos.map((logo, index) => (
+            {data.map((logo, index) => (
                 <SwiperSlide className="card-circle-custom" key={index}>
                     <div className="circular-card">
-                        <img src={logo || "https://pluspng.com/img-png/user-png-icon-user-2-icon-png-file-512x512-pixel-512.png"} className="circular-img" alt={`Logo ${index + 1}`} />
+                        <img src={logo.avatar || "https://pluspng.com/img-png/user-png-icon-user-2-icon-png-file-512x512-pixel-512.png"} className="circular-img" alt={`Logo ${index + 1}`} />
                     </div>
                 </SwiperSlide>
             ))}

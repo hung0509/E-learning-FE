@@ -6,6 +6,7 @@ import CourseHeaderDto from '../../dto/course-header-dto';
 import { useNavigate } from 'react-router-dom';
 import BaseRequestDto from '../../dto/base-request-dto';
 import Pagination from '../../component/pagination/pagination';
+import { STATUS } from '../../constant/code';
 
 
 const Courses = () => {
