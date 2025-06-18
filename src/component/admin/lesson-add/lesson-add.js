@@ -58,6 +58,9 @@ const LessonInfo = ({ courseId, closeModal, addLesson }) => {
     try {
         await getVideoDuration();
         const value = await handleAddLesson(formData);
+
+        console.log(value);
+
         addLesson(value);
         closeModal(); // Optionally đóng modal
     } catch (err) {

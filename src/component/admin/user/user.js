@@ -14,7 +14,7 @@ const User = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const results = await handleGetAll(`?page=${currentPage - 1}&pageSize=1`);
+            const results = await handleGetAll(`?page=${currentPage - 1}&pageSize=4`);
 
             const users = results.result.map((item) => UserInfoDto.fromUserInfoResponse(item));
             const page = BaseRequestDto.fromBaseRequestResponse(results);

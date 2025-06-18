@@ -331,7 +331,8 @@ const EditCoursePage = ({ courseSelected, changeData }) => {
   const addLesson = (newLesson) => {
     const lessonAddition = {
       id: newLesson.id,
-      title: newLesson.lessonName,
+      lessonName: newLesson.lessonName,
+      lessonTime: newLesson.lessonTime
     };
 
     setCourse((prevData) => ({

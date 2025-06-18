@@ -12,7 +12,7 @@ const LineChart = ({ result }) => {
     labels: labels,
     datasets: [{
       label: 'My First Dataset',
-      data: {result},
+      data: result,
       fill: false,
       borderColor: 'rgb(75, 192, 192)',
       tension: 0.1

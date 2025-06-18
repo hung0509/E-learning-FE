@@ -211,7 +211,8 @@ const MyInfo = () => {
                             </li>
                         </ul>
 
-                        <div className="row px-5 py-5">
+                        <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
+                                <div className="row px-5 py-5">
                             {tab === true ?
                                 data.courses.map((item) => (
                                     <div className="col-sm-12 col-md-6 col-lg-6 mb-5 d-flex justify-content-center" onClick={() => handleClickCourse(item.id)}>
@@ -230,7 +231,7 @@ const MyInfo = () => {
                                 ))
                             }
                         </div>
-
+                        </div>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@ const PolarAreaChart = ({ result }) => {
     datasets: [
       {
         label: 'My First Dataset',
-        data: {result},
+        data: result,
         backgroundColor: [
           'rgb(255, 99, 132)',
           'rgb(75, 192, 192)',
@@ -34,7 +34,7 @@ const PolarAreaChart = ({ result }) => {
           display: true,
         },
         suggestedMin: 0,
-        suggestedMax: 20,
+        suggestedMax: 2,
       },
     },
     plugins: {
