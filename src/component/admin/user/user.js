@@ -11,6 +11,7 @@ const User = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedRow, setSelectedRow] = useState(null);
     const { handleGetAll } = useUserInfo();
+    const { handleUpdate } = useUserInfo();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -62,7 +63,7 @@ const User = () => {
                 <tbody>
                     {data.map((item, index) => (
                         <React.Fragment key={item.id} >
-                            <tr onClick={() => handleRowClick(item.userInfoId)} className="clickable-row" style={{ fontSize: '14px' }}>
+                            <tr onClick={() => handleRowClick(item.id)} className="clickable-row" style={{ fontSize: '14px' }}>
                                 <td>{index}</td>
                                 <td><img src={item.avatar || "https://static.vecteezy.com/system/resources/previews/009/734/564/original/default-avatar-profile-icon-of-social-media-user-vector.jpg"} alt="hình ảnh" /></td>
                                 <td>{item.firstName}</td>
@@ -73,7 +74,7 @@ const User = () => {
                                     year: 'numeric'
                                 })}</td>
                             </tr>
-                            {selectedRow === item.userInfoId && (
+                            {selectedRow === item.id && (
                                 <tr>
                                     <td colSpan="5">
                                         <div className='row px-4'>
@@ -86,10 +87,6 @@ const User = () => {
                                                     <p style={{ fontSize: '14px' }} className="fw-bold">Số điện thoại: </p>
                                                     <div>{item.phone || "Chưa có thông tin"}</div>
                                                 </div>
-                                                <div className='d-flex justify-content-between'>
-                                                    <p style={{ fontSize: '14px' }} className="fw-bold">Địa chỉ: </p>
-                                                    <div>{item.address || "Chưa có thông tin"}</div>
-                                                </div>
                                             </div>
 
                                             <div className="col-sm-12 col-xl-6 p-3" style={{ fontSize: '12px' }}>
@@ -97,11 +94,15 @@ const User = () => {
                                                     <p style={{ fontSize: '14px' }} className="fw-bold">Giới tính: </p>
                                                     <div>{item.gender || "Chưa có thông tin"}</div>
                                                 </div>
+                                                <div className='d-flex justify-content-between'>
+                                                    <p style={{ fontSize: '14px' }} className="fw-bold">Địa chỉ: </p>
+                                                    <div>{item.address || "Chưa có thông tin"}</div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div className='mx-4' style={{ float: 'inline-end' }}>
-                                            <button type="button" className='btn btn-primary mx-2'>Chỉnh sửa</button>
-                                            <button type="button" className='btn btn-danger mx-2'>Xóa</button>
+                                            {/* <button type="button" className='btn btn-primary mx-2'>Chỉnh sửa</button> */}
+                                            {/* <button onClick={() => handleUnActive(item.id)} type="button" className='btn btn-outline-danger mx-2'>Ngừng hoạt động</button> */}
                                         </div>
                                     </td>
                                 </tr>

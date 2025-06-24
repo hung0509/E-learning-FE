@@ -205,32 +205,33 @@ const CourseAdmin = () => {
                                         <td colSpan="5">
                                             <div className='row px-4'>
                                                 <div style={{ fontSize: '12px' }} className="col-sm-12 col-xl-6 p-3">
-                                                    <div className='d-flex justify-content-between'>
+                                                    {/* <div className='d-flex justify-content-between'>
                                                         <p style={{ fontSize: '14px' }} className="fw-bold">Người hướng dẫn: </p>
                                                         <div>{item.fullName}</div>
                                                     </div>
                                                     <div className='d-flex justify-content-between'>
                                                         <p style={{ fontSize: '14px' }} className="fw-bold">Trạng thái: </p>
                                                         <div>{item.courseStatus}</div>
-                                                    </div>
+                                                    </div> */}
                                                     <div className='d-flex justify-content-between'>
                                                         <p style={{ fontSize: '14px' }} className="fw-bold">Chứng chỉ: </p>
-                                                        <div>{item.certificate.certificateName}</div>
+                                                        <div>{item.certificate.certificateName || "Không có"}</div>
+                                                    </div>
+
+                                                      <div className='d-flex justify-content-between'>
+                                                        <p style={{ fontSize: '14px' }} className="fw-bold">Mã giảm giá: </p>
+                                                        <div>{item?.discount?.discountCode || "Không có"}</div>
                                                     </div>
                                                 </div>
 
                                                 <div className="col-sm-12 col-xl-6 p-3" style={{ fontSize: '12px' }}>
-                                                    <div className='d-flex justify-content-between'>
-                                                        <p style={{ fontSize: '14px' }} className="fw-bold">Mã giảm giá: </p>
-                                                        <div>{item?.discount?.discountCode || "Không có"}</div>
-                                                    </div>
                                                     <div className='d-flex justify-content-between'>
                                                         <p style={{ fontSize: '14px' }} className="fw-bold">Trình độ: </p>
                                                         <div>{Level[item.level]}</div>
                                                     </div>
                                                     <div className='d-flex justify-content-between'>
                                                         <p style={{ fontSize: '14px' }} className="fw-bold">Thời gian học: </p>
-                                                        <div>{item.courseDuration} (phút)</div>
+                                                        <div>{item.courseDuration} (giây)</div>
                                                     </div>
                                                 </div>
                                             </div>

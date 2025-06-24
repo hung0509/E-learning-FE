@@ -35,6 +35,7 @@ const CourseDocAdd = ({closeModal, courseId, addDocument}) => {
         const data = await handleAddDocument(formData);
 
         addDocument(data);
+        closeModal();
     };
 
     return (

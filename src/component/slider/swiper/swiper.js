@@ -37,7 +37,7 @@ const SwiperComponent = ({data}) => {
                 {data.map((item, index) => (
                     <SwiperSlide key={index}>
                         <div className="card text-center" style={{ minWidth: '18rem', borderRadius: '32px' }}>
-                            <img width="254px" height="315px"  src={item.avatar} className="card-img-bottom"  alt="..." />
+                            <img width="254px" height="315px"  src={item.avatar} className="card-img-bottom" style={{objectFit: 'cover'}}  alt="..." />
                         </div>
                     </SwiperSlide>
                 ))}

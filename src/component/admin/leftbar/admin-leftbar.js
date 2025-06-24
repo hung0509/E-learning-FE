@@ -1,9 +1,15 @@
 import './admin-left-bar.css';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { useAuth } from '../../../hook/useAuth';
 
 const AdminLeftbar = () => {
   const location = useLocation();
+  const { handleLogOut } = useAuth();
+
+  const handleLogout = async () => {
+     await handleLogOut();
+  }
 
   return (
     <div className="admin-left-bar d-flex flex-column flex-shrink-0 p-3 bg-light border" style={{ width: '280px' }} >
@@ -51,10 +57,10 @@ const AdminLeftbar = () => {
       </ul>
       <div className="dropdown">
         <hr />
-        <a href="/logout" className="nav-link link-dark rounded p-3 fs-5" style={{fontWeight: '600'}}>
+        <button onClick={handleLogout} className="nav-link link-dark rounded p-3 fs-5" style={{fontWeight: '600'}}>
           <i className="bi bi-box-arrow-in-left mx-2"></i>
           Đăng xuất
-        </a>
+        </button>
       </div>
     </div>
   );

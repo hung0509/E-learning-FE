@@ -2,9 +2,15 @@ import { useContext, useState } from 'react';
 import './header.css';
 import { AuthContext } from '../../context/auth-context';
 import { useAuth } from '../../hook/useAuth';
+import { useCourse } from '../../hook/useCourse';
+import { AccountService } from '../../service/account-service';
+
 
 
 const Header = () => {
+  const roles = AccountService.getFirstRoleFromToken();
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [isLogin, setIsLogin] = useState(() => {
     return localStorage.getItem("userId") || null; // Mặc định là false nếu không tìm thấy giá trị
   });
@@ -21,6 +27,13 @@ const Header = () => {
     await handleLogOut();
   }
 
+    const handleKeyDown = (event) => {
+    if (event.key === "Enter" && searchTerm.trim()) {
+      console.log("Tra cứu khóa học:", searchTerm);
+
+      window.location.href = "/course?name="+ searchTerm;
+    }
+  };
   return (
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between p-3 border-bottom">
       <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
@@ -29,7 +42,15 @@ const Header = () => {
 
       <div class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 w-50">
         <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 w-75">
-          <input type="search" class="form-control " placeholder="Search..." aria-label="Search" />
+          <input 
+            type="search" 
+            class="form-control " 
+            placeholder="Tra cứu khóa học" 
+            aria-label="Search"   
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
         </div>
       </div>
 
@@ -55,6 +76,11 @@ const Header = () => {
             aria-labelledby="dropdownUser2"
             style={isDropdownOpen ? { position: 'absolute', margin: '0px', transform: 'translate(30px, 32px)', left: '-112px', top: '18px' } : {}}
           >
+            {roles?.includes("ROLE_ADMIN") && (
+              <li>
+                <a className="dropdown-item" href="/admin">Quản lý</a>
+              </li>
+            )}
             <li><a className="dropdown-item" href="/article/post">Tạo bài viết</a></li>
             <li><a className="dropdown-item" href="/my-info">Thông tin cá nhân</a></li>
             <li><a className="dropdown-item" href="/change-password">Đổi mật khẩu</a></li>

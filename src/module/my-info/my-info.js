@@ -88,7 +88,7 @@ const MyInfo = () => {
                 <div class="row">
                     <div class="col-lg-4 col-md-4 xs-margin-30px-bottom">
                         <div class="team-single-img avatar-container">
-                            <img className="p-3" src={data.avatar || "https://pluspng.com/img-png/user-png-icon-user-2-icon-png-file-512x512-pixel-512.png"} alt="" />
+                            <img className="p-1" src={data.avatar || "https://pluspng.com/img-png/user-png-icon-user-2-icon-png-file-512x512-pixel-512.png"} alt="" />
                         </div>
                         <div class="bg-light-gray padding-30px-all md-padding-25px-all sm-padding-20px-all text-center">
                             <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">{data.firstName + " " + data.lastName}</h4>
@@ -211,7 +211,7 @@ const MyInfo = () => {
                             </li>
                         </ul>
 
-                        <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
+                        <div style={{ maxHeight: '700px', overflowY: 'auto', overflowX: 'hidden' }}>
                                 <div className="row px-5 py-5">
                             {tab === true ?
                                 data.courses.map((item) => (

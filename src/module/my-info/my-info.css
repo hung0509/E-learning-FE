@@ -9,6 +9,7 @@
     width: 50%;
     object-fit: cover;
     border: 1px solid #d6d0d0;
+    height: 242px;
 }
 
 .my-info  .upload-wrapper {

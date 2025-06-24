@@ -25,7 +25,7 @@ const CourseLessonTab = ({ course, addLesson, deleteLesson }) => {
 
     const handleRemoveLesson = async (id) => {
         const value = await handleDeleteLesson(id);
-        deleteLesson(value);
+        deleteLesson(id);
     }
 
     const handleEditClick = () => {
@@ -77,7 +77,7 @@ const CourseLessonTab = ({ course, addLesson, deleteLesson }) => {
                             <i className="bi bi-clock px-2"></i>
                             {formatDuration(lesson.lessonTime)}
                             <span onClick={() => handleEditLesson(lesson.id)}  style={{ cursor: 'pointer', marginLeft: '5rem', marginRight: '1rem' }}><i class="bi bi-pencil-square"></i></span>
-                            <span onClick={handleRemoveLesson} className="mx-2" style={{ cursor: 'pointer' }}><i class="bi bi-trash-fill"></i></span>
+                            <span onClick={() => handleRemoveLesson(lesson.id)} className="mx-2" style={{ cursor: 'pointer' }}><i class="bi bi-trash-fill"></i></span>
                         </span>
                     </div>
                 </li>

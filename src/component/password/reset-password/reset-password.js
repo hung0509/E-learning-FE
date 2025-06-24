@@ -85,7 +85,7 @@ const ResetPassword = () => {
                                         <div className="form-text">Chúng tôi sẽ gửi mật khẩu đến email này!</div>
                                     </div>
                                     <button className="btn btn-primary w-100" onClick={() => handleSendEmail()}>
-                                        Send Verification Code
+                                        Thiết lập lại mật khẩu
                                     </button>
                                 </div>
                             )}
@@ -159,7 +159,7 @@ const ResetPassword = () => {
                                     </div>
                                     <h5 className="mb-3">Mật khẩu đã được thiết lập lại thành công</h5>
                                     <p className="text-muted mb-4">Vui lòng kiểm tra email để có được mật khẩu mới.</p>
-                                    <a href="#" className="btn btn-primary">Quay về trang đăng nhập</a>
+                                    <a href="/sign-in" className="btn btn-primary">Quay về trang đăng nhập</a>
                                 </div>
                             )}
                         </div>

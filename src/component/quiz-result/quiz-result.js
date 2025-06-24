@@ -14,7 +14,7 @@ const QuizResultPopup = ({ resultData, onClose, onRetry }) => {
         <p><strong>Điểm:</strong> {resultData.percentageCorrect}%</p>
 
         <div className="d-flex gap-2 mt-3 justify-content-center">
-          <button onClick={() => window.location.href = `course-des/${resultData.quiz.courseId}`} className="btn btn-primary">
+          <button onClick={() => window.location.href = `/course-des/${resultData.quiz.courseId}`} className="btn btn-primary">
             Quay về bài học
           </button>
           <button onClick={onRetry} className="btn btn-outline-secondary">

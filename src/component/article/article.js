@@ -4,7 +4,7 @@ const Article1 = ({ data, index }) => {
          }`} style={{ alignItems: 'center', minHeight: '220px' }} >
          <div class="card-body">
             <h5 class="card-title mt-3 fs-4">{data.title}</h5>
-            <p class="card-text">{data.description}</p>
+            <p class="card-text" style={{webkitLineClamp: '3', display: '-webkit-box', WebkitBoxOrient: 'vertical', overflow: 'hidden'}}>{data.description}</p>
          </div>
          <div class="card-img-block">
             <img style={{ height: '200px', width: '180px' }} class="card-img" src={data.image} alt="Card image cap" />

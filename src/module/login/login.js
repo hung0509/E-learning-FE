@@ -113,7 +113,7 @@ const Login = () => {
                         <i class="bi bi-google"></i>
                         <span class="ms-2 fs-6">Google</span>
                       </div>
-                      <a href="#!" class="btn bsb-btn-xl btn-outline-primary">
+                      <a href="#!" class="btn bsb-btn-xl btn-outline-primary disabled" tabindex="-1" aria-disabled="true">
                         <i class="bi bi-facebook"></i>
                         <span class="ms-2 fs-6">Facebook</span>
                       </a>
